@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "sApp UI kit",
+    "slug": "sapp-ui-kit-example",
+    "scheme": "sappexample",
+    "version": "0.2.0",
+    "orientation": "portrait",
+    "ios": { "bundleIdentifier": "ca.superroute.sapp.example" },
+    "android": { "package": "ca.superroute.sapp.example" },
+    "plugins": ["expo-secure-store", "expo-location", "expo-image-picker"]
+  }
+}

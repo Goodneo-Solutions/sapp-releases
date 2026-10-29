@@ -1,0 +1,156 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "ca.superroute",
+    "module": "sapp-ui-android",
+    "version": "0.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "ca.superroute",
+          "module": "sapp",
+          "version": {
+            "requires": "0.2.0"
+          }
+        },
+        {
+          "group": "androidx.compose",
+          "module": "compose-bom",
+          "version": {
+            "requires": "2025.10.01"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "androidx.compose.runtime",
+          "module": "runtime"
+        },
+        {
+          "group": "androidx.compose.ui",
+          "module": "ui"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "sapp-ui-android-0.2.0.aar",
+          "url": "sapp-ui-android-0.2.0.aar",
+          "size": 1246419,
+          "sha512": "7874715c37aad8e5a4b772fccd20815b708f4050022b61c5f0ea13ebd36a32be57329e8fa5c4a941238f8e9490697503fc5ff7fb82d19a4f3551c62d1175a970",
+          "sha256": "c05ec8f1a0c480e17bd5af6d9098534b8d0c90713cf24adadc1720cc595e72b6",
+          "sha1": "d782e4f6beb222ae0367dde9365a9a493515eea9",
+          "md5": "3122758de27bd3e02bea606cf09e2b21"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.compose.foundation",
+          "module": "foundation"
+        },
+        {
+          "group": "androidx.compose.material3",
+          "module": "material3"
+        },
+        {
+          "group": "ca.superroute",
+          "module": "sapp",
+          "version": {
+            "requires": "0.2.0"
+          }
+        },
+        {
+          "group": "androidx.compose",
+          "module": "compose-bom",
+          "version": {
+            "requires": "2025.10.01"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "androidx.compose.runtime",
+          "module": "runtime"
+        },
+        {
+          "group": "androidx.compose.ui",
+          "module": "ui"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "sapp-ui-android-0.2.0.aar",
+          "url": "sapp-ui-android-0.2.0.aar",
+          "size": 1246419,
+          "sha512": "7874715c37aad8e5a4b772fccd20815b708f4050022b61c5f0ea13ebd36a32be57329e8fa5c4a941238f8e9490697503fc5ff7fb82d19a4f3551c62d1175a970",
+          "sha256": "c05ec8f1a0c480e17bd5af6d9098534b8d0c90713cf24adadc1720cc595e72b6",
+          "sha1": "d782e4f6beb222ae0367dde9365a9a493515eea9",
+          "md5": "3122758de27bd3e02bea606cf09e2b21"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "sapp-ui-android-0.2.0-sources.jar",
+          "url": "sapp-ui-android-0.2.0-sources.jar",
+          "size": 124879,
+          "sha512": "6742feba4b5fec40041c9d51113d4f9aad07100b85f1609a6a8902cb0f9aad08e4097c231cd62f4aa196bb52e5fb31bd63b8d3524c3c9cf05a8458c5c286bb5b",
+          "sha256": "c21971dbd2c17022b1d09087e6794915502081779185a6a2a1f07225dfaffe09",
+          "sha1": "b32287b498408b6c11d2489aae8ea439d77c8cbb",
+          "md5": "20b6d0c65904c361ec1307aa8a5c922c"
+        }
+      ]
+    }
+  ]
+}

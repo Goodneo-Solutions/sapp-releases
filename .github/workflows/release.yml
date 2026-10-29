@@ -1,0 +1,35 @@
+# Makes the GitHub Release <version> when sApp's release workflow pushes the tag <version>: the XCFramework zips that
+# Package.swift points at are taken from the branch assets/<version> (pushed just before the tag), attached to the
+# Release, and the branch is deleted.
+name: release
+
+on:
+  push:
+    tags: ['[0-9]+.[0-9]+.[0-9]+']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: assets/${{ github.ref_name }}
+          path: assets
+      - name: Create the Release with the zips
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V: ${{ github.ref_name }}
+        run: |
+          if gh release view "$V" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$V" assets/*.zip assets/checksums.txt --clobber -R "$GITHUB_REPOSITORY"
+          else
+            gh release create "$V" assets/*.zip assets/checksums.txt -R "$GITHUB_REPOSITORY" \
+              --title "sApp $V" --notes "sApp $V. Documentation: https://open.superroute.ca/developer/sapp"
+          fi
+      - name: Delete the assets branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/heads/assets/${{ github.ref_name }}"

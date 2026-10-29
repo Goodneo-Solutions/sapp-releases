@@ -1,0 +1,24 @@
+{
+  "name": "sapp-react-native-example",
+  "version": "0.2.0",
+  "private": true,
+  "description": "The sApp UI kit for React Native in an Expo app: sign-in, inbox, wallet, pickups, store, group buy and driver screens.",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
+  },
+  "dependencies": {
+    "@superrouteca/sapp-react-native": "0.2.0",
+    "expo": "~52.0.46",
+    "expo-document-picker": "~13.0.3",
+    "expo-file-system": "~18.0.12",
+    "expo-image-picker": "~16.0.6",
+    "expo-location": "~18.0.10",
+    "expo-secure-store": "~14.0.1",
+    "expo-web-browser": "~14.0.2",
+    "react": "18.3.1",
+    "react-native": "0.76.9"
+  }
+}
