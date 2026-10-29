@@ -9,24 +9,29 @@ Build apps on Superroute: customer and driver apps that run for one or more serv
 Open Platform capabilities such as routing, geocoding and ETA. MIT licence.
 
 Documentation: [open.superroute.ca/developer/sapp](https://open.superroute.ca/developer/sapp). Swift packages, the
-Maven repository and the example apps: [Goodneo-Solutions/sapp-releases](https://github.com/Goodneo-Solutions/sapp-releases).
+Maven repository, the Go module and the example apps: [Goodneo-Solutions/sapp-releases](https://github.com/Goodneo-Solutions/sapp-releases).
+PHP: [Goodneo-Solutions/sapp-php](https://github.com/Goodneo-Solutions/sapp-php).
 
 | Package | Platform | Status |
 |---|---|---|
-| [`@superrouteca/sapp`](https://www.npmjs.com/package/@superrouteca/sapp) | JavaScript and TypeScript: web, Node 20+, React Native | 0.2.0 |
-| [`@superrouteca/sapp-react`](https://www.npmjs.com/package/@superrouteca/sapp-react) | React: provider and hooks | 0.2.0 |
-| [`@superrouteca/sapp-react-native`](https://www.npmjs.com/package/@superrouteca/sapp-react-native) | React Native: hooks, secure token store | 0.2.0 |
-| [`sapp`](https://pub.dev/packages/sapp) | Dart and Flutter | 0.2.0 |
-| [`SApp`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | iOS 15+, macOS 12+ | 0.2.0 |
-| [`ca.superroute:sapp` / `sapp-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Kotlin on the JVM and Android 7+ | 0.2.0 |
-| [`Superroute.SApp`](https://www.nuget.org/packages/Superroute.SApp) (NuGet) | .NET 8: Windows apps and servers | 0.2.0 |
-| [`sapp_ui`](https://pub.dev/packages/sapp_ui) | Flutter UI kit: sign-in, notifications, wallet, orders, pickups | 0.2.0 |
-| [`@superrouteca/sapp-ui`](https://www.npmjs.com/package/@superrouteca/sapp-ui) | Web UI kit: the same components as custom elements | 0.2.0 |
-| `@superrouteca/sapp-react/ui` | React components over the web UI kit | 0.2.0 |
-| [`SAppUI`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | SwiftUI UI kit: iOS 15+, macOS 12+ | 0.2.0 |
-| [`ca.superroute:sapp-ui-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Jetpack Compose UI kit: Android 7+ | 0.2.0 |
-| `@superrouteca/sapp-react-native/ui` | React Native UI kit | 0.2.0 |
-| [`Superroute.SApp.Wpf`](https://www.nuget.org/packages/Superroute.SApp.Wpf) / [`Superroute.SApp.WinForms`](https://www.nuget.org/packages/Superroute.SApp.WinForms) (NuGet) | WPF and WinForms UI kits over `Superroute.SApp.UI` | 0.2.0 |
+| [`@superrouteca/sapp`](https://www.npmjs.com/package/@superrouteca/sapp) | JavaScript and TypeScript: web, Node 20+, React Native | 0.2.1 |
+| [`@superrouteca/sapp-react`](https://www.npmjs.com/package/@superrouteca/sapp-react) | React: provider and hooks | 0.2.1 |
+| [`@superrouteca/sapp-react-native`](https://www.npmjs.com/package/@superrouteca/sapp-react-native) | React Native: hooks, secure token store | 0.2.1 |
+| [`sapp`](https://pub.dev/packages/sapp) | Dart and Flutter | 0.2.1 |
+| [`SApp`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | iOS 15+, macOS 12+ | 0.2.1 |
+| [`ca.superroute:sapp` / `sapp-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Kotlin on the JVM and Android 7+ | 0.2.1 |
+| [`Superroute.SApp`](https://www.nuget.org/packages/Superroute.SApp) (NuGet) | .NET 8: Windows apps and servers | 0.2.1 |
+| [`superroute-sapp`](https://pypi.org/project/superroute-sapp/) (PyPI, `import sapp`) | Python 3.9+: servers and scripts | 0.2.1 |
+| [`superroute/sapp`](https://packagist.org/packages/superroute/sapp) (Packagist) | PHP 8.1+: servers | 0.2.1 |
+| [`github.com/Goodneo-Solutions/sapp-releases/go`](https://github.com/Goodneo-Solutions/sapp-releases/tree/main/go) | Go 1.21+: servers | 0.2.1 |
+| [`ca.superroute:sapp-java`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Java 17+: servers, no dependencies | 0.2.1 |
+| [`sapp_ui`](https://pub.dev/packages/sapp_ui) | Flutter UI kit: sign-in, notifications, wallet, orders, pickups | 0.2.1 |
+| [`@superrouteca/sapp-ui`](https://www.npmjs.com/package/@superrouteca/sapp-ui) | Web UI kit: the same components as custom elements | 0.2.1 |
+| `@superrouteca/sapp-react/ui` | React components over the web UI kit | 0.2.1 |
+| [`SAppUI`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | SwiftUI UI kit: iOS 15+, macOS 12+ | 0.2.1 |
+| [`ca.superroute:sapp-ui-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Jetpack Compose UI kit: Android 7+ | 0.2.1 |
+| `@superrouteca/sapp-react-native/ui` | React Native UI kit | 0.2.1 |
+| [`Superroute.SApp.Wpf`](https://www.nuget.org/packages/Superroute.SApp.Wpf) / [`Superroute.SApp.WinForms`](https://www.nuget.org/packages/Superroute.SApp.WinForms) (NuGet) | WPF and WinForms UI kits over `Superroute.SApp.UI` | 0.2.1 |
 
 Every package of a release carries the same version. Version numbers never contain the digits 3 or 4.
 
@@ -98,7 +103,7 @@ final notifications = await sr.api.platformAppNotifications();
 
 ```swift
 // Package.swift
-.package(url: "https://github.com/Goodneo-Solutions/sapp-releases", from: "0.2.0")
+.package(url: "https://github.com/Goodneo-Solutions/sapp-releases", from: "0.2.1")
 // in the target: .product(name: "SApp", package: "sapp-releases"), and .product(name: "SAppUI", package: "sapp-releases") for the UI kit
 ```
 
@@ -132,8 +137,8 @@ dependencyResolutionManagement {
 }
 
 // build.gradle.kts: ca.superroute:sapp on the JVM, sapp-android on Android, sapp-ui-android for the Compose kit
-implementation("ca.superroute:sapp-android:0.2.0")
-implementation("ca.superroute:sapp-ui-android:0.2.0")
+implementation("ca.superroute:sapp-android:0.2.1")
+implementation("ca.superroute:sapp-ui-android:0.2.1")
 ```
 
 ```kotlin
@@ -158,6 +163,116 @@ var notifications = await sr.Api.PlatformAppNotificationsAsync();   // a System.
 
 `ProtectedDataTokenStore` keeps the tokens encrypted for the current Windows user. `OnSessionChange` is told when a
 session starts and ends.
+
+## Python
+
+```python
+from sapp import PartnerClient, OpenClient
+
+sr = PartnerClient('p_acme_parcels', client_code='k3m9q2', app_key='sp_appkey_…')
+sr.sign_in_with_id_token(google_id_token)
+notifications = sr.api.platform_app_notifications()
+
+open = OpenClient(api_key=os.environ['SUPERROUTE_OPEN_KEY'])   # on a server
+place = open.api.geo_forward(body={'address': '100 King St W, Toronto'})
+```
+
+Methods and arguments are snake_case (`platform_app_mark_notification_read(notification_id=…)`); answers are the
+parsed JSON. The client is safe to share between threads: concurrent calls share one refresh.
+
+## PHP
+
+```php
+use Superroute\SApp\PartnerClient;
+use Superroute\SApp\OpenClient;
+
+$sr = new PartnerClient('p_acme_parcels', clientCode: 'k3m9q2', appKey: 'sp_appkey_…');
+$sr->signInWithIdToken($googleIdToken);
+$notifications = $sr->api->platformAppNotifications();
+
+$open = new OpenClient(apiKey: getenv('SUPERROUTE_OPEN_KEY'));
+$place = $open->api->geoForward(['address' => '100 King St W, Toronto']);
+```
+
+`composer require superroute/sapp`. Optional parameters are named arguments; answers are decoded JSON arrays. Requests
+go through curl when it is loaded, else PHP streams; pass your own `Transport` to use another HTTP client.
+
+## Go
+
+```go
+import sapp "github.com/Goodneo-Solutions/sapp-releases/go"
+
+sr, err := sapp.NewPartnerClient(sapp.PartnerOptions{AppCode: "p_acme_parcels", ClientCode: "k3m9q2", AppKey: "sp_appkey_…"})
+_, err = sr.SignInWithIDToken(ctx, googleIDToken, nil)
+notifications, err := sr.API.PlatformAppNotifications(ctx, sapp.PlatformAppNotificationsParams{})
+
+open, err := sapp.NewOpenClient(sapp.OpenOptions{APIKey: os.Getenv("SUPERROUTE_OPEN_KEY")})
+place, err := open.API.GeoForward(ctx, sapp.GeoForwardParams{Body: map[string]any{"address": "100 King St W, Toronto"}})
+```
+
+Each operation takes its parameters in a struct; optional ones are pointers (`sapp.String("ios")`, `sapp.Bool(true)`).
+Answers decode into `any` (numbers as `float64`). Failures are `*sapp.Error`.
+
+## Java
+
+```java
+// build.gradle.kts: repositories { maven("https://goodneo-solutions.github.io/sapp-releases/maven") }
+implementation("ca.superroute:sapp-java:0.2.1")
+
+PartnerClient sr = PartnerClient.builder("p_acme_parcels").clientCode("k3m9q2").appKey("sp_appkey_…").build();
+sr.signInWithIdToken(googleIdToken);
+Object notifications = sr.api.platformAppNotifications();
+
+OpenClient open = OpenClient.builder().apiKey(System.getenv("SUPERROUTE_OPEN_KEY")).build();
+Object place = open.api.geoForward(Map.of("address", "100 King St W, Toronto"));
+```
+
+Required parameters are arguments; optional ones, an optional body and files go in `Args`
+(`api.x(Args.of().with("page", 2))`). The artifact has no dependencies: answers are plain `Map`, `List`, `String`,
+`Long`, `Double`, `Boolean` or null (the built-in `Json` reads and writes them), so it never conflicts with the
+Jackson or Gson version a server already carries.
+
+## Webhooks
+
+Every language verifies Superroute webhooks: the signature over the raw body, a timestamp inside the tolerance (300
+seconds) so an old request cannot be replayed, and the event parsed from the native body or a CloudEvents envelope.
+
+```js
+import { verifyWebhook } from '@superrouteca/sapp';   // also from sapp-react and sapp-react-native
+
+const event = await verifyWebhook(rawBody, req.headers, process.env.SUPERROUTE_WEBHOOK_SECRET);
+if (await alreadyHandled(event.id)) return;            // an event can arrive more than once
+```
+
+| Language | Call |
+|---|---|
+| Dart | `verifyWebhook(body, headers, [secret])` |
+| Swift | `try Webhooks.verify(body:headers:secrets:)` |
+| Kotlin | `Webhooks.verify(body, headers, listOf(secret))` |
+| C# | `Webhooks.Verify(body, headers, new[] { secret })` |
+| Python | `verify_webhook(body, headers, secret)` |
+| PHP | `Webhooks::verify($body, $headers, $secret)` |
+| Go | `sapp.VerifyWebhook(body, r.Header, []string{secret}, sapp.WebhookOptions{})` |
+| Java | `Webhooks.verify(body, headers, secret, WebhookOptions.defaults())` |
+
+Pass the body exactly as received, never a re-encoded object. The secret is the endpoint's signing secret, as
+`whsec_…` or plain; during a key rotation pass both. The scheme is the way the endpoint signs:
+
+| Scheme | Sender | Headers |
+|---|---|---|
+| `standard` (default) | any endpoint with Standard Webhooks switched on | `webhook-id`, `webhook-timestamp`, `webhook-signature` |
+| `tenant` | order, tracking, driver and device-order webhooks | `X-Webhook-Signature-V2`, `X-Webhook-Timestamp` |
+| `partner_locker`, `tpd` | partner locker deliveries, third-party delivery providers | `X-Webhook-Signature: v1=…`, `X-Webhook-Delivery-Id`, `X-Webhook-Timestamp` |
+| `loading_plan` | loading plan callbacks | `X-Webhook-Signature: v1=…`, `X-Webhook-Timestamp` |
+| `open_platform` | Open Platform job callbacks | `X-Open-Signature`, `X-Open-Timestamp` |
+| `dataset` | dataset webhooks | `X-Webhook-Signature` (the timestamp is not signed) |
+
+Tenant webhooks keep the time of the first try on their retries, so their tolerance is 12,600 seconds. The event
+carries `id`, `type` (without the CloudEvents `ca.superroute.` prefix), `time`, `subject`, `source`, `business`,
+`attempt`, `format` (`native`, `ce_binary`, `ce_structured`) and `data`. A failure is a
+`WebhookVerificationError` / `WebhookVerificationException` with a `code`: `missing_header`, `invalid_timestamp`,
+`timestamp_out_of_tolerance`, `invalid_signature`, `invalid_secret`, `invalid_payload` or `unknown_scheme`. The test
+vectors are in `testdata/webhooks/vectors.json` (`tools/webhook_vectors.py`).
 
 ## Flutter UI kit
 
@@ -258,5 +373,9 @@ cd dart && dart pub get && dart test
 swift test
 cd kotlin && ./gradlew :sapp:test
 dotnet test dotnet/tests/Superroute.SApp.Tests/Superroute.SApp.Tests.csproj
+pip install -e python && pytest python/tests
+cd php && composer install && vendor/bin/phpunit
+cd go && go test ./...
+cd java && ./gradlew test
 cd flutter_ui && flutter test
 ```

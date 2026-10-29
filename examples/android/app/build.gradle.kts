@@ -29,8 +29,8 @@ kotlin {
 }
 
 dependencies {
-    implementation("ca.superroute:sapp-ui-android:0.2.0")
-    implementation("ca.superroute:sapp-android:0.2.0")
+    implementation("ca.superroute:sapp-ui-android:0.2.1")
+    implementation("ca.superroute:sapp-android:0.2.1")
     implementation(platform("androidx.compose:compose-bom:2025.10.01"))
     implementation("androidx.compose.material3:material3")
     implementation("androidx.activity:activity-compose:1.10.1")

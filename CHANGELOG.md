@@ -1,6 +1,12 @@
-# Unreleased
+# 0.2.1
 
 ## SDK
+
+### Python, PHP, Go and Java
+- **Four more languages**: `superroute-sapp` on PyPI, `superroute/sapp` on Packagist, the Go module `github.com/Goodneo-Solutions/sapp-releases/go` and `ca.superroute:sapp-java` from the sApp Maven repository, with the same sign-in, partner app API and Open Platform calls as the other languages and no extra dependencies.
+
+### Webhooks
+- **Verify Superroute webhooks in every language**: signatures checked, replays outside the allowed window refused, the event parsed — for the standard signature and each older one still in use.
 
 ### Swift (iOS and macOS)
 - **Prebuilt from the release repository**: add `https://github.com/Goodneo-Solutions/sapp-releases` in Swift Package Manager; `SApp` and `SAppUI` come as prebuilt frameworks for iOS devices, the iOS simulator and macOS, and work with every Xcode from 16 on.

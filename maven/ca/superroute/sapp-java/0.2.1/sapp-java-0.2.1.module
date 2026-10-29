@@ -1,0 +1,100 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "ca.superroute",
+    "module": "sapp-java",
+    "version": "0.2.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "sapp-java-0.2.1.jar",
+          "url": "sapp-java-0.2.1.jar",
+          "size": 89151,
+          "sha512": "0a138d5c3ce50ad492e0eed94baddf77fc82500f62029addcd1af3229afd58d1b5716121b22e70ac32a5d33cfb9bd0f53c3e16a628f60a06a60f71932e3f5b9a",
+          "sha256": "2c288a05df60085c9b7babde829ac8cfeca83b7fbf878823d9f58955888b6383",
+          "sha1": "cef00466b5dc067e7f06eeb13f8ba1c7c431e009",
+          "md5": "b720fdc647ea4d83a0e3f5607777d1df"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "sapp-java-0.2.1.jar",
+          "url": "sapp-java-0.2.1.jar",
+          "size": 89151,
+          "sha512": "0a138d5c3ce50ad492e0eed94baddf77fc82500f62029addcd1af3229afd58d1b5716121b22e70ac32a5d33cfb9bd0f53c3e16a628f60a06a60f71932e3f5b9a",
+          "sha256": "2c288a05df60085c9b7babde829ac8cfeca83b7fbf878823d9f58955888b6383",
+          "sha1": "cef00466b5dc067e7f06eeb13f8ba1c7c431e009",
+          "md5": "b720fdc647ea4d83a0e3f5607777d1df"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "sapp-java-0.2.1-sources.jar",
+          "url": "sapp-java-0.2.1-sources.jar",
+          "size": 48756,
+          "sha512": "c100e1c8dc4a00a5cf6bcd2c1a515f2d700fdb3265f68fec30c2bc00d690379e36b4fecea17248cf27a7215ab0da9ca7d58da26261e6b0cefbc0bdfb87e70f86",
+          "sha256": "f19fe02b3250ad9e91f611d7f082ce6f79a63f1b313b07fcadf5cc82b040901c",
+          "sha1": "72c338a9114ed2f8a294ca958602b3e569aac97d",
+          "md5": "13780a949381bada491921e56bc6305d"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "sapp-java-0.2.1-javadoc.jar",
+          "url": "sapp-java-0.2.1-javadoc.jar",
+          "size": 268047,
+          "sha512": "cb596f3cafb7a5e8af34c7b2f4a1cec2d0c42fa5fea009bf419d76be9361352c29b274a358b03e7c80bcc3e3e88be1d464b4f550f7ae8bcf90cc21dbc90dec38",
+          "sha256": "edf04e378250f09b57b292de0bd3a54ae67c2caf984c2726802a3544906b7831",
+          "sha1": "5471ecab7aa20577cf9b58e2f5cd7b14826d3014",
+          "md5": "5690ba2170901ad1b53c213d9832bf45"
+        }
+      ]
+    }
+  ]
+}
