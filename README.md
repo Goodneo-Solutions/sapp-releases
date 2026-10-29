@@ -6,7 +6,9 @@
 # sApp
 
 Build apps on Superroute: customer and driver apps that run for one or more service providers, and apps that use
-Open Platform capabilities such as routing, geocoding and ETA. MIT licence.
+Open Platform capabilities such as routing, geocoding and ETA. Superroute SDK License — see
+[LICENSE](LICENSE) and [open.superroute.ca/developer/license](https://open.superroute.ca/developer/license); versions published
+before it keep the licence they were published with.
 
 Documentation: [open.superroute.ca/developer/sapp](https://open.superroute.ca/developer/sapp). Swift packages, the
 Maven repository, the Go module and the example apps: [Goodneo-Solutions/sapp-releases](https://github.com/Goodneo-Solutions/sapp-releases).
