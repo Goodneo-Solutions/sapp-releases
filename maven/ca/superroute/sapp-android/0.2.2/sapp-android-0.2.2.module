@@ -1,0 +1,110 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "ca.superroute",
+    "module": "sapp-android",
+    "version": "0.2.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "ca.superroute",
+          "module": "sapp",
+          "version": {
+            "requires": "0.2.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "sapp-android-0.2.2.aar",
+          "url": "sapp-android-0.2.2.aar",
+          "size": 11882,
+          "sha512": "c23453ca1691c9fb081065f75cb5d5dc0d7714a200a8e3dad99201bde807016c578b31d4a0193c93ef2b978187b24eab0d5b9bf67d288eaca9bc4ebcba4311e7",
+          "sha256": "50a20fb3fb0f28521b5459d177530ab5fb1b9f58ca3d8b17eaf6204ae51287b6",
+          "sha1": "f6e3b3b326206c11e4f0f7c01aea53f029120994",
+          "md5": "5bbd1a8a1debc4574d9d30e8e58408e5"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "ca.superroute",
+          "module": "sapp",
+          "version": {
+            "requires": "0.2.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "sapp-android-0.2.2.aar",
+          "url": "sapp-android-0.2.2.aar",
+          "size": 11882,
+          "sha512": "c23453ca1691c9fb081065f75cb5d5dc0d7714a200a8e3dad99201bde807016c578b31d4a0193c93ef2b978187b24eab0d5b9bf67d288eaca9bc4ebcba4311e7",
+          "sha256": "50a20fb3fb0f28521b5459d177530ab5fb1b9f58ca3d8b17eaf6204ae51287b6",
+          "sha1": "f6e3b3b326206c11e4f0f7c01aea53f029120994",
+          "md5": "5bbd1a8a1debc4574d9d30e8e58408e5"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "sapp-android-0.2.2-sources.jar",
+          "url": "sapp-android-0.2.2-sources.jar",
+          "size": 1980,
+          "sha512": "2a4eae7f49669877c5eadf894e23033177dd6d5176be6eef7f026b3c283398600f2eebdfec9ad4094c347dc3cf31101cd14874625a7a3cb414898190bd983edd",
+          "sha256": "86a71ec63f2a087030856ad4ec11ab9d9c8a036c6f82d8a99fca46e8260bab97",
+          "sha1": "b532cccae16ef0cf1e1ed086243590d066ec65cc",
+          "md5": "28c11fc324327207d01486103cf84b8e"
+        }
+      ]
+    }
+  ]
+}

@@ -5,10 +5,17 @@
 
 # sApp
 
-Build apps on Superroute: customer and driver apps that run for one or more service providers, and apps that use
-Open Platform capabilities such as routing, geocoding and ETA. Superroute SDK License — see
-[LICENSE](LICENSE) and [open.superroute.ca/developer/license](https://open.superroute.ca/developer/license); versions published
-before it keep the licence they were published with.
+The SDK for building on Superroute — on phones, the web, the desktop and the server:
+
+- **Apps and websites for customers and drivers** that run for one or more service providers, with ready-made UI
+  components on Flutter, the web and React, SwiftUI, Jetpack Compose, React Native, WPF and WinForms.
+- **Desktop programs** on Windows and macOS, with the same calls and components.
+- **Back-end services and integrations** in JavaScript/Node, Python, PHP, Go, Java and C#: the partner app API and the
+  Open Platform capabilities such as routing, geocoding and ETA.
+- **Webhook receivers** in every language: Superroute's signatures checked, replays refused, events parsed.
+
+One client per language, generated from the same API description, so every platform calls Superroute the same way.
+Superroute SDK License — see [LICENSE](LICENSE) and [open.superroute.ca/developer/license](https://open.superroute.ca/developer/license).
 
 Documentation: [open.superroute.ca/developer/sapp](https://open.superroute.ca/developer/sapp). Swift packages, the
 Maven repository, the Go module and the example apps: [Goodneo-Solutions/sapp-releases](https://github.com/Goodneo-Solutions/sapp-releases).
@@ -16,24 +23,24 @@ PHP: [Goodneo-Solutions/sapp-php](https://github.com/Goodneo-Solutions/sapp-php)
 
 | Package | Platform | Status |
 |---|---|---|
-| [`@superrouteca/sapp`](https://www.npmjs.com/package/@superrouteca/sapp) | JavaScript and TypeScript: web, Node 20+, React Native | 0.2.1 |
-| [`@superrouteca/sapp-react`](https://www.npmjs.com/package/@superrouteca/sapp-react) | React: provider and hooks | 0.2.1 |
-| [`@superrouteca/sapp-react-native`](https://www.npmjs.com/package/@superrouteca/sapp-react-native) | React Native: hooks, secure token store | 0.2.1 |
-| [`sapp`](https://pub.dev/packages/sapp) | Dart and Flutter | 0.2.1 |
-| [`SApp`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | iOS 15+, macOS 12+ | 0.2.1 |
-| [`ca.superroute:sapp` / `sapp-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Kotlin on the JVM and Android 7+ | 0.2.1 |
-| [`Superroute.SApp`](https://www.nuget.org/packages/Superroute.SApp) (NuGet) | .NET 8: Windows apps and servers | 0.2.1 |
-| [`superroute-sapp`](https://pypi.org/project/superroute-sapp/) (PyPI, `import sapp`) | Python 3.9+: servers and scripts | 0.2.1 |
-| [`superroute/sapp`](https://packagist.org/packages/superroute/sapp) (Packagist) | PHP 8.1+: servers | 0.2.1 |
-| [`github.com/Goodneo-Solutions/sapp-releases/go`](https://github.com/Goodneo-Solutions/sapp-releases/tree/main/go) | Go 1.21+: servers | 0.2.1 |
-| [`ca.superroute:sapp-java`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Java 17+: servers, no dependencies | 0.2.1 |
-| [`sapp_ui`](https://pub.dev/packages/sapp_ui) | Flutter UI kit: sign-in, notifications, wallet, orders, pickups | 0.2.1 |
-| [`@superrouteca/sapp-ui`](https://www.npmjs.com/package/@superrouteca/sapp-ui) | Web UI kit: the same components as custom elements | 0.2.1 |
-| `@superrouteca/sapp-react/ui` | React components over the web UI kit | 0.2.1 |
-| [`SAppUI`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | SwiftUI UI kit: iOS 15+, macOS 12+ | 0.2.1 |
-| [`ca.superroute:sapp-ui-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Jetpack Compose UI kit: Android 7+ | 0.2.1 |
-| `@superrouteca/sapp-react-native/ui` | React Native UI kit | 0.2.1 |
-| [`Superroute.SApp.Wpf`](https://www.nuget.org/packages/Superroute.SApp.Wpf) / [`Superroute.SApp.WinForms`](https://www.nuget.org/packages/Superroute.SApp.WinForms) (NuGet) | WPF and WinForms UI kits over `Superroute.SApp.UI` | 0.2.1 |
+| [`@superrouteca/sapp`](https://www.npmjs.com/package/@superrouteca/sapp) | JavaScript and TypeScript: web, Node 20+, React Native | 0.2.2 |
+| [`@superrouteca/sapp-react`](https://www.npmjs.com/package/@superrouteca/sapp-react) | React: provider and hooks | 0.2.2 |
+| [`@superrouteca/sapp-react-native`](https://www.npmjs.com/package/@superrouteca/sapp-react-native) | React Native: hooks, secure token store | 0.2.2 |
+| [`sapp`](https://pub.dev/packages/sapp) | Dart and Flutter | 0.2.2 |
+| [`SApp`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | iOS 15+, macOS 12+ | 0.2.2 |
+| [`ca.superroute:sapp` / `sapp-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Kotlin on the JVM and Android 7+ | 0.2.2 |
+| [`Superroute.SApp`](https://www.nuget.org/packages/Superroute.SApp) (NuGet) | .NET 8: Windows apps and servers | 0.2.2 |
+| [`superroute-sapp`](https://pypi.org/project/superroute-sapp/) (PyPI, `import sapp`) | Python 3.9+: servers and scripts | 0.2.2 |
+| [`superroute/sapp`](https://packagist.org/packages/superroute/sapp) (Packagist) | PHP 8.1+: servers | 0.2.2 |
+| [`github.com/Goodneo-Solutions/sapp-releases/go`](https://github.com/Goodneo-Solutions/sapp-releases/tree/main/go) | Go 1.21+: servers | 0.2.2 |
+| [`ca.superroute:sapp-java`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Java 17+: servers, no dependencies | 0.2.2 |
+| [`sapp_ui`](https://pub.dev/packages/sapp_ui) | Flutter UI kit: sign-in, notifications, wallet, orders, returns, store, group buy, driver | 0.2.2 |
+| [`@superrouteca/sapp-ui`](https://www.npmjs.com/package/@superrouteca/sapp-ui) | Web UI kit: the same components as custom elements | 0.2.2 |
+| `@superrouteca/sapp-react/ui` | React components over the web UI kit | 0.2.2 |
+| [`SAppUI`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | SwiftUI UI kit: iOS 15+, macOS 12+ | 0.2.2 |
+| [`ca.superroute:sapp-ui-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Jetpack Compose UI kit: Android 7+ | 0.2.2 |
+| `@superrouteca/sapp-react-native/ui` | React Native UI kit | 0.2.2 |
+| [`Superroute.SApp.Wpf`](https://www.nuget.org/packages/Superroute.SApp.Wpf) / [`Superroute.SApp.WinForms`](https://www.nuget.org/packages/Superroute.SApp.WinForms) (NuGet) | WPF and WinForms UI kits over `Superroute.SApp.UI` | 0.2.2 |
 
 Every package of a release carries the same version. Version numbers never contain the digits 3 or 4.
 
@@ -46,6 +53,52 @@ Every package of a release carries the same version. Version numbers never conta
   own backend with a short-lived token; an Open Platform API key is a server secret and never belongs in an app.
 
 What a caller may do is decided by the server, never by the package installed.
+
+## Smart-locker operations moved to sLocker
+
+**Breaking change in 0.2.2.** Every smart-locker operation belongs to the sLocker SDK: from 0.2.2 the sApp packages no
+longer have the locker pickup, locker location, locker storage and locker shop methods, and the UI kits no longer have
+the pickup list and the locker map. sLocker 0.2.0 provides them under the same operation names, built on the sApp core
+(sLocker depends on sApp, never the other way round), so moving is a change of package, not of call. Store orders stay
+in sApp, `store-orders/{code}/locker-open` and `locker-refund` included.
+
+A path is a locker path when its first segment after the client scope (`/app/v1/`, `/app/v1/clients/{clientCode}/`,
+`guest/` included) is `pickups`, `locker-locations`, `locker-storage`, `locker-shop` or `locker-resale`;
+`tools/locker_paths.json` is the one list.
+
+| sApp 0.2.2 method (operationId) | Request | From 0.2.2 |
+|---|---|---|
+| `platformAppCollectPickup` | `POST /app/v1/pickups/{deliveryId}/collect` | sLocker, same operation name |
+| `platformAppHandOverPickup` | `POST /app/v1/pickups/{deliveryId}/handoff` | sLocker, same operation name |
+| `platformAppLockerLocation` | `GET /app/v1/locker-locations/{locationId}` | sLocker, same operation name |
+| `platformAppLockerLocationGuide` | `GET /app/v1/locker-locations/{locationId}/guide` | sLocker, same operation name |
+| `platformAppLockerLocationGuideFeedback` | `POST /app/v1/locker-locations/{locationId}/guide/feedback` | sLocker, same operation name |
+| `platformAppLockerLocations` | `GET /app/v1/locker-locations` | sLocker, same operation name |
+| `platformAppLockerShopCatalog` | `GET /app/v1/locker-locations/{locationId}/shop` | sLocker, same operation name |
+| `platformAppLockerShopCreateOrder` | `POST /app/v1/locker-shop/orders` | sLocker, same operation name |
+| `platformAppLockerShopIssueAccessCode` | `POST /app/v1/locker-shop/access-codes` | sLocker, same operation name |
+| `platformAppLockerShopItems` | `GET /app/v1/locker-shop/items` | sLocker, same operation name |
+| `platformAppLockerShopOpen` | `POST /app/v1/locker-shop/orders/{id}/open` | sLocker, same operation name |
+| `platformAppLockerShopOrder` | `GET /app/v1/locker-shop/orders/{id}` | sLocker, same operation name |
+| `platformAppLockerShopOrders` | `GET /app/v1/locker-shop/orders` | sLocker, same operation name |
+| `platformAppLockerShopRefundRequest` | `POST /app/v1/locker-shop/orders/{id}/refund-request` | sLocker, same operation name |
+| `platformAppLockerStorageClaim` | `POST /app/v1/locker-storage/rentals/claim` | sLocker, same operation name |
+| `platformAppLockerStorageDelivery` | `POST /app/v1/locker-storage/rentals/{id}/delivery` | sLocker, same operation name |
+| `platformAppLockerStorageKeep` | `POST /app/v1/locker-storage/rentals/{id}/keep` | sLocker, same operation name |
+| `platformAppLockerStorageOnwardQuote` | `POST /app/v1/locker-storage/rentals/{id}/onward-quote` | sLocker, same operation name |
+| `platformAppLockerStoragePickupSite` | `POST /app/v1/locker-storage/rentals/{id}/pickup-site` | sLocker, same operation name |
+| `platformAppLockerStoragePickupSiteCancel` | `POST /app/v1/locker-storage/rentals/{id}/pickup-site/cancel` | sLocker, same operation name |
+| `platformAppLockerStorageRental` | `GET /app/v1/locker-storage/rentals/{id}` | sLocker, same operation name |
+| `platformAppLockerStorageRentals` | `GET /app/v1/locker-storage/rentals` | sLocker, same operation name |
+| `platformAppLockerStorageResendCode` | `POST /app/v1/locker-storage/rentals/{id}/resend-code` | sLocker, same operation name |
+| `platformAppLockerStorageReturnTime` | `POST /app/v1/locker-storage/rentals/{id}/return-time` | sLocker, same operation name |
+| `platformAppLockerStorageShipment` | `POST /app/v1/locker-storage/rentals/{id}/shipment` | sLocker, same operation name |
+| `platformAppPickup` | `GET /app/v1/pickups/{deliveryId}` | sLocker, same operation name |
+| `platformAppPickups` | `GET /app/v1/pickups` | sLocker, same operation name |
+| `platformAppTakeBackPickup` | `POST /app/v1/pickups/{deliveryId}/handoff/revoke` | sLocker, same operation name |
+| `platformAppUpdateLockerPreference` | `PUT /app/v1/locker-locations/{locationId}/preference` | sLocker, same operation name |
+| UI component pickup list: Flutter `SrPickupList`, web `sr-pickup-list` (`SrPickupList`), React / React Native / SwiftUI / Compose `PickupList`, .NET `PickupListViewModel` and the WPF / WinForms `PickupList` control | — | sLocker UI kit |
+| UI component locker map and its sMap adapter: Flutter `SrLockerMap` (`SrSMapAdapter`, `SrMapAdapter`, `SrMapPoint`), web `sr-locker-map` (`SrLockerMap`, `smapAdapter`), React / React Native `LockerMap` (`smapAdapter`), SwiftUI `LockerMap` (`SRSMapAdapter`, `SRMapAdapter`, `SRMapPoint`), Compose `LockerMap` (`SrSMapAdapter`, `SrMapAdapter`, `SrMapPoint`), .NET `LockerMapViewModel` (`SMapAdapter`, `IMapAdapter`, `MapPoint`) and the WPF / WinForms `LockerMap` control | — | sLocker UI kit |
 
 ## JavaScript
 
@@ -101,11 +154,17 @@ await sr.signInWithIdToken(googleIdToken);
 final notifications = await sr.api.platformAppNotifications();
 ```
 
+In a Flutter app, keep the tokens in the platform's secure storage with `SecureTokenStore()` from `sapp_ui` (Keychain,
+Keystore, through flutter_secure_storage): `PartnerClient(…, tokenStore: SecureTokenStore())`.
+`package:sapp/transport.dart` exposes the core's transport (operations, URIs, header parameters and idempotency keys,
+extra query, retries, `SuperrouteException`) for a package that adds a connection profile over the same core; apps use
+`package:sapp/sapp.dart`.
+
 ## Swift
 
 ```swift
 // Package.swift
-.package(url: "https://github.com/Goodneo-Solutions/sapp-releases", from: "0.2.1")
+.package(url: "https://github.com/Goodneo-Solutions/sapp-releases", from: "0.2.2")
 // in the target: .product(name: "SApp", package: "sapp-releases"), and .product(name: "SAppUI", package: "sapp-releases") for the UI kit
 ```
 
@@ -139,8 +198,8 @@ dependencyResolutionManagement {
 }
 
 // build.gradle.kts: ca.superroute:sapp on the JVM, sapp-android on Android, sapp-ui-android for the Compose kit
-implementation("ca.superroute:sapp-android:0.2.1")
-implementation("ca.superroute:sapp-ui-android:0.2.1")
+implementation("ca.superroute:sapp-android:0.2.2")
+implementation("ca.superroute:sapp-ui-android:0.2.2")
 ```
 
 ```kotlin
@@ -219,7 +278,7 @@ Answers decode into `any` (numbers as `float64`). Failures are `*sapp.Error`.
 
 ```java
 // build.gradle.kts: repositories { maven("https://goodneo-solutions.github.io/sapp-releases/maven") }
-implementation("ca.superroute:sapp-java:0.2.1")
+implementation("ca.superroute:sapp-java:0.2.2")
 
 PartnerClient sr = PartnerClient.builder("p_acme_parcels").clientCode("k3m9q2").appKey("sp_appkey_…").build();
 sr.signInWithIdToken(googleIdToken);
@@ -283,13 +342,12 @@ SuperrouteScope(
   client: sr,
   theme: ThemeTokens.fromBranding(bootstrap['client']['settings']['branding']),
   onSignInRequired: () => router.go('/sign-in'),
-  child: SrPickupList(onShowCode: (value) => showQr(value)),
+  child: SrOrderList(onOpen: (type, id) => router.go('/orders/$type/$id')),
 )
 ```
 
-Components, for customer apps: `SrSignIn`, `SrNotificationInbox`, `SrWalletSummary`, `SrOrderList`, `SrPickupList`,
-`SrOrderDetail`, `SrTracking`, `SrNotificationPreferences`, `SrAccountPrivacy`, `SrLockerMap` (with
-`SrSMapAdapter(controller)` for the app's sMap map), `SrReturnList`, `SrReturnForm`, `SrShippingOrderForm`, the store
+Components, for customer apps: `SrSignIn`, `SrNotificationInbox`, `SrWalletSummary`, `SrOrderList`,
+`SrOrderDetail`, `SrTracking`, `SrNotificationPreferences`, `SrAccountPrivacy`, `SrReturnList`, `SrReturnForm`, `SrShippingOrderForm`, the store
 and mall (`SrStoreDirectory`, `SrStorePage`, `SrProductDetail`, `SrCart`, `SrCheckout`) and group buy
 (`SrGroupBuyList`, `SrGroupBuy`, `SrGroupBuyOrders`, `SrGroupBuyOrder`, and for group leaders `SrGroupBuyLead`,
 `SrGroupBuyLeading`, `SrGroupBuyLeadingGroup`); for driver apps: `SrDriverRoutes`,
@@ -307,22 +365,21 @@ platform. Strings in 14 languages live in `ui/strings/` (`tools/ui_strings.py`).
   import { configure } from '@superrouteca/sapp-ui';
   configure({ client: sr, theme: themeFromBranding(branding), locale: 'en' });
 </script>
-<sr-pickup-list></sr-pickup-list>
+<sr-order-list></sr-order-list>
 ```
 
-Elements: `sr-sign-in`, `sr-notification-inbox`, `sr-wallet-summary`, `sr-order-list`, `sr-pickup-list`,
-`sr-order-detail`, `sr-tracking`, `sr-notification-preferences`, `sr-account-privacy`, `sr-locker-map` (`map =
-smapAdapter(sMapMap)`), `sr-return-list`, `sr-return-form`, `sr-shipping-order-form`, `sr-store-directory`,
+Elements: `sr-sign-in`, `sr-notification-inbox`, `sr-wallet-summary`, `sr-order-list`,
+`sr-order-detail`, `sr-tracking`, `sr-notification-preferences`, `sr-account-privacy`, `sr-return-list`, `sr-return-form`, `sr-shipping-order-form`, `sr-store-directory`,
 `sr-store-page`, `sr-product-detail`, `sr-cart`, `sr-checkout`, `sr-group-buy-list`, `sr-group-buy`,
 `sr-group-buy-orders`, `sr-group-buy-order`, for group leaders `sr-group-buy-lead`, `sr-group-buy-leading`,
 `sr-group-buy-leading-group`, and for driver apps `sr-driver-routes`, `sr-route-stops`, `sr-stop`,
 `sr-driver-duty`, `sr-driver-pool`, `sr-route-boards`, `sr-route-board`, `sr-board-claims`, `sr-driver-earnings`,
 `sr-scan-lookup`. Each raises `sr-*` events (`sr-open`, `sr-created`, `sr-payment`, `sr-completed`, …, listed in the
-types) and `sr-sign-in-required`. The kit never draws a map: the locker map uses the app's own sMap map through the adapter. In React:
+types) and `sr-sign-in-required`. In React:
 
 ```jsx
-import { PickupList } from '@superrouteca/sapp-react/ui';
-<SuperrouteProvider client={sr}><PickupList onShowCode={showQr} /></SuperrouteProvider>
+import { OrderList } from '@superrouteca/sapp-react/ui';
+<SuperrouteProvider client={sr}><OrderList onOpen={({ type, id }) => openOrder(type, id)} /></SuperrouteProvider>
 ```
 
 ## Native UI kits
@@ -332,38 +389,106 @@ exactly as the Flutter and web kits do, with the same strings in 14 languages (g
 `tools/ui_strings.py`). Each component keeps its state and calls in a testable model (an `ObservableObject` on SwiftUI,
 a state holder on Compose, a view model in `Superroute.SApp.UI` shared by WPF and WinForms) and draws it with the
 platform's own controls. The app supplies what the kit leaves to it: images on Compose, the in-app browser for sign-in,
-files, photos, the position, the scanner, card payments and the sMap map through its adapter.
+files, photos, the position, the scanner and card payments.
 
 ```swift
 import SAppUI
 SuperrouteScope(client: client, theme: ThemeTokens(branding: branding)) {
-    PickupList(onShowCode: { code in showQR(code) })
+    OrderList(onOpen: { type, id in openOrder(type, id) })
 }
 ```
 
 ```kotlin
 SuperrouteScope(client = client, theme = ThemeTokens(branding)) {
-    PickupList(onShowCode = { code -> showQr(code) })
+    OrderList(onOpen = { type, id -> openOrder(type, id) })
 }
 ```
 
 ```jsx
-import { PickupList } from '@superrouteca/sapp-react-native/ui';
-<SuperrouteProvider client={sr}><PickupList onShowCode={(code) => showQr(code)} /></SuperrouteProvider>
+import { OrderList } from '@superrouteca/sapp-react-native/ui';
+<SuperrouteProvider client={sr}><OrderList onOpen={({ type, id }) => openOrder(type, id)} /></SuperrouteProvider>
 ```
 
 Example apps, built against the published packages: [SwiftUI](https://github.com/Goodneo-Solutions/sapp-releases/tree/main/examples/swiftui), [Android](https://github.com/Goodneo-Solutions/sapp-releases/tree/main/examples/android), [React Native](https://github.com/Goodneo-Solutions/sapp-releases/tree/main/examples/react-native), [WPF](https://github.com/Goodneo-Solutions/sapp-releases/tree/main/examples/wpf) and [WinForms](https://github.com/Goodneo-Solutions/sapp-releases/tree/main/examples/winforms).
 
 ## Errors
 
-Every failed call throws one error type (`SuperrouteError` / `SuperrouteException`) with the HTTP `status`, the
-server's `code` (`invalid_token`, `insufficient_scope`, `access_denied`, `APP_ACCESS_DENIED`, …) and the parsed body.
-`signInRequired` is true when the person must sign in again. Repeatable calls are retried on a lost connection and
-on temporary server errors; writes are never retried.
+Every failed call throws one error type (`SuperrouteError` / `SuperrouteException`, Go `*sapp.Error`) with the HTTP
+`status`, the server's `code` (`invalid_token`, `insufficient_scope`, `access_denied`, `APP_ACCESS_DENIED`, …), its
+`message`, the field messages `errors` (field → list of messages), the answer's `reasons` and `data` as sent, the
+request id and the parsed body (in C# the answer's `data` is `ResponseData`, since `Exception.Data` is taken).
+`signInRequired` is true when the person must sign in again. Repeatable calls are
+retried on a lost connection and on temporary server errors; writes are never retried.
+
+**Behaviour change (next version):** Superroute sometimes refuses with status 200 and the answer
+`{"result": false, "code", "message", "errors", "reasons", "data"}` (for example an order cancel whose label cancel
+failed). Every client now throws its error type for any JSON object answer with `"result": false`, whatever the
+status; `status` then holds the 2xx status the server sent. Answers without a `result` key, and `"result": true`, are
+returned exactly as before. Code that read `result` from an answer to detect a refusal now catches the error instead.
+
+## Header parameters and extra query
+
+Operations that declare request headers take them as optional arguments, named after the header without its `X-`
+prefix: `Idempotency-Key` → `idempotencyKey`, `X-Guest-Order-Token` → `guestOrderToken`, `X-Guest-Contact-Token` →
+`guestContactToken`, `X-Guest-Cart-Token` → `guestCartToken` (snake_case in Python, `IdempotencyKey` fields of the
+params struct in Go; in Java by the header's own name, `Args.of().with("X-Guest-Cart-Token", token)`, or
+`Args.of().idempotencyKey(key)`). A header argument never replaces `Authorization`, `X-App-Key`, `X-SApp`, `Accept`,
+`Accept-Language` or `Content-Type`. When an operation declares `Idempotency-Key` and the caller gives none, the client
+makes a random UUID for that call and sends the same key every time that call is sent again (a repeat after a token
+refresh); the next call gets a new one.
+
+Every generated method also takes an optional **extra query**: names the spec does not declare, appended after the
+declared parameters and never replacing a declared one (a declared name in the extra query is ignored). Booleans are
+sent as `1` / `0`, lists as repeated names, null values are left out.
+
+| Language | Extra query |
+|----------|-------------|
+| JavaScript | `api.customerAddressByPostcodePostcodeGet({ postcode, extraQuery: { multiple: 1 } })` |
+| Dart, Swift, Kotlin, PHP | `extraQuery:` argument (last argument of every method) |
+| C# | `extraQuery:` named argument (after `cancellationToken`) |
+| Python | `extra_query=` keyword argument |
+| Go | `sapp.WithExtraQuery(map[string]any{"multiple": 1})` as the last (variadic) argument |
+| Java | `Args.of().extraQuery(Map.of("multiple", 1))` |
+
+## Building on the sApp core
+
+A package that adds operations of its own on top of sApp — sLocker is one — describes each operation by hand and calls
+it through the client, instead of copying the core. The call goes through exactly the same path as a generated method:
+the token or app key the operation asks for, one refresh and resend on a 401, a made idempotency key kept across that
+resend, retries of repeatable calls, the extra query and the SDK's error for a refusal (`result: false` included).
+
+The description is the language's `Operation`: method, path template (`{name}` placeholders; `{clientCode}` is filled
+from the client), authentication (`token`, `key`, `token_or_key`, `none`), the declared query names, the header
+parameters and the body kind (`json`, `form`, `multipart` or none). Path, query and header values travel in the
+parameters by name (in JavaScript a header maps to its parameter key), the extra query under `extraQuery`.
+
+| Language | Partner and open client |
+|----------|-------------------------|
+| JavaScript | `sr.callOperation(operation, params)`; `createOpenClient(…).callOperation(operation, params)` |
+| Dart | `callOperation(Operation operation, Map<String, Object?> params, {body, files})` |
+| Swift | `callOperation(_ operation: Operation, params:, body:, files:) async throws -> JSON` |
+| Kotlin | `suspend fun callOperation(operation: Operation, params, body, files): JsonElement` |
+| C# | `CallOperationAsync(Operation operation, parameters, body, files, cancellationToken)` |
+| Python | `call_operation(operation, params=None, body=None, files=None)` |
+| PHP | `callOperation(Operation $operation, array $params = [], ?array $body = null, array $files = [])` |
+| Go | `CallOperation(ctx, op Operation, params, body map[string]any, files []File, opts ...CallOption)` |
+| Java | `callOperation(Operation operation, Map<String, Object> params, Map<String, ?> body, List<OperationFile> files)` |
+
+```js
+const answer = await sr.callOperation(
+  { method: 'POST', path: '/app/v1/things/{id}/open', auth: 'token', query: [], body: 'json',
+    headers: { 'Idempotency-Key': 'idempotencyKey' } },
+  { id: 42, body: { note: 'at the door' } },
+);
+```
+
+What a caller may do is still decided by the server: a hand-made operation reaches nothing the account could not reach
+through a generated one.
 
 ## How the clients are made
 
-The API methods are generated from the specs Superroute publishes (`specs/`): one method per operation. Never edit
+The API methods are generated from the specs Superroute publishes (`specs/`): one method per operation, except the
+smart-locker operations, which are in sLocker (`tools/locker_paths.json` is the one list). Never edit
 `*/generated/*`; run `tools/sync-specs.sh /path/to/Superroute` to copy newer specs and regenerate. CI fails when the
 generated files do not match the specs.
 

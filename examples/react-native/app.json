@@ -3,7 +3,7 @@
     "name": "sApp UI kit",
     "slug": "sapp-ui-kit-example",
     "scheme": "sappexample",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "orientation": "portrait",
     "ios": { "bundleIdentifier": "ca.superroute.sapp.example" },
     "android": { "package": "ca.superroute.sapp.example" },

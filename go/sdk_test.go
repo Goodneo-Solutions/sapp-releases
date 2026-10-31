@@ -7,6 +7,8 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"reflect"
+	"regexp"
 	"strings"
 	"sync"
 	"testing"
@@ -20,6 +22,7 @@ type recorded struct {
 	Headers http.Header
 	Form    url.Values
 	JSON    map[string]any
+	URI     string // escaped path and query as sent
 }
 
 type reply struct {
@@ -41,7 +44,7 @@ func (f *fake) RoundTrip(r *http.Request) (*http.Response, error) {
 	if r.Body != nil {
 		raw, _ = io.ReadAll(r.Body)
 	}
-	c := recorded{Method: r.Method, Path: r.URL.Path, Query: r.URL.Query(), Headers: r.Header.Clone()}
+	c := recorded{Method: r.Method, Path: r.URL.Path, Query: r.URL.Query(), Headers: r.Header.Clone(), URI: r.URL.RequestURI()}
 	if strings.HasPrefix(r.Header.Get("Content-Type"), "application/x-www-form-urlencoded") {
 		c.Form, _ = url.ParseQuery(string(raw))
 	} else if len(raw) > 0 {
@@ -499,5 +502,169 @@ func TestMultipartSendsFieldsListsAndFiles(t *testing.T) {
 	}
 	if strings.Contains(s, `name="skip"`) {
 		t.Fatal(s)
+	}
+}
+
+var uuidPattern = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$`)
+
+func TestHeaderParametersAreSentAndNeverReplaceAuthorizationOrTheAppKey(t *testing.T) {
+	f := fixed(reply{status: 200, body: map[string]any{"result": true}}, reply{status: 200, body: map[string]any{"result": true}})
+	sr := partner(t, f, PartnerOptions{ClientCode: "k3m9q2", AppKey: "sp_appkey_1", TokenStore: signedIn(time.Hour)})
+	if _, err := sr.API.PlatformAppGuestStoreCart(ctx, PlatformAppGuestStoreCartParams{Slug: "shop", GuestCartToken: String("cart-1")}); err != nil {
+		t.Fatal(err)
+	}
+	c := f.calls[0]
+	if c.URI != "/app/v1/clients/k3m9q2/guest/stores/shop/cart" || c.Headers.Get("X-Guest-Cart-Token") != "cart-1" || c.Headers.Get("X-App-Key") != "sp_appkey_1" {
+		t.Fatal(c)
+	}
+	if _, err := sr.API.PlatformAppWalletCreateTopUp(ctx, PlatformAppWalletCreateTopUpParams{Body: map[string]any{"amount": 10}, IdempotencyKey: String("key-1")}); err != nil {
+		t.Fatal(err)
+	}
+	c = f.calls[1]
+	if c.Headers.Get("Idempotency-Key") != "key-1" || c.Headers.Get("Authorization") != "Bearer old" || c.Headers.Get("X-SApp") != "go/"+Version {
+		t.Fatal(c)
+	}
+	// A header the SDK sets is never replaced, even by an operation that names it.
+	op := Operation{Method: "GET", Path: "/app/v1/wallet", Auth: AuthToken, Headers: []string{"Authorization", "X-Test"}}
+	f.handlers = append(f.handlers, func(recorded) reply { return reply{status: 200, body: map[string]any{}} })
+	if _, err := sr.API.call(ctx, op, map[string]any{"Authorization": String("Bearer forged"), "X-Test": "t"}, nil, nil); err != nil {
+		t.Fatal(err)
+	}
+	if c := f.calls[2]; c.Headers.Get("Authorization") != "Bearer old" || c.Headers.Get("X-Test") != "t" {
+		t.Fatal(c)
+	}
+}
+
+func TestAnIdempotencyKeyIsMadePerCallAndKeptWhenTheCallIsSentAgain(t *testing.T) {
+	f := fixed(
+		reply{status: 401, body: map[string]any{"error": "invalid_token"}},
+		reply{status: 200, body: tokenBody("2")},
+		reply{status: 200, body: map[string]any{"result": true}},
+		reply{status: 200, body: map[string]any{"result": true}},
+	)
+	sr := partner(t, f, PartnerOptions{TokenStore: signedIn(time.Hour)})
+	if _, err := sr.API.PlatformAppWalletCreateTopUp(ctx, PlatformAppWalletCreateTopUpParams{Body: map[string]any{"amount": 10}}); err != nil {
+		t.Fatal(err)
+	}
+	key := f.calls[0].Headers.Get("Idempotency-Key")
+	if !uuidPattern.MatchString(key) || f.calls[2].Headers.Get("Idempotency-Key") != key || f.calls[2].Headers.Get("Authorization") != "Bearer sp_app_access2" {
+		t.Fatal(key, f.calls)
+	}
+	if f.calls[1].Headers.Get("Idempotency-Key") != "" {
+		t.Fatal(f.calls[1])
+	}
+	if _, err := sr.API.PlatformAppWalletCreateTopUp(ctx, PlatformAppWalletCreateTopUpParams{Body: map[string]any{"amount": 10}}); err != nil {
+		t.Fatal(err)
+	}
+	if f.calls[3].Headers.Get("Idempotency-Key") == key {
+		t.Fatal("a new call must get a new key")
+	}
+}
+
+func TestTheExtraQueryIsAppendedAfterTheDeclaredParametersAndNeverReplacesOne(t *testing.T) {
+	f := fixed(reply{status: 200, body: map[string]any{"result": true}}, reply{status: 200, body: map[string]any{"result": true}})
+	sr := partner(t, f, PartnerOptions{TokenStore: signedIn(time.Hour)})
+	if _, err := sr.API.PlatformAppWallet(ctx, PlatformAppWalletParams{Locale: String("fr")},
+		WithExtraQuery(map[string]any{"locale": "de", "multiple": 1, "flag": true, "skip": nil})); err != nil {
+		t.Fatal(err)
+	}
+	if c := f.calls[0]; c.URI != "/app/v1/wallet?locale=fr&flag=1&multiple=1" {
+		t.Fatal(c.URI)
+	}
+	if _, err := sr.API.CustomerAddressByPostcodePostcodeGet(ctx, CustomerAddressByPostcodePostcodeGetParams{Postcode: "M5V 2T6"}, WithExtraQuery(map[string]any{"multiple": 1})); err != nil {
+		t.Fatal(err)
+	}
+	if c := f.calls[1]; c.URI != "/app/v1/address-by-postcode/M5V%202T6?multiple=1" {
+		t.Fatal(c.URI)
+	}
+}
+
+func TestResultFalseIsRaisedEvenWithStatus200AndOtherAnswersAreReturned(t *testing.T) {
+	refusal := map[string]any{
+		"result": false, "code": "LABEL_CANCEL_FAILED", "message": "The label could not be cancelled.",
+		"errors":  map[string]any{"label": []any{"The carrier refused the cancel."}, "amount": 5},
+		"reasons": []any{"carrier_refused"}, "data": map[string]any{"order_id": 9},
+	}
+	f := fixed(
+		reply{status: 200, body: refusal, headers: map[string]string{"X-Request-Id": "req-9"}},
+		reply{status: 200, body: map[string]any{"result": true, "data": 1}},
+		reply{status: 200, body: map[string]any{"items": []any{}}},
+		reply{status: 200, body: []any{1, 2}},
+	)
+	sr := partner(t, f, PartnerOptions{TokenStore: signedIn(time.Hour)})
+	_, err := sr.API.PlatformAppWallet(ctx, PlatformAppWalletParams{})
+	e := asError(t, err)
+	if e.Status != 200 || e.Code != "LABEL_CANCEL_FAILED" || e.Message != "The label could not be cancelled." || e.RequestID != "req-9" {
+		t.Fatal(e)
+	}
+	if !reflect.DeepEqual(e.Errors, map[string][]string{"label": {"The carrier refused the cancel."}, "amount": {"5"}}) {
+		t.Fatal(e.Errors)
+	}
+	if !reflect.DeepEqual(e.Reasons, []any{"carrier_refused"}) || !reflect.DeepEqual(e.Data, map[string]any{"order_id": float64(9)}) {
+		t.Fatal(e.Reasons, e.Data)
+	}
+	if b, _ := e.Body.(map[string]any); b["result"] != false {
+		t.Fatal(e.Body)
+	}
+	for _, want := range []any{map[string]any{"result": true, "data": float64(1)}, map[string]any{"items": []any{}}, []any{float64(1), float64(2)}} {
+		got, err := sr.API.PlatformAppWallet(ctx, PlatformAppWalletParams{})
+		if err != nil || !reflect.DeepEqual(got, want) {
+			t.Fatal(got, err)
+		}
+	}
+}
+
+func TestAHandMadeOperationThroughCallOperationBehavesLikeAGeneratedOne(t *testing.T) {
+	// A copy of the generated top-up operation, and an operation the generated API does not have.
+	topUp := Operation{Method: "POST", Path: "/app/v1/wallet/top-ups", Auth: AuthToken, Body: BodyJSON, Headers: []string{"Idempotency-Key"}}
+	handMade := Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/things/{id}", Auth: AuthTokenOrKey, Query: []string{"status"}}
+	f := fixed(
+		reply{status: 200, body: map[string]any{"result": true}},
+		reply{status: 401, body: map[string]any{"error": "invalid_token"}},
+		reply{status: 200, body: tokenBody("2")},
+		reply{status: 200, body: map[string]any{"result": true, "data": 7}},
+		reply{status: 200, body: map[string]any{"result": true}},
+		reply{status: 200, body: map[string]any{"result": false, "code": "NOPE", "message": "Refused."}},
+	)
+	sr := partner(t, f, PartnerOptions{TokenStore: signedIn(time.Hour), AppKey: "sp_appkey_1"})
+	if _, err := sr.API.PlatformAppWalletCreateTopUp(ctx, PlatformAppWalletCreateTopUpParams{Body: map[string]any{"amount": 10}, IdempotencyKey: String("key-1")}); err != nil {
+		t.Fatal(err)
+	}
+	answer, err := sr.CallOperation(ctx, topUp, nil, map[string]any{"amount": 10}, nil, WithExtraQuery(map[string]any{"x": 1}))
+	if err != nil || answer.(map[string]any)["data"] != float64(7) {
+		t.Fatal(answer, err)
+	}
+	generated, first, retried := f.calls[0], f.calls[1], f.calls[3]
+	if first.Method != generated.Method || first.Path != generated.Path || !reflect.DeepEqual(first.JSON, generated.JSON) || first.URI != "/app/v1/wallet/top-ups?x=1" {
+		t.Fatal(first, generated)
+	}
+	if first.Headers.Get("Authorization") != "Bearer old" || retried.Headers.Get("Authorization") != "Bearer sp_app_access2" {
+		t.Fatal(first.Headers, retried.Headers)
+	}
+	key := first.Headers.Get("Idempotency-Key")
+	if !uuidPattern.MatchString(key) || retried.Headers.Get("Idempotency-Key") != key {
+		t.Fatal(key, retried.Headers)
+	}
+	if _, err := sr.CallOperation(ctx, handMade, map[string]any{"id": 5, "status": "open"}, nil, nil); err != nil {
+		t.Fatal(err)
+	}
+	if f.calls[4].URI != "/app/v1/clients/c/guest/things/5?status=open" {
+		t.Fatal(f.calls[4].URI)
+	}
+	_, err = sr.CallOperation(ctx, handMade, map[string]any{"id": 5}, nil, nil)
+	if e := asError(t, err); e.Status != 200 || e.Code != "NOPE" {
+		t.Fatal(e)
+	}
+}
+
+func TestTheOpenClientCallOperationGoesThroughTheSameCall(t *testing.T) {
+	f := fixed(reply{status: 200, body: map[string]any{"ok": true}})
+	open, _ := NewOpenClient(OpenOptions{APIKey: "sk_open", HTTPClient: &http.Client{Transport: f}})
+	op := Operation{Method: "GET", Path: "/v1/capabilities", Auth: AuthToken}
+	if _, err := open.CallOperation(ctx, op, nil, nil, nil, WithExtraQuery(map[string]any{"a": "b"})); err != nil {
+		t.Fatal(err)
+	}
+	if f.calls[0].URI != "/v1/capabilities?a=b" || f.calls[0].Headers.Get("Authorization") != "Bearer sk_open" {
+		t.Fatal(f.calls[0])
 	}
 }

@@ -27,8 +27,8 @@ struct ExampleView: View {
     @State private var selection: String? = "Sign-in"
 
     private let names = [
-        "Sign-in", "Notification inbox", "Wallet summary", "Order list", "Pickup list",
-        "Order detail", "Tracking", "Notification preferences", "Account and privacy", "Locker map", "Return list",
+        "Sign-in", "Notification inbox", "Wallet summary", "Order list",
+        "Order detail", "Tracking", "Notification preferences", "Account and privacy", "Return list",
         "Return form", "Shipping order form",
         "Store directory", "Store page", "Product detail", "Cart", "Checkout",
         "Group buy list", "Group buy", "Group buy orders", "Group buy order",
@@ -70,12 +70,10 @@ struct ExampleView: View {
         case "Notification inbox": NotificationInbox(onOpen: { log("onOpen \($0["id"]?.srText ?? "")") })
         case "Wallet summary": WalletSummary(onTopUp: { min, max, currency in log("onTopUp \(min ?? "") \(max ?? "") \(currency ?? "")") })
         case "Order list": OrderList(onOpen: { log("onOpen \($0) \($1)") })
-        case "Pickup list": PickupList(onShowCode: { log("onShowCode \($0)") })
         case "Order detail": OrderDetail(type: "shipping", id: 1, onTrack: { log("onTrack \($0)") })
         case "Tracking": Tracking()
         case "Notification preferences": NotificationPreferences()
         case "Account and privacy": AccountPrivacy(onOpenLink: { log("onOpenLink \($0)") }, onClosureRequested: { log("onClosureRequested") })
-        case "Locker map": LockerMap(onSelect: { log("onSelect \($0["id"]?.srText ?? "")") })
         case "Return list": ReturnList(onOpen: { log("onOpen \($0)") }, onCreate: { log("onCreate") })
         case "Return form": ReturnForm(pickFile: { log("pickFile"); return nil }, onCreated: { _ in log("onCreated") }, onCancel: { log("onCancel") })
         case "Shipping order form": ShippingOrderForm(onCreated: { _ in log("onCreated") }, onCancel: { log("onCancel") })

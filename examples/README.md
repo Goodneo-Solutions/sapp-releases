@@ -1,6 +1,6 @@
 # sApp example apps
 
-Example apps for the sApp UI kits, each built against the published packages of sApp 0.2.1.
+Example apps for the sApp UI kits, each built against the published packages of sApp 0.2.2.
 Documentation: https://open.superroute.ca/developer/sapp
 
 | Folder | Platform | Run |

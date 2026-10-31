@@ -81,7 +81,6 @@ namespace SAppExample
                 ("NotificationInbox", () => { var vm = new NotificationInboxViewModel(c); vm.Open += n => _log($"Open {J.S(n, "deep_link")}"); return vm; }),
                 ("WalletSummary", () => { var vm = new WalletSummaryViewModel(c); vm.TopUp += (min, max, cur) => _log($"Top up {min}–{max} {cur}"); return vm; }),
                 ("OrderList", () => { var vm = new OrderListViewModel(c); vm.Open += (type, id) => _show("OrderDetail", new OrderDetailViewModel(c, type, id)); return vm; }),
-                ("PickupList", () => { var vm = new PickupListViewModel(c); vm.ShowCode += code => _log($"QR {code}"); return vm; }),
                 ("Tracking", () => new TrackingViewModel(c)),
                 ("NotificationPreferences", () => new NotificationPreferencesViewModel(c)),
                 ("AccountPrivacy", () =>
@@ -91,7 +90,6 @@ namespace SAppExample
                     vm.ClosureRequested += () => _ = c.Client.SignOutAsync();
                     return vm;
                 }),
-                ("LockerMap", () => { var vm = new LockerMapViewModel(c); vm.Select += l => _log($"Locker {J.S(l, "name")}"); return vm; }),
                 ("ReturnList", () =>
                 {
                     var vm = new ReturnListViewModel(c);

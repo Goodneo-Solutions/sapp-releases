@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"os"
 	"reflect"
+	"regexp"
+	"slices"
 	"sort"
 	"strings"
 	"testing"
@@ -64,7 +66,26 @@ func TestGeneratedTablesCoverEverySpecOperation(t *testing.T) {
 	if len(PartnerOperations) != counts["partner"] || len(OpenOperations) != counts["open"] {
 		t.Fatalf("partner %d/%d open %d/%d", len(PartnerOperations), counts["partner"], len(OpenOperations), counts["open"])
 	}
-	partner := specIDs(t, "../specs/partner-api.json", func(p string) bool { return strings.HasPrefix(p, "/app/oauth") || p == "/app/graphql" })
+	// Smart-locker operations are in sLocker, never generated here (tools/locker_paths.json).
+	rawLocker, err := os.ReadFile("../tools/locker_paths.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var locker struct {
+		Segments []string          `json:"segments"`
+		Scopes   map[string]string `json:"scopes"`
+	}
+	if err := json.Unmarshal(rawLocker, &locker); err != nil {
+		t.Fatal(err)
+	}
+	scope := regexp.MustCompile(locker.Scopes["partner"])
+	isLocker := func(p string) bool {
+		m := scope.FindStringSubmatch(p)
+		return m != nil && slices.Contains(locker.Segments, m[1])
+	}
+	partner := specIDs(t, "../specs/partner-api.json", func(p string) bool {
+		return strings.HasPrefix(p, "/app/oauth") || p == "/app/graphql" || isLocker(p)
+	})
 	if !reflect.DeepEqual(partner, keys(PartnerOperations)) {
 		t.Fatal("partner operations differ from the spec")
 	}

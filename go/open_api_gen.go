@@ -75,18 +75,18 @@ type AuthSessionParams struct {
 }
 
 // AuthSession — POST /v1/auth/session — Get a session token
-func (a *OpenAPI) AuthSession(ctx context.Context, p AuthSessionParams) (any, error) {
-	return a.call(ctx, openOperations["authSession"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) AuthSession(ctx context.Context, p AuthSessionParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["authSession"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // AuthSessionRevokeDelete — DELETE /v1/auth/session — Revoke a session token
-func (a *OpenAPI) AuthSessionRevokeDelete(ctx context.Context) (any, error) {
-	return a.call(ctx, openOperations["authSessionRevokeDelete"], nil, nil, nil)
+func (a *OpenAPI) AuthSessionRevokeDelete(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["authSessionRevokeDelete"], nil, nil, nil, opts...)
 }
 
 // CapabilitiesIndex — GET /v1/capabilities — List capabilities
-func (a *OpenAPI) CapabilitiesIndex(ctx context.Context) (any, error) {
-	return a.call(ctx, openOperations["capabilitiesIndex"], nil, nil, nil)
+func (a *OpenAPI) CapabilitiesIndex(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["capabilitiesIndex"], nil, nil, nil, opts...)
 }
 
 // CapabilitiesShowParams are the parameters of OpenAPI.CapabilitiesShow.
@@ -96,8 +96,8 @@ type CapabilitiesShowParams struct {
 }
 
 // CapabilitiesShow — GET /v1/capabilities/{code} — Get one capability
-func (a *OpenAPI) CapabilitiesShow(ctx context.Context, p CapabilitiesShowParams) (any, error) {
-	return a.call(ctx, openOperations["capabilitiesShow"], map[string]any{"code": p.Code}, nil, nil)
+func (a *OpenAPI) CapabilitiesShow(ctx context.Context, p CapabilitiesShowParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["capabilitiesShow"], map[string]any{"code": p.Code}, nil, nil, opts...)
 }
 
 // DirectionsComputeParams are the parameters of OpenAPI.DirectionsCompute.
@@ -107,8 +107,8 @@ type DirectionsComputeParams struct {
 }
 
 // DirectionsCompute — POST /v1/directions — Compute directions
-func (a *OpenAPI) DirectionsCompute(ctx context.Context, p DirectionsComputeParams) (any, error) {
-	return a.call(ctx, openOperations["directionsCompute"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) DirectionsCompute(ctx context.Context, p DirectionsComputeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["directionsCompute"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DocumentVerifyParams are the parameters of OpenAPI.DocumentVerify.
@@ -118,8 +118,8 @@ type DocumentVerifyParams struct {
 }
 
 // DocumentVerify — POST /v1/document/verify — Verify a document
-func (a *OpenAPI) DocumentVerify(ctx context.Context, p DocumentVerifyParams) (any, error) {
-	return a.call(ctx, openOperations["documentVerify"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) DocumentVerify(ctx context.Context, p DocumentVerifyParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["documentVerify"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // EtaEstimateParams are the parameters of OpenAPI.EtaEstimate.
@@ -129,8 +129,8 @@ type EtaEstimateParams struct {
 }
 
 // EtaEstimate — POST /v1/eta — Estimate arrival times
-func (a *OpenAPI) EtaEstimate(ctx context.Context, p EtaEstimateParams) (any, error) {
-	return a.call(ctx, openOperations["etaEstimate"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) EtaEstimate(ctx context.Context, p EtaEstimateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["etaEstimate"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // GeoAutocompleteParams are the parameters of OpenAPI.GeoAutocomplete.
@@ -140,13 +140,13 @@ type GeoAutocompleteParams struct {
 }
 
 // GeoAutocomplete — POST /v1/geo/autocomplete — Suggest addresses
-func (a *OpenAPI) GeoAutocomplete(ctx context.Context, p GeoAutocompleteParams) (any, error) {
-	return a.call(ctx, openOperations["geoAutocomplete"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) GeoAutocomplete(ctx context.Context, p GeoAutocompleteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["geoAutocomplete"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // GeoCoverage — GET /v1/geo/coverage — Geocoding coverage
-func (a *OpenAPI) GeoCoverage(ctx context.Context) (any, error) {
-	return a.call(ctx, openOperations["geoCoverage"], nil, nil, nil)
+func (a *OpenAPI) GeoCoverage(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["geoCoverage"], nil, nil, nil, opts...)
 }
 
 // GeoForwardParams are the parameters of OpenAPI.GeoForward.
@@ -156,8 +156,8 @@ type GeoForwardParams struct {
 }
 
 // GeoForward — POST /v1/geo/forward — Geocode an address
-func (a *OpenAPI) GeoForward(ctx context.Context, p GeoForwardParams) (any, error) {
-	return a.call(ctx, openOperations["geoForward"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) GeoForward(ctx context.Context, p GeoForwardParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["geoForward"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // GeoForwardBatchParams are the parameters of OpenAPI.GeoForwardBatch.
@@ -167,8 +167,8 @@ type GeoForwardBatchParams struct {
 }
 
 // GeoForwardBatch — POST /v1/geo/forward/batch — Geocode many addresses
-func (a *OpenAPI) GeoForwardBatch(ctx context.Context, p GeoForwardBatchParams) (any, error) {
-	return a.call(ctx, openOperations["geoForwardBatch"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) GeoForwardBatch(ctx context.Context, p GeoForwardBatchParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["geoForwardBatch"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // GeoPlaceParams are the parameters of OpenAPI.GeoPlace.
@@ -178,8 +178,8 @@ type GeoPlaceParams struct {
 }
 
 // GeoPlace — POST /v1/geo/place — Get a suggestion's address
-func (a *OpenAPI) GeoPlace(ctx context.Context, p GeoPlaceParams) (any, error) {
-	return a.call(ctx, openOperations["geoPlace"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) GeoPlace(ctx context.Context, p GeoPlaceParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["geoPlace"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // GeoReverseParams are the parameters of OpenAPI.GeoReverse.
@@ -189,8 +189,8 @@ type GeoReverseParams struct {
 }
 
 // GeoReverse — POST /v1/geo/reverse — Reverse geocode a coordinate
-func (a *OpenAPI) GeoReverse(ctx context.Context, p GeoReverseParams) (any, error) {
-	return a.call(ctx, openOperations["geoReverse"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) GeoReverse(ctx context.Context, p GeoReverseParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["geoReverse"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // GeoReverseBatchParams are the parameters of OpenAPI.GeoReverseBatch.
@@ -200,8 +200,8 @@ type GeoReverseBatchParams struct {
 }
 
 // GeoReverseBatch — POST /v1/geo/reverse/batch — Reverse geocode many coordinates
-func (a *OpenAPI) GeoReverseBatch(ctx context.Context, p GeoReverseBatchParams) (any, error) {
-	return a.call(ctx, openOperations["geoReverseBatch"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) GeoReverseBatch(ctx context.Context, p GeoReverseBatchParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["geoReverseBatch"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // GeoValidateParams are the parameters of OpenAPI.GeoValidate.
@@ -211,8 +211,8 @@ type GeoValidateParams struct {
 }
 
 // GeoValidate — POST /v1/geo/validate — Validate an address
-func (a *OpenAPI) GeoValidate(ctx context.Context, p GeoValidateParams) (any, error) {
-	return a.call(ctx, openOperations["geoValidate"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) GeoValidate(ctx context.Context, p GeoValidateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["geoValidate"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // IsochroneComputeParams are the parameters of OpenAPI.IsochroneCompute.
@@ -222,8 +222,8 @@ type IsochroneComputeParams struct {
 }
 
 // IsochroneCompute — POST /v1/isochrone — Draw reach areas
-func (a *OpenAPI) IsochroneCompute(ctx context.Context, p IsochroneComputeParams) (any, error) {
-	return a.call(ctx, openOperations["isochroneCompute"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) IsochroneCompute(ctx context.Context, p IsochroneComputeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["isochroneCompute"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // JobsCancelParams are the parameters of OpenAPI.JobsCancel.
@@ -233,8 +233,8 @@ type JobsCancelParams struct {
 }
 
 // JobsCancel — POST /v1/jobs/{jobId}/cancel — Cancel a job
-func (a *OpenAPI) JobsCancel(ctx context.Context, p JobsCancelParams) (any, error) {
-	return a.call(ctx, openOperations["jobsCancel"], map[string]any{"jobId": p.JobId}, nil, nil)
+func (a *OpenAPI) JobsCancel(ctx context.Context, p JobsCancelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["jobsCancel"], map[string]any{"jobId": p.JobId}, nil, nil, opts...)
 }
 
 // JobsDeliveriesParams are the parameters of OpenAPI.JobsDeliveries.
@@ -244,8 +244,8 @@ type JobsDeliveriesParams struct {
 }
 
 // JobsDeliveries — GET /v1/jobs/{jobId}/deliveries — List webhook deliveries
-func (a *OpenAPI) JobsDeliveries(ctx context.Context, p JobsDeliveriesParams) (any, error) {
-	return a.call(ctx, openOperations["jobsDeliveries"], map[string]any{"jobId": p.JobId}, nil, nil)
+func (a *OpenAPI) JobsDeliveries(ctx context.Context, p JobsDeliveriesParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["jobsDeliveries"], map[string]any{"jobId": p.JobId}, nil, nil, opts...)
 }
 
 // JobsDeliveriesReplayParams are the parameters of OpenAPI.JobsDeliveriesReplay.
@@ -258,13 +258,13 @@ type JobsDeliveriesReplayParams struct {
 }
 
 // JobsDeliveriesReplay — POST /v1/jobs/{jobId}/deliveries/{deliveryId}/replay — Replay a webhook delivery
-func (a *OpenAPI) JobsDeliveriesReplay(ctx context.Context, p JobsDeliveriesReplayParams) (any, error) {
-	return a.call(ctx, openOperations["jobsDeliveriesReplay"], map[string]any{"jobId": p.JobId, "deliveryId": p.DeliveryId}, nil, nil)
+func (a *OpenAPI) JobsDeliveriesReplay(ctx context.Context, p JobsDeliveriesReplayParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["jobsDeliveriesReplay"], map[string]any{"jobId": p.JobId, "deliveryId": p.DeliveryId}, nil, nil, opts...)
 }
 
 // JobsIndex — GET /v1/jobs — List jobs
-func (a *OpenAPI) JobsIndex(ctx context.Context) (any, error) {
-	return a.call(ctx, openOperations["jobsIndex"], nil, nil, nil)
+func (a *OpenAPI) JobsIndex(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["jobsIndex"], nil, nil, nil, opts...)
 }
 
 // JobsResultParams are the parameters of OpenAPI.JobsResult.
@@ -274,8 +274,8 @@ type JobsResultParams struct {
 }
 
 // JobsResult — GET /v1/jobs/{jobId}/result — Collect a job result
-func (a *OpenAPI) JobsResult(ctx context.Context, p JobsResultParams) (any, error) {
-	return a.call(ctx, openOperations["jobsResult"], map[string]any{"jobId": p.JobId}, nil, nil)
+func (a *OpenAPI) JobsResult(ctx context.Context, p JobsResultParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["jobsResult"], map[string]any{"jobId": p.JobId}, nil, nil, opts...)
 }
 
 // JobsShowParams are the parameters of OpenAPI.JobsShow.
@@ -285,8 +285,8 @@ type JobsShowParams struct {
 }
 
 // JobsShow — GET /v1/jobs/{jobId} — Get job status
-func (a *OpenAPI) JobsShow(ctx context.Context, p JobsShowParams) (any, error) {
-	return a.call(ctx, openOperations["jobsShow"], map[string]any{"jobId": p.JobId}, nil, nil)
+func (a *OpenAPI) JobsShow(ctx context.Context, p JobsShowParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["jobsShow"], map[string]any{"jobId": p.JobId}, nil, nil, opts...)
 }
 
 // LabelBarcodeParams are the parameters of OpenAPI.LabelBarcode.
@@ -296,8 +296,8 @@ type LabelBarcodeParams struct {
 }
 
 // LabelBarcode — POST /v1/label/barcode — Draw a barcode
-func (a *OpenAPI) LabelBarcode(ctx context.Context, p LabelBarcodeParams) (any, error) {
-	return a.call(ctx, openOperations["labelBarcode"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) LabelBarcode(ctx context.Context, p LabelBarcodeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["labelBarcode"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // LoadingSolveParams are the parameters of OpenAPI.LoadingSolve.
@@ -307,8 +307,8 @@ type LoadingSolveParams struct {
 }
 
 // LoadingSolve — POST /v1/loading/solve — Plan a container load
-func (a *OpenAPI) LoadingSolve(ctx context.Context, p LoadingSolveParams) (any, error) {
-	return a.call(ctx, openOperations["loadingSolve"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) LoadingSolve(ctx context.Context, p LoadingSolveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["loadingSolve"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // MapStaticParams are the parameters of OpenAPI.MapStatic.
@@ -318,8 +318,8 @@ type MapStaticParams struct {
 }
 
 // MapStatic — POST /v1/map/static — Draw a static map
-func (a *OpenAPI) MapStatic(ctx context.Context, p MapStaticParams) (any, error) {
-	return a.call(ctx, openOperations["mapStatic"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) MapStatic(ctx context.Context, p MapStaticParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["mapStatic"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // MapTokenParams are the parameters of OpenAPI.MapToken.
@@ -329,8 +329,8 @@ type MapTokenParams struct {
 }
 
 // MapToken — POST /v1/map/token — Issue a map token
-func (a *OpenAPI) MapToken(ctx context.Context, p MapTokenParams) (any, error) {
-	return a.call(ctx, openOperations["mapToken"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) MapToken(ctx context.Context, p MapTokenParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["mapToken"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // MatrixComputeParams are the parameters of OpenAPI.MatrixCompute.
@@ -340,8 +340,8 @@ type MatrixComputeParams struct {
 }
 
 // MatrixCompute — POST /v1/matrix — Compute a distance matrix
-func (a *OpenAPI) MatrixCompute(ctx context.Context, p MatrixComputeParams) (any, error) {
-	return a.call(ctx, openOperations["matrixCompute"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) MatrixCompute(ctx context.Context, p MatrixComputeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["matrixCompute"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // NetworkSiteScenarioParams are the parameters of OpenAPI.NetworkSiteScenario.
@@ -351,8 +351,8 @@ type NetworkSiteScenarioParams struct {
 }
 
 // NetworkSiteScenario — POST /v1/network/site-scenario — Compare network scenarios
-func (a *OpenAPI) NetworkSiteScenario(ctx context.Context, p NetworkSiteScenarioParams) (any, error) {
-	return a.call(ctx, openOperations["networkSite_scenario"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) NetworkSiteScenario(ctx context.Context, p NetworkSiteScenarioParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["networkSite_scenario"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PackingSolveParams are the parameters of OpenAPI.PackingSolve.
@@ -362,8 +362,8 @@ type PackingSolveParams struct {
 }
 
 // PackingSolve — POST /v1/packing/solve — Choose cartons
-func (a *OpenAPI) PackingSolve(ctx context.Context, p PackingSolveParams) (any, error) {
-	return a.call(ctx, openOperations["packingSolve"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PackingSolve(ctx context.Context, p PackingSolveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["packingSolve"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PickingBatchParams are the parameters of OpenAPI.PickingBatch.
@@ -373,8 +373,8 @@ type PickingBatchParams struct {
 }
 
 // PickingBatch — POST /v1/picking/batch — Batch picks
-func (a *OpenAPI) PickingBatch(ctx context.Context, p PickingBatchParams) (any, error) {
-	return a.call(ctx, openOperations["pickingBatch"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PickingBatch(ctx context.Context, p PickingBatchParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["pickingBatch"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlanInsertParams are the parameters of OpenAPI.PlanInsert.
@@ -384,8 +384,8 @@ type PlanInsertParams struct {
 }
 
 // PlanInsert — POST /v1/plan/insert — Insert jobs
-func (a *OpenAPI) PlanInsert(ctx context.Context, p PlanInsertParams) (any, error) {
-	return a.call(ctx, openOperations["planInsert"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PlanInsert(ctx context.Context, p PlanInsertParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planInsert"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlanMatrixCloseDeleteParams are the parameters of OpenAPI.PlanMatrixCloseDelete.
@@ -395,8 +395,8 @@ type PlanMatrixCloseDeleteParams struct {
 }
 
 // PlanMatrixCloseDelete — DELETE /v1/plan/matrix/{matrixId} — Close a distance snapshot
-func (a *OpenAPI) PlanMatrixCloseDelete(ctx context.Context, p PlanMatrixCloseDeleteParams) (any, error) {
-	return a.call(ctx, openOperations["planMatrixCloseDelete"], map[string]any{"matrixId": p.MatrixId}, nil, nil)
+func (a *OpenAPI) PlanMatrixCloseDelete(ctx context.Context, p PlanMatrixCloseDeleteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planMatrixCloseDelete"], map[string]any{"matrixId": p.MatrixId}, nil, nil, opts...)
 }
 
 // PlanMatrixOpenParams are the parameters of OpenAPI.PlanMatrixOpen.
@@ -406,8 +406,8 @@ type PlanMatrixOpenParams struct {
 }
 
 // PlanMatrixOpen — POST /v1/plan/matrix — Open a distance snapshot
-func (a *OpenAPI) PlanMatrixOpen(ctx context.Context, p PlanMatrixOpenParams) (any, error) {
-	return a.call(ctx, openOperations["planMatrixOpen"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PlanMatrixOpen(ctx context.Context, p PlanMatrixOpenParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planMatrixOpen"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlanMoveParams are the parameters of OpenAPI.PlanMove.
@@ -417,8 +417,8 @@ type PlanMoveParams struct {
 }
 
 // PlanMove — POST /v1/plan/move — Move stops
-func (a *OpenAPI) PlanMove(ctx context.Context, p PlanMoveParams) (any, error) {
-	return a.call(ctx, openOperations["planMove"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PlanMove(ctx context.Context, p PlanMoveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planMove"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlanRecostParams are the parameters of OpenAPI.PlanRecost.
@@ -428,8 +428,8 @@ type PlanRecostParams struct {
 }
 
 // PlanRecost — POST /v1/plan/recost — Re-cost a plan
-func (a *OpenAPI) PlanRecost(ctx context.Context, p PlanRecostParams) (any, error) {
-	return a.call(ctx, openOperations["planRecost"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PlanRecost(ctx context.Context, p PlanRecostParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planRecost"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlanRefineParams are the parameters of OpenAPI.PlanRefine.
@@ -439,8 +439,8 @@ type PlanRefineParams struct {
 }
 
 // PlanRefine — POST /v1/plan/refine — Refine routes
-func (a *OpenAPI) PlanRefine(ctx context.Context, p PlanRefineParams) (any, error) {
-	return a.call(ctx, openOperations["planRefine"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PlanRefine(ctx context.Context, p PlanRefineParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planRefine"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlanRemoveParams are the parameters of OpenAPI.PlanRemove.
@@ -450,8 +450,8 @@ type PlanRemoveParams struct {
 }
 
 // PlanRemove — POST /v1/plan/remove — Remove stops
-func (a *OpenAPI) PlanRemove(ctx context.Context, p PlanRemoveParams) (any, error) {
-	return a.call(ctx, openOperations["planRemove"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PlanRemove(ctx context.Context, p PlanRemoveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planRemove"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlanResequenceParams are the parameters of OpenAPI.PlanResequence.
@@ -461,8 +461,8 @@ type PlanResequenceParams struct {
 }
 
 // PlanResequence — POST /v1/plan/resequence — Reorder a route
-func (a *OpenAPI) PlanResequence(ctx context.Context, p PlanResequenceParams) (any, error) {
-	return a.call(ctx, openOperations["planResequence"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PlanResequence(ctx context.Context, p PlanResequenceParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planResequence"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlanTokenParams are the parameters of OpenAPI.PlanToken.
@@ -472,8 +472,8 @@ type PlanTokenParams struct {
 }
 
 // PlanToken — POST /v1/plan/token — Get a plan editor token
-func (a *OpenAPI) PlanToken(ctx context.Context, p PlanTokenParams) (any, error) {
-	return a.call(ctx, openOperations["planToken"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PlanToken(ctx context.Context, p PlanTokenParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planToken"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlanValidateParams are the parameters of OpenAPI.PlanValidate.
@@ -483,8 +483,8 @@ type PlanValidateParams struct {
 }
 
 // PlanValidate — POST /v1/plan/validate — Validate a plan
-func (a *OpenAPI) PlanValidate(ctx context.Context, p PlanValidateParams) (any, error) {
-	return a.call(ctx, openOperations["planValidate"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PlanValidate(ctx context.Context, p PlanValidateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planValidate"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlanWhatIfParams are the parameters of OpenAPI.PlanWhatIf.
@@ -494,8 +494,8 @@ type PlanWhatIfParams struct {
 }
 
 // PlanWhatIf — POST /v1/plan/what-if — Compare plans
-func (a *OpenAPI) PlanWhatIf(ctx context.Context, p PlanWhatIfParams) (any, error) {
-	return a.call(ctx, openOperations["planWhat_if"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) PlanWhatIf(ctx context.Context, p PlanWhatIfParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planWhat_if"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // RoutingInsertParams are the parameters of OpenAPI.RoutingInsert.
@@ -505,8 +505,8 @@ type RoutingInsertParams struct {
 }
 
 // RoutingInsert — POST /v1/routing/insert — Insert stops
-func (a *OpenAPI) RoutingInsert(ctx context.Context, p RoutingInsertParams) (any, error) {
-	return a.call(ctx, openOperations["routingInsert"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) RoutingInsert(ctx context.Context, p RoutingInsertParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["routingInsert"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // RoutingOptimizeParams are the parameters of OpenAPI.RoutingOptimize.
@@ -516,8 +516,8 @@ type RoutingOptimizeParams struct {
 }
 
 // RoutingOptimize — POST /v1/routing/optimize — Optimize routes
-func (a *OpenAPI) RoutingOptimize(ctx context.Context, p RoutingOptimizeParams) (any, error) {
-	return a.call(ctx, openOperations["routingOptimize"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) RoutingOptimize(ctx context.Context, p RoutingOptimizeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["routingOptimize"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // RoutingPresetsParams are the parameters of OpenAPI.RoutingPresets.
@@ -527,8 +527,8 @@ type RoutingPresetsParams struct {
 }
 
 // RoutingPresets — GET /v1/routing/presets — List balance presets
-func (a *OpenAPI) RoutingPresets(ctx context.Context, p RoutingPresetsParams) (any, error) {
-	return a.call(ctx, openOperations["routingPresets"], map[string]any{"engine": p.Engine}, nil, nil)
+func (a *OpenAPI) RoutingPresets(ctx context.Context, p RoutingPresetsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["routingPresets"], map[string]any{"engine": p.Engine}, nil, nil, opts...)
 }
 
 // RoutingRefineParams are the parameters of OpenAPI.RoutingRefine.
@@ -538,8 +538,8 @@ type RoutingRefineParams struct {
 }
 
 // RoutingRefine — POST /v1/routing/refine — Refine an existing plan
-func (a *OpenAPI) RoutingRefine(ctx context.Context, p RoutingRefineParams) (any, error) {
-	return a.call(ctx, openOperations["routingRefine"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) RoutingRefine(ctx context.Context, p RoutingRefineParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["routingRefine"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // RoutingWhatifParams are the parameters of OpenAPI.RoutingWhatif.
@@ -549,8 +549,8 @@ type RoutingWhatifParams struct {
 }
 
 // RoutingWhatif — POST /v1/routing/what-if — Compare alternative plans
-func (a *OpenAPI) RoutingWhatif(ctx context.Context, p RoutingWhatifParams) (any, error) {
-	return a.call(ctx, openOperations["routingWhatif"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) RoutingWhatif(ctx context.Context, p RoutingWhatifParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["routingWhatif"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // SlotsQuoteParams are the parameters of OpenAPI.SlotsQuote.
@@ -560,8 +560,8 @@ type SlotsQuoteParams struct {
 }
 
 // SlotsQuote — POST /v1/slots/quote — Quote delivery slots
-func (a *OpenAPI) SlotsQuote(ctx context.Context, p SlotsQuoteParams) (any, error) {
-	return a.call(ctx, openOperations["slotsQuote"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) SlotsQuote(ctx context.Context, p SlotsQuoteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["slotsQuote"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // TerritoryDesignParams are the parameters of OpenAPI.TerritoryDesign.
@@ -571,8 +571,8 @@ type TerritoryDesignParams struct {
 }
 
 // TerritoryDesign — POST /v1/territory/design — Design territories
-func (a *OpenAPI) TerritoryDesign(ctx context.Context, p TerritoryDesignParams) (any, error) {
-	return a.call(ctx, openOperations["territoryDesign"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) TerritoryDesign(ctx context.Context, p TerritoryDesignParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["territoryDesign"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // TraceMatchParams are the parameters of OpenAPI.TraceMatch.
@@ -582,8 +582,8 @@ type TraceMatchParams struct {
 }
 
 // TraceMatch — POST /v1/trace/match — Match a GPS trace
-func (a *OpenAPI) TraceMatch(ctx context.Context, p TraceMatchParams) (any, error) {
-	return a.call(ctx, openOperations["traceMatch"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) TraceMatch(ctx context.Context, p TraceMatchParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["traceMatch"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // WebhooksVerifyParams are the parameters of OpenAPI.WebhooksVerify.
@@ -593,8 +593,8 @@ type WebhooksVerifyParams struct {
 }
 
 // WebhooksVerify — POST /v1/webhooks/verify — Verify a webhook endpoint
-func (a *OpenAPI) WebhooksVerify(ctx context.Context, p WebhooksVerifyParams) (any, error) {
-	return a.call(ctx, openOperations["webhooksVerify"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) WebhooksVerify(ctx context.Context, p WebhooksVerifyParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["webhooksVerify"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // WeightChargeableParams are the parameters of OpenAPI.WeightChargeable.
@@ -604,6 +604,6 @@ type WeightChargeableParams struct {
 }
 
 // WeightChargeable — POST /v1/weight/chargeable — Work out chargeable weight
-func (a *OpenAPI) WeightChargeable(ctx context.Context, p WeightChargeableParams) (any, error) {
-	return a.call(ctx, openOperations["weightChargeable"], map[string]any{}, p.Body, nil)
+func (a *OpenAPI) WeightChargeable(ctx context.Context, p WeightChargeableParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["weightChargeable"], map[string]any{}, p.Body, nil, opts...)
 }

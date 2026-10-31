@@ -11,8 +11,8 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import { SuperrouteProvider, createPartnerClient, createSecureTokenStore, themeFromBranding, useSession } from '@superrouteca/sapp-react-native';
 import {
-  AccountPrivacy, Cart, Checkout, DriverDuty, DriverEarnings, DriverRoutes, GroupBuy, GroupBuyLeading, GroupBuyLeadingGroup, GroupBuyOrder, GroupBuyOrders, LockerMap,
-  NotificationInbox, NotificationPreferences, OrderDetail, OrderList, PickupList, ProductDetail, ReturnForm, ReturnList, RouteStops, ScanLookup,
+  AccountPrivacy, Cart, Checkout, DriverDuty, DriverEarnings, DriverRoutes, GroupBuy, GroupBuyLeading, GroupBuyLeadingGroup, GroupBuyOrder, GroupBuyOrders,
+  NotificationInbox, NotificationPreferences, OrderDetail, OrderList, ProductDetail, ReturnForm, ReturnList, RouteStops, ScanLookup,
   ShippingOrderForm, SignIn, Stop, StoreDirectory, StorePage, Tracking, WalletSummary, configure,
 } from '@superrouteca/sapp-react-native/ui';
 
@@ -60,7 +60,7 @@ async function pickFile() {
   return { name: asset.name, base64, size: asset.size };
 }
 
-const SCREENS = ['Inbox', 'Wallet', 'Orders', 'Pickups', 'Tracking', 'Lockers', 'Returns', 'Ship', 'Stores', 'Group buys', 'Account', 'Driver'];
+const SCREENS = ['Inbox', 'Wallet', 'Orders', 'Tracking', 'Returns', 'Ship', 'Stores', 'Group buys', 'Account', 'Driver'];
 
 function Tabs({ value, onChange }) {
   return (
@@ -122,9 +122,7 @@ function Screens() {
   } else if (screen === 'Inbox') body = <NotificationInbox ref={refreshable} onOpen={(n) => n.deep_link && Linking.openURL(n.deep_link)} />;
   else if (screen === 'Wallet') body = <WalletSummary ref={refreshable} onTopUp={({ minimum, maximum, currency }) => Alert.alert('Top up', `Between ${minimum} and ${maximum} ${currency}.`)} />;
   else if (screen === 'Orders') body = <OrderList ref={refreshable} onOpen={({ type, id }) => push({ kind: 'order', type, id })} />;
-  else if (screen === 'Pickups') body = <PickupList ref={refreshable} onShowCode={(value) => Alert.alert('Pickup code', value)} />;
   else if (screen === 'Tracking') body = <Tracking />;
-  else if (screen === 'Lockers') body = <LockerMap ref={refreshable} onSelect={(location) => Alert.alert(location.name)} />;
   else if (screen === 'Returns') body = <ReturnList ref={refreshable} canCreate onCreate={() => push({ kind: 'returnForm' })} />;
   else if (screen === 'Ship') body = <ShippingOrderForm onCreated={(order) => Alert.alert('Order placed', String(order.id))} />;
   else if (screen === 'Stores') body = <StoreDirectory ref={refreshable} onOpen={(slug) => push({ kind: 'store', slug })} />;

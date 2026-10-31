@@ -28,7 +28,7 @@ import (
 )
 
 // Version is the sApp version.
-const Version = "0.2.1"
+const Version = "0.2.2"
 
 // DefaultBaseURL is where the partner app API and the Open Platform answer.
 const DefaultBaseURL = "https://open.superroute.ca"
@@ -45,13 +45,22 @@ const (
 // Error is every failed call. Status is the HTTP status (0 when the request never got an answer), Code the server's
 // error code (invalid_token, insufficient_scope, access_denied, a platform app code such as APP_ACCESS_DENIED, …)
 // when it sent one, Body the parsed answer.
+//
+// An answer {"result": false, …} is a failed call too, whatever its status (Superroute sometimes answers a refusal
+// with 200): Errors holds its field messages, Reasons and Data what it sent beside them.
 type Error struct {
 	Status    int
 	Code      string
 	Message   string
 	Body      any
 	RequestID string
-	cause     error
+	// Errors is field -> messages ({"email": ["The email is taken."]}); nil when the answer named none.
+	Errors map[string][]string
+	// Reasons is the answer's "reasons", as sent (a list or a map), or nil.
+	Reasons any
+	// Data is the answer's "data", as sent, or nil.
+	Data  any
+	cause error
 }
 
 func (e *Error) Error() string {
@@ -75,9 +84,19 @@ var upperCode = regexp.MustCompile(`^[A-Z_]+$`)
 func errorFrom(status int, body any, requestID string) *Error {
 	b, _ := body.(map[string]any)
 	str := func(k string) string { s, _ := b[k].(string); return s }
-	code := str("error")
+	scalar := func(k string) string {
+		switch v := b[k].(type) {
+		case string:
+			return v
+		case nil, map[string]any, []any:
+			return ""
+		default:
+			return text(v)
+		}
+	}
+	code := scalar("error")
 	if code == "" {
-		code = str("code")
+		code = scalar("code")
 	}
 	if msg := str("message"); code == "" && upperCode.MatchString(msg) {
 		code = msg
@@ -99,7 +118,87 @@ func errorFrom(status int, body any, requestID string) *Error {
 	if id := str("request_id"); id != "" {
 		requestID = id
 	}
-	return &Error{Status: status, Code: code, Message: text, Body: body, RequestID: requestID}
+	return &Error{Status: status, Code: code, Message: text, Body: body, RequestID: requestID,
+		Errors: fieldErrors(b["errors"]), Reasons: b["reasons"], Data: b["data"]}
+}
+
+func fieldErrors(raw any) map[string][]string {
+	m, ok := raw.(map[string]any)
+	if !ok || len(m) == 0 {
+		return nil
+	}
+	out := make(map[string][]string, len(m))
+	for field, v := range m {
+		if v == nil {
+			continue
+		}
+		if items, ok := v.([]any); ok {
+			msgs := make([]string, 0, len(items))
+			for _, item := range items {
+				msgs = append(msgs, text(item))
+			}
+			out[field] = msgs
+		} else {
+			out[field] = []string{text(v)}
+		}
+	}
+	return out
+}
+
+// refused is true for status 400 or more, or a JSON object answering result false (even with a 2xx status).
+func refused(status int, body any) bool {
+	if status >= 400 {
+		return true
+	}
+	b, ok := body.(map[string]any)
+	return ok && b["result"] == false
+}
+
+// protectedHeaders are set by the SDK itself; a header argument never replaces them.
+var protectedHeaders = map[string]bool{
+	"authorization": true, "x-app-key": true, "x-sapp": true, "accept": true, "accept-language": true, "content-type": true,
+}
+
+// uuid4 answers a random (version 4) UUID, for an idempotency key the caller did not give.
+func uuid4() string {
+	b := make([]byte, 16)
+	if _, err := rand.Read(b); err != nil {
+		panic(err)
+	}
+	b[6] = (b[6] & 0x0f) | 0x40
+	b[8] = (b[8] & 0x3f) | 0x80
+	return fmt.Sprintf("%x-%x-%x-%x-%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
+}
+
+// callHeaders are the header parameters of one call, worked out once so every attempt of the call sends the same
+// values: an operation that declares Idempotency-Key gets a fresh key when the caller gave none.
+func callHeaders(op Operation, params map[string]any) map[string]string {
+	out := map[string]string{}
+	for _, name := range op.Headers {
+		if protectedHeaders[strings.ToLower(name)] {
+			continue
+		}
+		if v := text(params[name]); v != "" {
+			out[name] = v
+		} else if strings.EqualFold(name, "Idempotency-Key") {
+			out[name] = uuid4()
+		}
+	}
+	return out
+}
+
+// withCallHeaders adds extra to headers without replacing a header the SDK set (compared without regard to case).
+func withCallHeaders(headers, extra map[string]string) map[string]string {
+	taken := make(map[string]bool, len(headers))
+	for k := range headers {
+		taken[strings.ToLower(k)] = true
+	}
+	for k, v := range extra {
+		if !taken[strings.ToLower(k)] {
+			headers[k] = v
+		}
+	}
+	return headers
 }
 
 // ------------------------------------------------------------------------------------------------ tokens
@@ -274,7 +373,7 @@ func list(v any) ([]any, bool) {
 	return out, true
 }
 
-func buildURL(base string, op Operation, params map[string]any) (string, error) {
+func buildURL(base string, op Operation, params map[string]any, extra ...map[string]any) (string, error) {
 	path := pathParam.ReplaceAllStringFunc(op.Path, func(m string) string {
 		value := text(params[m[1:len(m)-1]])
 		if value == "" {
@@ -306,6 +405,35 @@ func buildURL(base string, op Operation, params map[string]any) (string, error) 
 		q.Set(name, text(v))
 	}
 	u.RawQuery = q.Encode()
+	// The extra query comes after the declared names and never replaces one of them.
+	declared := make(map[string]bool, len(op.Query))
+	for _, name := range op.Query {
+		declared[name] = true
+	}
+	more := url.Values{}
+	for _, m := range extra {
+		for name, v := range m {
+			v = deref(v)
+			if name == "" || declared[name] || v == nil {
+				continue
+			}
+			if items, ok := list(v); ok {
+				for _, item := range items {
+					if deref(item) != nil {
+						more.Add(name, text(item))
+					}
+				}
+				continue
+			}
+			more.Set(name, text(v))
+		}
+	}
+	if len(more) > 0 {
+		if u.RawQuery != "" {
+			u.RawQuery += "&"
+		}
+		u.RawQuery += more.Encode()
+	}
 	return u.String(), nil
 }
 
@@ -471,7 +599,7 @@ func (t *transport) send(ctx context.Context, r request, retryable bool) (*answe
 }
 
 func (a *answer) orError() (any, error) {
-	if a.status >= 400 {
+	if refused(a.status, a.body) {
 		return nil, errorFrom(a.status, a.body, a.requestID)
 	}
 	return a.body, nil
@@ -863,8 +991,8 @@ func (c *PartnerClient) authorise(ctx context.Context, op Operation, headers map
 	return nil
 }
 
-func (c *PartnerClient) call(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File) (any, error) {
-	u, err := buildURL(c.baseURL, op, params)
+func (c *PartnerClient) call(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File, opts ...CallOption) (any, error) {
+	u, err := buildURL(c.baseURL, op, params, optionsOf(opts).extraQuery)
 	if err != nil {
 		return nil, err
 	}
@@ -873,10 +1001,12 @@ func (c *PartnerClient) call(ctx context.Context, op Operation, params map[strin
 		return nil, err
 	}
 	retryable := op.Method == "GET"
+	perCall := callHeaders(op, params)
 	headers := c.baseHeaders()
 	if err := c.authorise(ctx, op, headers); err != nil {
 		return nil, err
 	}
+	withCallHeaders(headers, perCall)
 	r := request{method: op.Method, url: u, headers: headers, body: payload, contentType: contentType}
 	a, err := c.t.send(ctx, r, retryable)
 	if err != nil {
@@ -891,7 +1021,7 @@ func (c *PartnerClient) call(ctx context.Context, op Operation, params map[strin
 		if err := c.authorise(ctx, op, headers); err != nil {
 			return nil, err
 		}
-		r.headers = headers
+		r.headers = withCallHeaders(headers, perCall)
 		if a, err = c.t.send(ctx, r, retryable); err != nil {
 			return nil, err
 		}
@@ -899,7 +1029,7 @@ func (c *PartnerClient) call(ctx context.Context, op Operation, params map[strin
 	return a.orError()
 }
 
-func (c *PartnerClient) apiCall(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File) (any, error) {
+func (c *PartnerClient) apiCall(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File, opts ...CallOption) (any, error) {
 	// Public calls name the service provider in the path; take it from the client unless the caller passes one.
 	if strings.Contains(op.Path, "{clientCode}") && deref(params["clientCode"]) == nil {
 		if code, _ := c.client(); code != "" {
@@ -911,7 +1041,18 @@ func (c *PartnerClient) apiCall(ctx context.Context, op Operation, params map[st
 			params = copied
 		}
 	}
-	return c.call(ctx, op, params, body, files)
+	return c.call(ctx, op, params, body, files, opts...)
+}
+
+// CallOperation is for building on the sApp core: it calls an operation described by hand exactly as the generated
+// methods of API do — the same sign-in headers (the token, or the app key when the operation allows it), one refresh
+// and retry after a 401, an Idempotency-Key made once per call (and kept across that retry) when the operation
+// declares one and none is given, retries of GET calls, and *Error for a refusal (status 400 or more, or
+// "result": false). Path and query values and header parameters (under the header's own name) travel in params, the
+// extra query in WithExtraQuery; {clientCode} is filled from the client when not given. For packages such as sLocker
+// that add their own operations on top of this client.
+func (c *PartnerClient) CallOperation(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File, opts ...CallOption) (any, error) {
+	return c.apiCall(ctx, op, params, body, files, opts...)
 }
 
 // GraphQL runs a partner GraphQL operation (open.superroute.ca/app/graphql), with the token when signed in, else the
@@ -960,7 +1101,15 @@ type OpenOptions struct {
 // open.superroute.ca/v1.
 type OpenClient struct {
 	// API has one method per Open Platform operation.
-	API *OpenAPI
+	API  *OpenAPI
+	call operationCall
+}
+
+// CallOperation is for building on the sApp core: it calls an operation described by hand exactly as the generated
+// methods of API do (the token, header parameters and idempotency keys, extra query, retries of GET calls and *Error
+// for a refusal).
+func (c *OpenClient) CallOperation(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File, opts ...CallOption) (any, error) {
+	return c.call(ctx, op, params, body, files, opts...)
 }
 
 // NewOpenClient makes an Open Platform client.
@@ -973,7 +1122,7 @@ func NewOpenClient(o OpenOptions) (*OpenClient, error) {
 		base = DefaultBaseURL
 	}
 	t := newTransport(o.HTTPClient, o.Retries, o.Sleep)
-	call := func(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File) (any, error) {
+	call := func(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File, opts ...CallOption) (any, error) {
 		token := o.APIKey
 		if o.GetToken != nil {
 			var err error
@@ -981,7 +1130,7 @@ func NewOpenClient(o OpenOptions) (*OpenClient, error) {
 				return nil, err
 			}
 		}
-		u, err := buildURL(base, op, params)
+		u, err := buildURL(base, op, params, optionsOf(opts).extraQuery)
 		if err != nil {
 			return nil, err
 		}
@@ -993,11 +1142,12 @@ func NewOpenClient(o OpenOptions) (*OpenClient, error) {
 		if o.Locale != "" {
 			headers["Accept-Language"] = o.Locale
 		}
+		withCallHeaders(headers, callHeaders(op, params))
 		a, err := t.send(ctx, request{method: op.Method, url: u, headers: headers, body: payload, contentType: contentType}, op.Method == "GET")
 		if err != nil {
 			return nil, err
 		}
 		return a.orError()
 	}
-	return &OpenClient{API: &OpenAPI{call: call}}, nil
+	return &OpenClient{API: &OpenAPI{call: call}, call: call}, nil
 }

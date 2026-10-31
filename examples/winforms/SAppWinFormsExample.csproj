@@ -9,7 +9,7 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Superroute.SApp.WinForms" Version="0.2.1" />
+    <PackageReference Include="Superroute.SApp.WinForms" Version="0.2.2" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="../wpf/ExampleSetup.cs" Link="ExampleSetup.cs" />

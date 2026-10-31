@@ -1,0 +1,144 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "ca.superroute",
+    "module": "sapp",
+    "version": "0.2.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "4.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "sapp-0.2.2.jar",
+          "url": "sapp-0.2.2.jar",
+          "size": 134702,
+          "sha512": "faf5519fc42dfd796a8f1ad1af2137525636d828e05eed68d7c80dd44d5c67ebafdf0ea63636e20fc8996f7fd60cc2d82e5a9a7f0ab4343de946404bfa9efc52",
+          "sha256": "3a8d67e77b79fccd69291369f699cc0f3180290393859e6343f094a46cf04141",
+          "sha1": "747af54789c2c1e140ca714b75bf04de94fb4e62",
+          "md5": "0df8b3fcb7b22cc88fb437059cd1094b"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "4.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "sapp-0.2.2.jar",
+          "url": "sapp-0.2.2.jar",
+          "size": 134702,
+          "sha512": "faf5519fc42dfd796a8f1ad1af2137525636d828e05eed68d7c80dd44d5c67ebafdf0ea63636e20fc8996f7fd60cc2d82e5a9a7f0ab4343de946404bfa9efc52",
+          "sha256": "3a8d67e77b79fccd69291369f699cc0f3180290393859e6343f094a46cf04141",
+          "sha1": "747af54789c2c1e140ca714b75bf04de94fb4e62",
+          "md5": "0df8b3fcb7b22cc88fb437059cd1094b"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "sapp-0.2.2-sources.jar",
+          "url": "sapp-0.2.2-sources.jar",
+          "size": 27739,
+          "sha512": "6daf1aa8ccab4595562e67c7af2652a1806808c893bdfd33de0e3ce388c166ab759686f2e40733339d5a478408549876cc6e8c70f37a47c201717652dcdd8a16",
+          "sha256": "45c1b6457d3eb1f75fb954ff6142bfa16eed14db7e98627cf0e02aa116c76788",
+          "sha1": "ac4e513d80ba082228d8fa1d39518d503b1df0f5",
+          "md5": "21cda396ca788dfba0cfbf7a87512bf2"
+        }
+      ]
+    }
+  ]
+}

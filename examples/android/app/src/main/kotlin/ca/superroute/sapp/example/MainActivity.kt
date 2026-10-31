@@ -49,12 +49,10 @@ import ca.superroute.sapp.ui.GroupBuyLeadingGroup
 import ca.superroute.sapp.ui.GroupBuyList
 import ca.superroute.sapp.ui.GroupBuyOrder
 import ca.superroute.sapp.ui.GroupBuyOrders
-import ca.superroute.sapp.ui.LockerMap
 import ca.superroute.sapp.ui.NotificationInbox
 import ca.superroute.sapp.ui.NotificationPreferences
 import ca.superroute.sapp.ui.OrderDetail
 import ca.superroute.sapp.ui.OrderList
-import ca.superroute.sapp.ui.PickupList
 import ca.superroute.sapp.ui.ProductDetail
 import ca.superroute.sapp.ui.ReturnForm
 import ca.superroute.sapp.ui.ReturnList
@@ -108,11 +106,9 @@ private fun ExampleApp() {
             Screen("Notification inbox") { NotificationInbox(onOpen = { toast("Open ${it["deep_link"]}") }) },
             Screen("Wallet summary") { WalletSummary(onTopUp = { min, max, currency -> toast("Top up $min–$max $currency") }) },
             Screen("Order list") { go -> OrderList(onOpen = { type, id -> go(Screen("Order $id") { o -> OrderDetail(type, id, onTrack = { number -> o(Screen("Tracking") { Tracking(number) }) }) }) }) },
-            Screen("Pickup list") { PickupList(onShowCode = { toast("QR $it") }) },
             Screen("Tracking") { Tracking() },
             Screen("Notification preferences") { NotificationPreferences() },
             Screen("Account and privacy") { AccountPrivacy(onOpenLink = { toast(it) }) },
-            Screen("Locker map") { LockerMap(onSelect = { toast("${it["name"]}") }) },
             Screen("Return list") { go -> ReturnList(onCreate = { go(Screen("Return form") { ReturnForm(onCreated = { toast("Created") }) }) }) },
             Screen("Shipping order form") { ShippingOrderForm(onCreated = { toast("Order ${it["id"]}") }) },
             Screen("Store directory") { go ->

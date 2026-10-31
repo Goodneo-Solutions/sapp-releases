@@ -22,7 +22,7 @@ var partnerOperations = func() map[string]Operation {
 	m["customerMovingOrderCalculatePrice"] = Operation{Method: "POST", Path: "/app/v1/moving-orders/calculate-price", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["customerMovingOrderCancel"] = Operation{Method: "POST", Path: "/app/v1/moving-orders/{id}/cancel", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["customerMovingOrderConfig"] = Operation{Method: "GET", Path: "/app/v1/moving-orders/config", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["customerMovingOrderCreate"] = Operation{Method: "POST", Path: "/app/v1/moving-orders", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
+	m["customerMovingOrderCreate"] = Operation{Method: "POST", Path: "/app/v1/moving-orders", Auth: AuthToken, Query: []string{}, Body: BodyJSON, Headers: []string{"Idempotency-Key"}}
 	m["customerMovingOrderPay"] = Operation{Method: "POST", Path: "/app/v1/moving-orders/{id}/pay", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["customerMovingOrderPaymentInfo"] = Operation{Method: "GET", Path: "/app/v1/moving-orders/{id}/payment-info", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["customerMovingOrderShow"] = Operation{Method: "GET", Path: "/app/v1/moving-orders/{id}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
@@ -41,7 +41,7 @@ var partnerOperations = func() map[string]Operation {
 	m["customerSavedFormAnswersList"] = Operation{Method: "GET", Path: "/app/v1/saved-form-answers", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["customerSavedFormAnswersSave"] = Operation{Method: "PUT", Path: "/app/v1/saved-form-answers/{formId}", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["customerShippingOrderCancel"] = Operation{Method: "POST", Path: "/app/v1/shipping-orders/{id}/cancel", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["customerShippingOrderCreate"] = Operation{Method: "POST", Path: "/app/v1/shipping-orders/services/{serviceCode}/orders", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
+	m["customerShippingOrderCreate"] = Operation{Method: "POST", Path: "/app/v1/shipping-orders/services/{serviceCode}/orders", Auth: AuthToken, Query: []string{}, Body: BodyJSON, Headers: []string{"Idempotency-Key"}}
 	m["customerShippingOrderEstimatePrice"] = Operation{Method: "POST", Path: "/app/v1/shipping-orders/services/{serviceCode}/estimate-price", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["customerShippingOrderPay"] = Operation{Method: "POST", Path: "/app/v1/shipping-orders/{id}/pay", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["customerShippingOrderPaymentInfo"] = Operation{Method: "GET", Path: "/app/v1/shipping-orders/{id}/payment-info", Auth: AuthToken, Query: []string{}, Body: BodyNone}
@@ -53,7 +53,7 @@ var partnerOperations = func() map[string]Operation {
 	m["customerStorageOrderCalculatePrice"] = Operation{Method: "POST", Path: "/app/v1/storage-orders/calculate-price", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["customerStorageOrderCancel"] = Operation{Method: "POST", Path: "/app/v1/storage-orders/{id}/cancel", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["customerStorageOrderConfig"] = Operation{Method: "GET", Path: "/app/v1/storage-orders/config", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["customerStorageOrderCreate"] = Operation{Method: "POST", Path: "/app/v1/storage-orders", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
+	m["customerStorageOrderCreate"] = Operation{Method: "POST", Path: "/app/v1/storage-orders", Auth: AuthToken, Query: []string{}, Body: BodyJSON, Headers: []string{"Idempotency-Key"}}
 	m["customerStorageOrderPay"] = Operation{Method: "POST", Path: "/app/v1/storage-orders/{id}/pay", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["customerStorageOrderPaymentInfo"] = Operation{Method: "GET", Path: "/app/v1/storage-orders/{id}/payment-info", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["customerStorageOrderShow"] = Operation{Method: "GET", Path: "/app/v1/storage-orders/{id}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
@@ -130,7 +130,6 @@ var partnerOperations = func() map[string]Operation {
 	m["platformAppBootstrap"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/bootstrap", Auth: AuthKey, Query: []string{"platform", "app_version"}, Body: BodyNone}
 	m["platformAppCancelAccountDeletion"] = Operation{Method: "DELETE", Path: "/app/v1/privacy/account-deletion", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["platformAppCancelReturn"] = Operation{Method: "POST", Path: "/app/v1/returns/{returnId}/cancel", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["platformAppCollectPickup"] = Operation{Method: "POST", Path: "/app/v1/pickups/{deliveryId}/collect", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppCompleteRegistration"] = Operation{Method: "POST", Path: "/app/v1/registration-details", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppCreateReturn"] = Operation{Method: "POST", Path: "/app/v1/returns", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppGroupBuy"] = Operation{Method: "GET", Path: "/app/v1/group-buys/{code}", Auth: AuthToken, Query: []string{"leader", "locale"}, Body: BodyNone}
@@ -158,8 +157,8 @@ var partnerOperations = func() map[string]Operation {
 	m["platformAppGuestGroupBuyOrder"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/group-buy-orders/{token}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
 	m["platformAppGuestGroupBuyOrderPay"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/group-buy-orders/{token}/pay", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
 	m["platformAppGuestGroupBuyOrderReceived"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/group-buy-orders/{token}/received", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestGroupBuyOrders"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/group-buy-orders", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestGroupBuyPlaceOrder"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/group-buys/{code}/order", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON}
+	m["platformAppGuestGroupBuyOrders"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/group-buy-orders", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Order-Token"}}
+	m["platformAppGuestGroupBuyPlaceOrder"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/group-buys/{code}/order", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON, Headers: []string{"X-Guest-Contact-Token"}}
 	m["platformAppGuestGroupBuyQuote"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/group-buys/{code}/quote", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON}
 	m["platformAppGuestGroupBuyVerifyComplete"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/group-buys/{code}/verify/complete", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON}
 	m["platformAppGuestGroupBuyVerifyRequest"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/group-buys/{code}/verify/request", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON}
@@ -169,61 +168,37 @@ var partnerOperations = func() map[string]Operation {
 	m["platformAppGuestMallHome"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/mall/home", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
 	m["platformAppGuestMallSearch"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/mall/search", Auth: AuthKey, Query: []string{"q", "locale"}, Body: BodyNone}
 	m["platformAppGuestMallStores"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/mall/stores", Auth: AuthKey, Query: []string{"type", "tag", "q", "page", "locale"}, Body: BodyNone}
-	m["platformAppGuestShipment"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/shipments/{guestOrderId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestShipmentCancel"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/shipments/{guestOrderId}/cancel", Auth: AuthKey, Query: []string{}, Body: BodyNone}
-	m["platformAppGuestShipmentLabel"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/shipments/{guestOrderId}/label", Auth: AuthKey, Query: []string{}, Body: BodyNone}
+	m["platformAppGuestShipment"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/shipments/{guestOrderId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Order-Token", "X-Guest-Contact-Token"}}
+	m["platformAppGuestShipmentCancel"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/shipments/{guestOrderId}/cancel", Auth: AuthKey, Query: []string{}, Body: BodyNone, Headers: []string{"X-Guest-Order-Token", "X-Guest-Contact-Token"}}
+	m["platformAppGuestShipmentLabel"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/shipments/{guestOrderId}/label", Auth: AuthKey, Query: []string{}, Body: BodyNone, Headers: []string{"X-Guest-Order-Token", "X-Guest-Contact-Token"}}
 	m["platformAppGuestShipmentRate"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/shipments/rate", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
-	m["platformAppGuestShipmentSubmit"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/shipments", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
-	m["platformAppGuestShipments"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/shipments", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
+	m["platformAppGuestShipmentSubmit"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/shipments", Auth: AuthKey, Query: []string{}, Body: BodyJSON, Headers: []string{"X-Guest-Contact-Token"}}
+	m["platformAppGuestShipments"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/shipments", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Contact-Token"}}
 	m["platformAppGuestStore"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}", Auth: AuthKey, Query: []string{"q", "cat", "sort", "table", "locale"}, Body: BodyNone}
-	m["platformAppGuestStoreCart"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/cart", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestStoreCartAdd"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/cart/items", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON}
-	m["platformAppGuestStoreCartRemove"] = Operation{Method: "DELETE", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/cart/items/{itemId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestStoreCartUpdate"] = Operation{Method: "PATCH", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/cart/items/{itemId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON}
+	m["platformAppGuestStoreCart"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/cart", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Cart-Token"}}
+	m["platformAppGuestStoreCartAdd"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/cart/items", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON, Headers: []string{"X-Guest-Cart-Token"}}
+	m["platformAppGuestStoreCartRemove"] = Operation{Method: "DELETE", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/cart/items/{itemId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Cart-Token"}}
+	m["platformAppGuestStoreCartUpdate"] = Operation{Method: "PATCH", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/cart/items/{itemId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON, Headers: []string{"X-Guest-Cart-Token"}}
 	m["platformAppGuestStoreCategory"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/categories/{categoryId}", Auth: AuthKey, Query: []string{"sort", "sub", "in_stock", "page", "locale"}, Body: BodyNone}
-	m["platformAppGuestStoreCheckoutPlace"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/checkout/place", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON}
-	m["platformAppGuestStoreCheckoutQuote"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/checkout/quote", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON}
+	m["platformAppGuestStoreCheckoutPlace"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/checkout/place", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON, Headers: []string{"X-Guest-Cart-Token"}}
+	m["platformAppGuestStoreCheckoutQuote"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/checkout/quote", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON, Headers: []string{"X-Guest-Cart-Token"}}
 	m["platformAppGuestStoreHome"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/home", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestStoreOrder"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestStoreOrderCancel"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/cancel", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestStoreOrderConfirmPayment"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/confirm-payment", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestStoreOrderLockerOpen"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/locker-open", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestStoreOrderLockerRefund"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/locker-refund", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestStoreOrderPay"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/pay", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestStoreOrderReorder"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/reorder", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppGuestStoreOrderReturn"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/return", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON}
-	m["platformAppGuestStoreOrderReview"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/review/{productId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON}
+	m["platformAppGuestStoreOrder"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Order-Token"}}
+	m["platformAppGuestStoreOrderCancel"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/cancel", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Order-Token"}}
+	m["platformAppGuestStoreOrderConfirmPayment"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/confirm-payment", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Order-Token"}}
+	m["platformAppGuestStoreOrderLockerOpen"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/locker-open", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Order-Token"}}
+	m["platformAppGuestStoreOrderLockerRefund"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/locker-refund", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Order-Token"}}
+	m["platformAppGuestStoreOrderPay"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/pay", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Order-Token"}}
+	m["platformAppGuestStoreOrderReorder"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/reorder", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone, Headers: []string{"X-Guest-Cart-Token", "X-Guest-Order-Token"}}
+	m["platformAppGuestStoreOrderReturn"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/return", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON, Headers: []string{"X-Guest-Order-Token"}}
+	m["platformAppGuestStoreOrderReview"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/review/{productId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON, Headers: []string{"X-Guest-Order-Token"}}
 	m["platformAppGuestStoreProduct"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/products/{productId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
 	m["platformAppGuestStorefront"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/storefront", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
 	m["platformAppGuestTrack"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/track", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
 	m["platformAppGuestVerifyComplete"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/verify/complete", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
 	m["platformAppGuestVerifyRequest"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/verify/request", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
-	m["platformAppHandOverPickup"] = Operation{Method: "POST", Path: "/app/v1/pickups/{deliveryId}/handoff", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppHome"] = Operation{Method: "GET", Path: "/app/v1/home", Auth: AuthToken, Query: []string{"latitude", "longitude"}, Body: BodyNone}
 	m["platformAppLinkResolve"] = Operation{Method: "GET", Path: "/app/v1/links/resolve", Auth: AuthToken, Query: []string{"url", "locale"}, Body: BodyNone}
-	m["platformAppLockerLocation"] = Operation{Method: "GET", Path: "/app/v1/locker-locations/{locationId}", Auth: AuthToken, Query: []string{"latitude", "longitude", "origin_address_1", "origin_address_2", "origin_city", "origin_province", "origin_country", "origin_postcode"}, Body: BodyNone}
-	m["platformAppLockerLocationGuide"] = Operation{Method: "GET", Path: "/app/v1/locker-locations/{locationId}/guide", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["platformAppLockerLocationGuideFeedback"] = Operation{Method: "POST", Path: "/app/v1/locker-locations/{locationId}/guide/feedback", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
-	m["platformAppLockerLocations"] = Operation{Method: "GET", Path: "/app/v1/locker-locations", Auth: AuthToken, Query: []string{"latitude", "longitude", "origin_address_1", "origin_address_2", "origin_city", "origin_province", "origin_country", "origin_postcode", "search", "limit", "per_page", "page", "north", "south", "east", "west", "pickup", "return", "online", "available", "favorite", "include_status", "sort"}, Body: BodyNone}
-	m["platformAppLockerShopCatalog"] = Operation{Method: "GET", Path: "/app/v1/locker-locations/{locationId}/shop", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppLockerShopCreateOrder"] = Operation{Method: "POST", Path: "/app/v1/locker-shop/orders", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
-	m["platformAppLockerShopIssueAccessCode"] = Operation{Method: "POST", Path: "/app/v1/locker-shop/access-codes", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
-	m["platformAppLockerShopItems"] = Operation{Method: "GET", Path: "/app/v1/locker-shop/items", Auth: AuthToken, Query: []string{"shelf_id", "store_id", "status", "page", "per_page"}, Body: BodyNone}
-	m["platformAppLockerShopOpen"] = Operation{Method: "POST", Path: "/app/v1/locker-shop/orders/{id}/open", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["platformAppLockerShopOrder"] = Operation{Method: "GET", Path: "/app/v1/locker-shop/orders/{id}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["platformAppLockerShopOrders"] = Operation{Method: "GET", Path: "/app/v1/locker-shop/orders", Auth: AuthToken, Query: []string{"scope", "page", "per_page"}, Body: BodyNone}
-	m["platformAppLockerShopRefundRequest"] = Operation{Method: "POST", Path: "/app/v1/locker-shop/orders/{id}/refund-request", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["platformAppLockerStorageClaim"] = Operation{Method: "POST", Path: "/app/v1/locker-storage/rentals/claim", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
-	m["platformAppLockerStorageDelivery"] = Operation{Method: "POST", Path: "/app/v1/locker-storage/rentals/{id}/delivery", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
-	m["platformAppLockerStorageKeep"] = Operation{Method: "POST", Path: "/app/v1/locker-storage/rentals/{id}/keep", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["platformAppLockerStorageOnwardQuote"] = Operation{Method: "POST", Path: "/app/v1/locker-storage/rentals/{id}/onward-quote", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
-	m["platformAppLockerStoragePickupSite"] = Operation{Method: "POST", Path: "/app/v1/locker-storage/rentals/{id}/pickup-site", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
-	m["platformAppLockerStoragePickupSiteCancel"] = Operation{Method: "POST", Path: "/app/v1/locker-storage/rentals/{id}/pickup-site/cancel", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["platformAppLockerStorageRental"] = Operation{Method: "GET", Path: "/app/v1/locker-storage/rentals/{id}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["platformAppLockerStorageRentals"] = Operation{Method: "GET", Path: "/app/v1/locker-storage/rentals", Auth: AuthToken, Query: []string{"scope", "page", "per_page"}, Body: BodyNone}
-	m["platformAppLockerStorageResendCode"] = Operation{Method: "POST", Path: "/app/v1/locker-storage/rentals/{id}/resend-code", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["platformAppLockerStorageReturnTime"] = Operation{Method: "POST", Path: "/app/v1/locker-storage/rentals/{id}/return-time", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
-	m["platformAppLockerStorageShipment"] = Operation{Method: "POST", Path: "/app/v1/locker-storage/rentals/{id}/shipment", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppMallCategory"] = Operation{Method: "GET", Path: "/app/v1/mall/categories/{categoryId}", Auth: AuthToken, Query: []string{"page", "locale"}, Body: BodyNone}
 	m["platformAppMallGroupBuys"] = Operation{Method: "GET", Path: "/app/v1/mall/group-buys", Auth: AuthToken, Query: []string{"category", "locale"}, Body: BodyNone}
 	m["platformAppMallHome"] = Operation{Method: "GET", Path: "/app/v1/mall/home", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
@@ -242,8 +217,6 @@ var partnerOperations = func() map[string]Operation {
 	m["platformAppPayRequest"] = Operation{Method: "GET", Path: "/app/v1/pay/requests/{publicToken}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["platformAppPayResolveLink"] = Operation{Method: "POST", Path: "/app/v1/pay/links", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppPayResolveTag"] = Operation{Method: "POST", Path: "/app/v1/pay/resolve", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
-	m["platformAppPickup"] = Operation{Method: "GET", Path: "/app/v1/pickups/{deliveryId}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["platformAppPickups"] = Operation{Method: "GET", Path: "/app/v1/pickups", Auth: AuthToken, Query: []string{"status", "per_page", "page"}, Body: BodyNone}
 	m["platformAppPrivacy"] = Operation{Method: "GET", Path: "/app/v1/privacy", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["platformAppPublicQuote"] = Operation{Method: "POST", Path: "/app/v1/quotes/{line}", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppPublicQuoteSchema"] = Operation{Method: "GET", Path: "/app/v1/quotes/schema", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
@@ -282,23 +255,21 @@ var partnerOperations = func() map[string]Operation {
 	m["platformAppStoreOrders"] = Operation{Method: "GET", Path: "/app/v1/store-orders", Auth: AuthToken, Query: []string{"scope", "page", "per_page", "include", "locale"}, Body: BodyNone}
 	m["platformAppStoreProduct"] = Operation{Method: "GET", Path: "/app/v1/stores/{slug}/products/{productId}", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
 	m["platformAppStorefront"] = Operation{Method: "GET", Path: "/app/v1/storefront", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppTakeBackPickup"] = Operation{Method: "POST", Path: "/app/v1/pickups/{deliveryId}/handoff/revoke", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["platformAppTrack"] = Operation{Method: "POST", Path: "/app/v1/track", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
-	m["platformAppUpdateLockerPreference"] = Operation{Method: "PUT", Path: "/app/v1/locker-locations/{locationId}/preference", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppUpdateNotificationPreferences"] = Operation{Method: "PUT", Path: "/app/v1/notifications/preferences", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppVerifyPhone"] = Operation{Method: "POST", Path: "/app/v1/privacy/phone/verify", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppWallet"] = Operation{Method: "GET", Path: "/app/v1/wallet", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
-	m["platformAppWalletCreateTopUp"] = Operation{Method: "POST", Path: "/app/v1/wallet/top-ups", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
+	m["platformAppWalletCreateTopUp"] = Operation{Method: "POST", Path: "/app/v1/wallet/top-ups", Auth: AuthToken, Query: []string{}, Body: BodyJSON, Headers: []string{"Idempotency-Key"}}
 	m["platformAppWalletPaymentMethods"] = Operation{Method: "GET", Path: "/app/v1/wallet/payment-methods", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
 	m["platformAppWalletTaxPreview"] = Operation{Method: "POST", Path: "/app/v1/wallet/tax-preview", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppWalletTopUpStatus"] = Operation{Method: "GET", Path: "/app/v1/wallet/top-ups/{operationId}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["platformAppWalletTransactions"] = Operation{Method: "GET", Path: "/app/v1/wallet/transactions", Auth: AuthToken, Query: []string{"category", "status", "type", "per_page", "page"}, Body: BodyNone}
 	m["platformAppWithdrawAccountClosure"] = Operation{Method: "POST", Path: "/app/v1/account-closure/withdraw", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
 	m["uniorder"] = Operation{Method: "GET", Path: "/app/v1/uniorder/{orderId}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["uniorderCancel"] = Operation{Method: "POST", Path: "/app/v1/uniorder/{orderId}/cancel", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["uniorderCreate"] = Operation{Method: "POST", Path: "/app/v1/uniorder", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
+	m["uniorderCancel"] = Operation{Method: "POST", Path: "/app/v1/uniorder/{orderId}/cancel", Auth: AuthToken, Query: []string{}, Body: BodyNone, Headers: []string{"Idempotency-Key"}}
+	m["uniorderCreate"] = Operation{Method: "POST", Path: "/app/v1/uniorder", Auth: AuthToken, Query: []string{}, Body: BodyJSON, Headers: []string{"Idempotency-Key"}}
 	m["uniorderLabel"] = Operation{Method: "GET", Path: "/app/v1/uniorder/{orderId}/label", Auth: AuthToken, Query: []string{"hide_sender_address", "hide_receiver_address"}, Body: BodyNone}
-	m["uniorderPurchaseLabel"] = Operation{Method: "POST", Path: "/app/v1/uniorder/{orderId}/label", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
+	m["uniorderPurchaseLabel"] = Operation{Method: "POST", Path: "/app/v1/uniorder/{orderId}/label", Auth: AuthToken, Query: []string{}, Body: BodyJSON, Headers: []string{"Idempotency-Key"}}
 	m["uniorderRate"] = Operation{Method: "POST", Path: "/app/v1/uniorder/rate", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["uniorderTracking"] = Operation{Method: "GET", Path: "/app/v1/uniorder/{orderId}/tracking", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	return m
@@ -314,8 +285,8 @@ type BatchAddOrdersToRouteByDriverParams struct {
 }
 
 // BatchAddOrdersToRouteByDriver — POST /app/v1/driver/routes/{routeId}/batch-add-orders-by-driver — Batch Add Orders to Route by Driver
-func (a *PartnerAPI) BatchAddOrdersToRouteByDriver(ctx context.Context, p BatchAddOrdersToRouteByDriverParams) (any, error) {
-	return a.call(ctx, partnerOperations["batchAddOrdersToRouteByDriver"], map[string]any{"routeId": p.RouteId}, p.Body, nil)
+func (a *PartnerAPI) BatchAddOrdersToRouteByDriver(ctx context.Context, p BatchAddOrdersToRouteByDriverParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["batchAddOrdersToRouteByDriver"], map[string]any{"routeId": p.RouteId}, p.Body, nil, opts...)
 }
 
 // CancelRouteByDriverParams are the parameters of PartnerAPI.CancelRouteByDriver.
@@ -325,8 +296,8 @@ type CancelRouteByDriverParams struct {
 }
 
 // CancelRouteByDriver — POST /app/v1/driver/routes/cancel — Cancel route by driver
-func (a *PartnerAPI) CancelRouteByDriver(ctx context.Context, p CancelRouteByDriverParams) (any, error) {
-	return a.call(ctx, partnerOperations["cancelRouteByDriver"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) CancelRouteByDriver(ctx context.Context, p CancelRouteByDriverParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["cancelRouteByDriver"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // CustomerAddressByPostcodePostcodeGetParams are the parameters of PartnerAPI.CustomerAddressByPostcodePostcodeGet.
@@ -336,8 +307,8 @@ type CustomerAddressByPostcodePostcodeGetParams struct {
 }
 
 // CustomerAddressByPostcodePostcodeGet — GET /app/v1/address-by-postcode/{postcode} — GET /app/v1/address-by-postcode/{postcode}
-func (a *PartnerAPI) CustomerAddressByPostcodePostcodeGet(ctx context.Context, p CustomerAddressByPostcodePostcodeGetParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerAddressByPostcodePostcodeGet"], map[string]any{"postcode": p.Postcode}, nil, nil)
+func (a *PartnerAPI) CustomerAddressByPostcodePostcodeGet(ctx context.Context, p CustomerAddressByPostcodePostcodeGetParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerAddressByPostcodePostcodeGet"], map[string]any{"postcode": p.Postcode}, nil, nil, opts...)
 }
 
 // CustomerAddressByPostcodePostcodePostParams are the parameters of PartnerAPI.CustomerAddressByPostcodePostcodePost.
@@ -347,13 +318,13 @@ type CustomerAddressByPostcodePostcodePostParams struct {
 }
 
 // CustomerAddressByPostcodePostcodePost — POST /app/v1/address-by-postcode/{postcode} — POST /app/v1/address-by-postcode/{postcode?}
-func (a *PartnerAPI) CustomerAddressByPostcodePostcodePost(ctx context.Context, p CustomerAddressByPostcodePostcodePostParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerAddressByPostcodePostcodePost"], map[string]any{"postcode": p.Postcode}, nil, nil)
+func (a *PartnerAPI) CustomerAddressByPostcodePostcodePost(ctx context.Context, p CustomerAddressByPostcodePostcodePostParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerAddressByPostcodePostcodePost"], map[string]any{"postcode": p.Postcode}, nil, nil, opts...)
 }
 
 // CustomerDealsGet — GET /app/v1/deals — GET /app/v1/deals
-func (a *PartnerAPI) CustomerDealsGet(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerDealsGet"], nil, nil, nil)
+func (a *PartnerAPI) CustomerDealsGet(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerDealsGet"], nil, nil, nil, opts...)
 }
 
 // CustomerMovingOrderCalculatePriceParams are the parameters of PartnerAPI.CustomerMovingOrderCalculatePrice.
@@ -363,8 +334,8 @@ type CustomerMovingOrderCalculatePriceParams struct {
 }
 
 // CustomerMovingOrderCalculatePrice — POST /app/v1/moving-orders/calculate-price — Calculate the price of a moving order
-func (a *PartnerAPI) CustomerMovingOrderCalculatePrice(ctx context.Context, p CustomerMovingOrderCalculatePriceParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerMovingOrderCalculatePrice"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) CustomerMovingOrderCalculatePrice(ctx context.Context, p CustomerMovingOrderCalculatePriceParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerMovingOrderCalculatePrice"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // CustomerMovingOrderCancelParams are the parameters of PartnerAPI.CustomerMovingOrderCancel.
@@ -374,24 +345,27 @@ type CustomerMovingOrderCancelParams struct {
 }
 
 // CustomerMovingOrderCancel — POST /app/v1/moving-orders/{id}/cancel — Cancel a moving order
-func (a *PartnerAPI) CustomerMovingOrderCancel(ctx context.Context, p CustomerMovingOrderCancelParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerMovingOrderCancel"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerMovingOrderCancel(ctx context.Context, p CustomerMovingOrderCancelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerMovingOrderCancel"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerMovingOrderConfig — GET /app/v1/moving-orders/config — Get the configuration bundle needed to render the customer 'create moving order' form
-func (a *PartnerAPI) CustomerMovingOrderConfig(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerMovingOrderConfig"], nil, nil, nil)
+func (a *PartnerAPI) CustomerMovingOrderConfig(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerMovingOrderConfig"], nil, nil, nil, opts...)
 }
 
 // CustomerMovingOrderCreateParams are the parameters of PartnerAPI.CustomerMovingOrderCreate.
 type CustomerMovingOrderCreateParams struct {
 	// Body is the request body (required).
 	Body map[string]any
+
+	// IdempotencyKey is sent as the Idempotency-Key header (optional). When nil, the client makes one per call.
+	IdempotencyKey *string
 }
 
 // CustomerMovingOrderCreate — POST /app/v1/moving-orders — Create a moving order
-func (a *PartnerAPI) CustomerMovingOrderCreate(ctx context.Context, p CustomerMovingOrderCreateParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerMovingOrderCreate"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) CustomerMovingOrderCreate(ctx context.Context, p CustomerMovingOrderCreateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerMovingOrderCreate"], map[string]any{"Idempotency-Key": p.IdempotencyKey}, p.Body, nil, opts...)
 }
 
 // CustomerMovingOrderPayParams are the parameters of PartnerAPI.CustomerMovingOrderPay.
@@ -404,8 +378,8 @@ type CustomerMovingOrderPayParams struct {
 }
 
 // CustomerMovingOrderPay — POST /app/v1/moving-orders/{id}/pay — Pay a moving order from the wallet balance
-func (a *PartnerAPI) CustomerMovingOrderPay(ctx context.Context, p CustomerMovingOrderPayParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerMovingOrderPay"], map[string]any{"id": p.Id}, p.Body, nil)
+func (a *PartnerAPI) CustomerMovingOrderPay(ctx context.Context, p CustomerMovingOrderPayParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerMovingOrderPay"], map[string]any{"id": p.Id}, p.Body, nil, opts...)
 }
 
 // CustomerMovingOrderPaymentInfoParams are the parameters of PartnerAPI.CustomerMovingOrderPaymentInfo.
@@ -415,8 +389,8 @@ type CustomerMovingOrderPaymentInfoParams struct {
 }
 
 // CustomerMovingOrderPaymentInfo — GET /app/v1/moving-orders/{id}/payment-info — Get the payment options of a moving order
-func (a *PartnerAPI) CustomerMovingOrderPaymentInfo(ctx context.Context, p CustomerMovingOrderPaymentInfoParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerMovingOrderPaymentInfo"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerMovingOrderPaymentInfo(ctx context.Context, p CustomerMovingOrderPaymentInfoParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerMovingOrderPaymentInfo"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerMovingOrderShowParams are the parameters of PartnerAPI.CustomerMovingOrderShow.
@@ -426,8 +400,8 @@ type CustomerMovingOrderShowParams struct {
 }
 
 // CustomerMovingOrderShow — GET /app/v1/moving-orders/{id} — Get the detail of one moving order owned by the authenticated customer
-func (a *PartnerAPI) CustomerMovingOrderShow(ctx context.Context, p CustomerMovingOrderShowParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerMovingOrderShow"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerMovingOrderShow(ctx context.Context, p CustomerMovingOrderShowParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerMovingOrderShow"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerMovingOrderUpdateParams are the parameters of PartnerAPI.CustomerMovingOrderUpdate.
@@ -440,8 +414,8 @@ type CustomerMovingOrderUpdateParams struct {
 }
 
 // CustomerMovingOrderUpdate — PUT /app/v1/moving-orders/{id} — Update a moving order
-func (a *PartnerAPI) CustomerMovingOrderUpdate(ctx context.Context, p CustomerMovingOrderUpdateParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerMovingOrderUpdate"], map[string]any{"id": p.Id}, p.Body, nil)
+func (a *PartnerAPI) CustomerMovingOrderUpdate(ctx context.Context, p CustomerMovingOrderUpdateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerMovingOrderUpdate"], map[string]any{"id": p.Id}, p.Body, nil, opts...)
 }
 
 // CustomerMovingOrdersParams are the parameters of PartnerAPI.CustomerMovingOrders.
@@ -472,13 +446,13 @@ type CustomerMovingOrdersParams struct {
 }
 
 // CustomerMovingOrders — GET /app/v1/moving-orders — List the authenticated customer's moving orders
-func (a *PartnerAPI) CustomerMovingOrders(ctx context.Context, p CustomerMovingOrdersParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerMovingOrders"], map[string]any{"status": p.Status, "moving_date_from": p.MovingDateFrom, "moving_date_to": p.MovingDateTo, "created_at_from": p.CreatedAtFrom, "created_at_to": p.CreatedAtTo, "sort_by": p.SortBy, "per_page": p.PerPage, "page": p.Page}, nil, nil)
+func (a *PartnerAPI) CustomerMovingOrders(ctx context.Context, p CustomerMovingOrdersParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerMovingOrders"], map[string]any{"status": p.Status, "moving_date_from": p.MovingDateFrom, "moving_date_to": p.MovingDateTo, "created_at_from": p.CreatedAtFrom, "created_at_to": p.CreatedAtTo, "sort_by": p.SortBy, "per_page": p.PerPage, "page": p.Page}, nil, nil, opts...)
 }
 
 // CustomerOrderAddressbookGet — GET /app/v1/order-addressbook — GET /app/v1/order-addressbook
-func (a *PartnerAPI) CustomerOrderAddressbookGet(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerOrderAddressbookGet"], nil, nil, nil)
+func (a *PartnerAPI) CustomerOrderAddressbookGet(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerOrderAddressbookGet"], nil, nil, nil, opts...)
 }
 
 // CustomerOrderAddressbookIdDeleteParams are the parameters of PartnerAPI.CustomerOrderAddressbookIdDelete.
@@ -488,8 +462,8 @@ type CustomerOrderAddressbookIdDeleteParams struct {
 }
 
 // CustomerOrderAddressbookIdDelete — DELETE /app/v1/order-addressbook/{id} — DELETE /app/v1/order-addressbook/{id}
-func (a *PartnerAPI) CustomerOrderAddressbookIdDelete(ctx context.Context, p CustomerOrderAddressbookIdDeleteParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerOrderAddressbookIdDelete"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerOrderAddressbookIdDelete(ctx context.Context, p CustomerOrderAddressbookIdDeleteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerOrderAddressbookIdDelete"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerOrderAddressbookIdGetParams are the parameters of PartnerAPI.CustomerOrderAddressbookIdGet.
@@ -499,8 +473,8 @@ type CustomerOrderAddressbookIdGetParams struct {
 }
 
 // CustomerOrderAddressbookIdGet — GET /app/v1/order-addressbook/{id} — GET /app/v1/order-addressbook/{id}
-func (a *PartnerAPI) CustomerOrderAddressbookIdGet(ctx context.Context, p CustomerOrderAddressbookIdGetParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerOrderAddressbookIdGet"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerOrderAddressbookIdGet(ctx context.Context, p CustomerOrderAddressbookIdGetParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerOrderAddressbookIdGet"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerOrderAddressbookIdPutParams are the parameters of PartnerAPI.CustomerOrderAddressbookIdPut.
@@ -510,33 +484,33 @@ type CustomerOrderAddressbookIdPutParams struct {
 }
 
 // CustomerOrderAddressbookIdPut — PUT /app/v1/order-addressbook/{id} — PUT /app/v1/order-addressbook/{id}
-func (a *PartnerAPI) CustomerOrderAddressbookIdPut(ctx context.Context, p CustomerOrderAddressbookIdPutParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerOrderAddressbookIdPut"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerOrderAddressbookIdPut(ctx context.Context, p CustomerOrderAddressbookIdPutParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerOrderAddressbookIdPut"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerOrderAddressbookPost — POST /app/v1/order-addressbook — POST /app/v1/order-addressbook
-func (a *PartnerAPI) CustomerOrderAddressbookPost(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerOrderAddressbookPost"], nil, nil, nil)
+func (a *PartnerAPI) CustomerOrderAddressbookPost(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerOrderAddressbookPost"], nil, nil, nil, opts...)
 }
 
 // CustomerOrderAnnouncementsConfirmPost — POST /app/v1/order-announcements/confirm — POST /app/v1/order-announcements/confirm
-func (a *PartnerAPI) CustomerOrderAnnouncementsConfirmPost(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerOrderAnnouncementsConfirmPost"], nil, nil, nil)
+func (a *PartnerAPI) CustomerOrderAnnouncementsConfirmPost(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerOrderAnnouncementsConfirmPost"], nil, nil, nil, opts...)
 }
 
 // CustomerOrderAnnouncementsGet — GET /app/v1/order-announcements — GET /app/v1/order-announcements
-func (a *PartnerAPI) CustomerOrderAnnouncementsGet(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerOrderAnnouncementsGet"], nil, nil, nil)
+func (a *PartnerAPI) CustomerOrderAnnouncementsGet(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerOrderAnnouncementsGet"], nil, nil, nil, opts...)
 }
 
 // CustomerProfileGet — GET /app/v1/profile — GET /app/v1/profile
-func (a *PartnerAPI) CustomerProfileGet(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerProfileGet"], nil, nil, nil)
+func (a *PartnerAPI) CustomerProfileGet(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerProfileGet"], nil, nil, nil, opts...)
 }
 
 // CustomerProfilePost — POST /app/v1/profile — POST /app/v1/profile
-func (a *PartnerAPI) CustomerProfilePost(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerProfilePost"], nil, nil, nil)
+func (a *PartnerAPI) CustomerProfilePost(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerProfilePost"], nil, nil, nil, opts...)
 }
 
 // CustomerSavedFormAnswersDeleteParams are the parameters of PartnerAPI.CustomerSavedFormAnswersDelete.
@@ -546,13 +520,13 @@ type CustomerSavedFormAnswersDeleteParams struct {
 }
 
 // CustomerSavedFormAnswersDelete — DELETE /app/v1/saved-form-answers/{formId} — Remove the answers the customer keeps for one order form
-func (a *PartnerAPI) CustomerSavedFormAnswersDelete(ctx context.Context, p CustomerSavedFormAnswersDeleteParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerSavedFormAnswersDelete"], map[string]any{"formId": p.FormId}, nil, nil)
+func (a *PartnerAPI) CustomerSavedFormAnswersDelete(ctx context.Context, p CustomerSavedFormAnswersDeleteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerSavedFormAnswersDelete"], map[string]any{"formId": p.FormId}, nil, nil, opts...)
 }
 
 // CustomerSavedFormAnswersList — GET /app/v1/saved-form-answers — List the order forms whose answers the customer may keep on their account
-func (a *PartnerAPI) CustomerSavedFormAnswersList(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerSavedFormAnswersList"], nil, nil, nil)
+func (a *PartnerAPI) CustomerSavedFormAnswersList(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerSavedFormAnswersList"], nil, nil, nil, opts...)
 }
 
 // CustomerSavedFormAnswersSaveParams are the parameters of PartnerAPI.CustomerSavedFormAnswersSave.
@@ -565,8 +539,8 @@ type CustomerSavedFormAnswersSaveParams struct {
 }
 
 // CustomerSavedFormAnswersSave — PUT /app/v1/saved-form-answers/{formId} — Save the answers the customer keeps for one order form
-func (a *PartnerAPI) CustomerSavedFormAnswersSave(ctx context.Context, p CustomerSavedFormAnswersSaveParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerSavedFormAnswersSave"], map[string]any{"formId": p.FormId}, p.Body, nil)
+func (a *PartnerAPI) CustomerSavedFormAnswersSave(ctx context.Context, p CustomerSavedFormAnswersSaveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerSavedFormAnswersSave"], map[string]any{"formId": p.FormId}, p.Body, nil, opts...)
 }
 
 // CustomerShippingOrderCancelParams are the parameters of PartnerAPI.CustomerShippingOrderCancel.
@@ -576,8 +550,8 @@ type CustomerShippingOrderCancelParams struct {
 }
 
 // CustomerShippingOrderCancel — POST /app/v1/shipping-orders/{id}/cancel — Cancel a shipping order
-func (a *PartnerAPI) CustomerShippingOrderCancel(ctx context.Context, p CustomerShippingOrderCancelParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerShippingOrderCancel"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerShippingOrderCancel(ctx context.Context, p CustomerShippingOrderCancelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerShippingOrderCancel"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerShippingOrderCreateParams are the parameters of PartnerAPI.CustomerShippingOrderCreate.
@@ -587,11 +561,14 @@ type CustomerShippingOrderCreateParams struct {
 
 	// Body is the request body (required).
 	Body map[string]any
+
+	// IdempotencyKey is sent as the Idempotency-Key header (optional). When nil, the client makes one per call.
+	IdempotencyKey *string
 }
 
 // CustomerShippingOrderCreate — POST /app/v1/shipping-orders/services/{serviceCode}/orders — Create a shipping order on a service
-func (a *PartnerAPI) CustomerShippingOrderCreate(ctx context.Context, p CustomerShippingOrderCreateParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerShippingOrderCreate"], map[string]any{"serviceCode": p.ServiceCode}, p.Body, nil)
+func (a *PartnerAPI) CustomerShippingOrderCreate(ctx context.Context, p CustomerShippingOrderCreateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerShippingOrderCreate"], map[string]any{"serviceCode": p.ServiceCode, "Idempotency-Key": p.IdempotencyKey}, p.Body, nil, opts...)
 }
 
 // CustomerShippingOrderEstimatePriceParams are the parameters of PartnerAPI.CustomerShippingOrderEstimatePrice.
@@ -604,8 +581,8 @@ type CustomerShippingOrderEstimatePriceParams struct {
 }
 
 // CustomerShippingOrderEstimatePrice — POST /app/v1/shipping-orders/services/{serviceCode}/estimate-price — Estimate the price of a shipping order on a service
-func (a *PartnerAPI) CustomerShippingOrderEstimatePrice(ctx context.Context, p CustomerShippingOrderEstimatePriceParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerShippingOrderEstimatePrice"], map[string]any{"serviceCode": p.ServiceCode}, p.Body, nil)
+func (a *PartnerAPI) CustomerShippingOrderEstimatePrice(ctx context.Context, p CustomerShippingOrderEstimatePriceParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerShippingOrderEstimatePrice"], map[string]any{"serviceCode": p.ServiceCode}, p.Body, nil, opts...)
 }
 
 // CustomerShippingOrderPayParams are the parameters of PartnerAPI.CustomerShippingOrderPay.
@@ -618,8 +595,8 @@ type CustomerShippingOrderPayParams struct {
 }
 
 // CustomerShippingOrderPay — POST /app/v1/shipping-orders/{id}/pay — Pay a shipping order from the wallet balance
-func (a *PartnerAPI) CustomerShippingOrderPay(ctx context.Context, p CustomerShippingOrderPayParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerShippingOrderPay"], map[string]any{"id": p.Id}, p.Body, nil)
+func (a *PartnerAPI) CustomerShippingOrderPay(ctx context.Context, p CustomerShippingOrderPayParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerShippingOrderPay"], map[string]any{"id": p.Id}, p.Body, nil, opts...)
 }
 
 // CustomerShippingOrderPaymentInfoParams are the parameters of PartnerAPI.CustomerShippingOrderPaymentInfo.
@@ -629,8 +606,8 @@ type CustomerShippingOrderPaymentInfoParams struct {
 }
 
 // CustomerShippingOrderPaymentInfo — GET /app/v1/shipping-orders/{id}/payment-info — Get the payment information of a shipping order
-func (a *PartnerAPI) CustomerShippingOrderPaymentInfo(ctx context.Context, p CustomerShippingOrderPaymentInfoParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerShippingOrderPaymentInfo"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerShippingOrderPaymentInfo(ctx context.Context, p CustomerShippingOrderPaymentInfoParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerShippingOrderPaymentInfo"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerShippingOrderServiceConfigParams are the parameters of PartnerAPI.CustomerShippingOrderServiceConfig.
@@ -640,13 +617,13 @@ type CustomerShippingOrderServiceConfigParams struct {
 }
 
 // CustomerShippingOrderServiceConfig — GET /app/v1/shipping-orders/services/{serviceCode}/config — Get the per-service configuration bundle needed to render the 'create shipping order' form
-func (a *PartnerAPI) CustomerShippingOrderServiceConfig(ctx context.Context, p CustomerShippingOrderServiceConfigParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerShippingOrderServiceConfig"], map[string]any{"serviceCode": p.ServiceCode}, nil, nil)
+func (a *PartnerAPI) CustomerShippingOrderServiceConfig(ctx context.Context, p CustomerShippingOrderServiceConfigParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerShippingOrderServiceConfig"], map[string]any{"serviceCode": p.ServiceCode}, nil, nil, opts...)
 }
 
 // CustomerShippingOrderServices — GET /app/v1/shipping-orders/services — List shipping services available to the authenticated customer
-func (a *PartnerAPI) CustomerShippingOrderServices(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerShippingOrderServices"], nil, nil, nil)
+func (a *PartnerAPI) CustomerShippingOrderServices(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerShippingOrderServices"], nil, nil, nil, opts...)
 }
 
 // CustomerShippingOrderShowParams are the parameters of PartnerAPI.CustomerShippingOrderShow.
@@ -656,8 +633,8 @@ type CustomerShippingOrderShowParams struct {
 }
 
 // CustomerShippingOrderShow — GET /app/v1/shipping-orders/{id} — Get the detail of one shipping order owned by the authenticated customer
-func (a *PartnerAPI) CustomerShippingOrderShow(ctx context.Context, p CustomerShippingOrderShowParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerShippingOrderShow"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerShippingOrderShow(ctx context.Context, p CustomerShippingOrderShowParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerShippingOrderShow"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerShippingOrderUpdateParams are the parameters of PartnerAPI.CustomerShippingOrderUpdate.
@@ -670,8 +647,8 @@ type CustomerShippingOrderUpdateParams struct {
 }
 
 // CustomerShippingOrderUpdate — PUT /app/v1/shipping-orders/{id} — Update a shipping order
-func (a *PartnerAPI) CustomerShippingOrderUpdate(ctx context.Context, p CustomerShippingOrderUpdateParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerShippingOrderUpdate"], map[string]any{"id": p.Id}, p.Body, nil)
+func (a *PartnerAPI) CustomerShippingOrderUpdate(ctx context.Context, p CustomerShippingOrderUpdateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerShippingOrderUpdate"], map[string]any{"id": p.Id}, p.Body, nil, opts...)
 }
 
 // CustomerShippingOrdersParams are the parameters of PartnerAPI.CustomerShippingOrders.
@@ -702,8 +679,8 @@ type CustomerShippingOrdersParams struct {
 }
 
 // CustomerShippingOrders — GET /app/v1/shipping-orders/services/{serviceCode}/orders — List the authenticated customer's shipping orders under one service
-func (a *PartnerAPI) CustomerShippingOrders(ctx context.Context, p CustomerShippingOrdersParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerShippingOrders"], map[string]any{"serviceCode": p.ServiceCode, "status": p.Status, "id": p.Id, "created_at_from": p.CreatedAtFrom, "created_at_to": p.CreatedAtTo, "sort_by": p.SortBy, "per_page": p.PerPage, "page": p.Page}, nil, nil)
+func (a *PartnerAPI) CustomerShippingOrders(ctx context.Context, p CustomerShippingOrdersParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerShippingOrders"], map[string]any{"serviceCode": p.ServiceCode, "status": p.Status, "id": p.Id, "created_at_from": p.CreatedAtFrom, "created_at_to": p.CreatedAtTo, "sort_by": p.SortBy, "per_page": p.PerPage, "page": p.Page}, nil, nil, opts...)
 }
 
 // CustomerStorageOrderCalculatePriceParams are the parameters of PartnerAPI.CustomerStorageOrderCalculatePrice.
@@ -713,8 +690,8 @@ type CustomerStorageOrderCalculatePriceParams struct {
 }
 
 // CustomerStorageOrderCalculatePrice — POST /app/v1/storage-orders/calculate-price — Calculate the price of a storage order
-func (a *PartnerAPI) CustomerStorageOrderCalculatePrice(ctx context.Context, p CustomerStorageOrderCalculatePriceParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerStorageOrderCalculatePrice"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) CustomerStorageOrderCalculatePrice(ctx context.Context, p CustomerStorageOrderCalculatePriceParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerStorageOrderCalculatePrice"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // CustomerStorageOrderCancelParams are the parameters of PartnerAPI.CustomerStorageOrderCancel.
@@ -724,24 +701,27 @@ type CustomerStorageOrderCancelParams struct {
 }
 
 // CustomerStorageOrderCancel — POST /app/v1/storage-orders/{id}/cancel — Cancel a storage order
-func (a *PartnerAPI) CustomerStorageOrderCancel(ctx context.Context, p CustomerStorageOrderCancelParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerStorageOrderCancel"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerStorageOrderCancel(ctx context.Context, p CustomerStorageOrderCancelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerStorageOrderCancel"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerStorageOrderConfig — GET /app/v1/storage-orders/config — Get the configuration bundle needed to render the customer 'create storage order' form
-func (a *PartnerAPI) CustomerStorageOrderConfig(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["customerStorageOrderConfig"], nil, nil, nil)
+func (a *PartnerAPI) CustomerStorageOrderConfig(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerStorageOrderConfig"], nil, nil, nil, opts...)
 }
 
 // CustomerStorageOrderCreateParams are the parameters of PartnerAPI.CustomerStorageOrderCreate.
 type CustomerStorageOrderCreateParams struct {
 	// Body is the request body (required).
 	Body map[string]any
+
+	// IdempotencyKey is sent as the Idempotency-Key header (optional). When nil, the client makes one per call.
+	IdempotencyKey *string
 }
 
 // CustomerStorageOrderCreate — POST /app/v1/storage-orders — Create a storage order
-func (a *PartnerAPI) CustomerStorageOrderCreate(ctx context.Context, p CustomerStorageOrderCreateParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerStorageOrderCreate"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) CustomerStorageOrderCreate(ctx context.Context, p CustomerStorageOrderCreateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerStorageOrderCreate"], map[string]any{"Idempotency-Key": p.IdempotencyKey}, p.Body, nil, opts...)
 }
 
 // CustomerStorageOrderPayParams are the parameters of PartnerAPI.CustomerStorageOrderPay.
@@ -754,8 +734,8 @@ type CustomerStorageOrderPayParams struct {
 }
 
 // CustomerStorageOrderPay — POST /app/v1/storage-orders/{id}/pay — Pay a storage order from the wallet balance
-func (a *PartnerAPI) CustomerStorageOrderPay(ctx context.Context, p CustomerStorageOrderPayParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerStorageOrderPay"], map[string]any{"id": p.Id}, p.Body, nil)
+func (a *PartnerAPI) CustomerStorageOrderPay(ctx context.Context, p CustomerStorageOrderPayParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerStorageOrderPay"], map[string]any{"id": p.Id}, p.Body, nil, opts...)
 }
 
 // CustomerStorageOrderPaymentInfoParams are the parameters of PartnerAPI.CustomerStorageOrderPaymentInfo.
@@ -765,8 +745,8 @@ type CustomerStorageOrderPaymentInfoParams struct {
 }
 
 // CustomerStorageOrderPaymentInfo — GET /app/v1/storage-orders/{id}/payment-info — Get the payment options of a storage order
-func (a *PartnerAPI) CustomerStorageOrderPaymentInfo(ctx context.Context, p CustomerStorageOrderPaymentInfoParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerStorageOrderPaymentInfo"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerStorageOrderPaymentInfo(ctx context.Context, p CustomerStorageOrderPaymentInfoParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerStorageOrderPaymentInfo"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerStorageOrderShowParams are the parameters of PartnerAPI.CustomerStorageOrderShow.
@@ -776,8 +756,8 @@ type CustomerStorageOrderShowParams struct {
 }
 
 // CustomerStorageOrderShow — GET /app/v1/storage-orders/{id} — Get the detail of one storage order owned by the authenticated customer
-func (a *PartnerAPI) CustomerStorageOrderShow(ctx context.Context, p CustomerStorageOrderShowParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerStorageOrderShow"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) CustomerStorageOrderShow(ctx context.Context, p CustomerStorageOrderShowParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerStorageOrderShow"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // CustomerStorageOrderUpdateParams are the parameters of PartnerAPI.CustomerStorageOrderUpdate.
@@ -790,8 +770,8 @@ type CustomerStorageOrderUpdateParams struct {
 }
 
 // CustomerStorageOrderUpdate — PUT /app/v1/storage-orders/{id} — Update a storage order
-func (a *PartnerAPI) CustomerStorageOrderUpdate(ctx context.Context, p CustomerStorageOrderUpdateParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerStorageOrderUpdate"], map[string]any{"id": p.Id}, p.Body, nil)
+func (a *PartnerAPI) CustomerStorageOrderUpdate(ctx context.Context, p CustomerStorageOrderUpdateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerStorageOrderUpdate"], map[string]any{"id": p.Id}, p.Body, nil, opts...)
 }
 
 // CustomerStorageOrdersParams are the parameters of PartnerAPI.CustomerStorageOrders.
@@ -834,8 +814,8 @@ type CustomerStorageOrdersParams struct {
 }
 
 // CustomerStorageOrders — GET /app/v1/storage-orders — List the authenticated customer's storage orders
-func (a *PartnerAPI) CustomerStorageOrders(ctx context.Context, p CustomerStorageOrdersParams) (any, error) {
-	return a.call(ctx, partnerOperations["customerStorageOrders"], map[string]any{"status": p.Status, "warehouse_id": p.WarehouseId, "store_from": p.StoreFrom, "store_to": p.StoreTo, "created_at_from": p.CreatedAtFrom, "created_at_to": p.CreatedAtTo, "quick_search": p.QuickSearch, "id": p.Id, "package_id": p.PackageId, "sort_by": p.SortBy, "per_page": p.PerPage, "page": p.Page}, nil, nil)
+func (a *PartnerAPI) CustomerStorageOrders(ctx context.Context, p CustomerStorageOrdersParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["customerStorageOrders"], map[string]any{"status": p.Status, "warehouse_id": p.WarehouseId, "store_from": p.StoreFrom, "store_to": p.StoreTo, "created_at_from": p.CreatedAtFrom, "created_at_to": p.CreatedAtTo, "quick_search": p.QuickSearch, "id": p.Id, "package_id": p.PackageId, "sort_by": p.SortBy, "per_page": p.PerPage, "page": p.Page}, nil, nil, opts...)
 }
 
 // DriverAddGpsTackingRecordParams are the parameters of PartnerAPI.DriverAddGpsTackingRecord.
@@ -845,8 +825,8 @@ type DriverAddGpsTackingRecordParams struct {
 }
 
 // DriverAddGpsTackingRecord — POST /app/v1/driver/addGpsTackingRecord — Add Gps Tracking Record
-func (a *PartnerAPI) DriverAddGpsTackingRecord(ctx context.Context, p DriverAddGpsTackingRecordParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverAddGpsTackingRecord"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverAddGpsTackingRecord(ctx context.Context, p DriverAddGpsTackingRecordParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverAddGpsTackingRecord"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverAssignmentRespondParams are the parameters of PartnerAPI.DriverAssignmentRespond.
@@ -856,18 +836,18 @@ type DriverAssignmentRespondParams struct {
 }
 
 // DriverAssignmentRespond — POST /app/v1/driver/orders/{orderId}/accept — Accept an assigned order
-func (a *PartnerAPI) DriverAssignmentRespond(ctx context.Context, p DriverAssignmentRespondParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverAssignmentRespond"], map[string]any{"orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) DriverAssignmentRespond(ctx context.Context, p DriverAssignmentRespondParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverAssignmentRespond"], map[string]any{"orderId": p.OrderId}, nil, nil, opts...)
 }
 
 // DriverAssignmentsPendingGet — GET /app/v1/driver/assignments/pending — Pending auto-assign offers
-func (a *PartnerAPI) DriverAssignmentsPendingGet(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverAssignmentsPendingGet"], nil, nil, nil)
+func (a *PartnerAPI) DriverAssignmentsPendingGet(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverAssignmentsPendingGet"], nil, nil, nil, opts...)
 }
 
 // DriverAvailabilityShow — GET /app/v1/driver/availability — Current availability (online, heartbeat, load)
-func (a *PartnerAPI) DriverAvailabilityShow(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverAvailabilityShow"], nil, nil, nil)
+func (a *PartnerAPI) DriverAvailabilityShow(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverAvailabilityShow"], nil, nil, nil, opts...)
 }
 
 // DriverAvailabilityUpdateParams are the parameters of PartnerAPI.DriverAvailabilityUpdate.
@@ -877,8 +857,8 @@ type DriverAvailabilityUpdateParams struct {
 }
 
 // DriverAvailabilityUpdate — POST /app/v1/driver/availability — Go online/offline or send a heartbeat
-func (a *PartnerAPI) DriverAvailabilityUpdate(ctx context.Context, p DriverAvailabilityUpdateParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverAvailabilityUpdate"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverAvailabilityUpdate(ctx context.Context, p DriverAvailabilityUpdateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverAvailabilityUpdate"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverBatchUpdateDeliverParams are the parameters of PartnerAPI.DriverBatchUpdateDeliver.
@@ -891,8 +871,8 @@ type DriverBatchUpdateDeliverParams struct {
 }
 
 // DriverBatchUpdateDeliver — POST /app/v1/driver/batch-update-deliver — POST /app/v1/driver/batch-update-deliver
-func (a *PartnerAPI) DriverBatchUpdateDeliver(ctx context.Context, p DriverBatchUpdateDeliverParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverBatchUpdateDeliver"], map[string]any{}, p.Body, p.Files)
+func (a *PartnerAPI) DriverBatchUpdateDeliver(ctx context.Context, p DriverBatchUpdateDeliverParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverBatchUpdateDeliver"], map[string]any{}, p.Body, p.Files, opts...)
 }
 
 // DriverBoardsIdBidPostParams are the parameters of PartnerAPI.DriverBoardsIdBidPost.
@@ -905,8 +885,8 @@ type DriverBoardsIdBidPostParams struct {
 }
 
 // DriverBoardsIdBidPost — POST /app/v1/driver/boards/{id}/bid — Place or lower a bid on a seat of a bid-mode (reverse auction) Route Board
-func (a *PartnerAPI) DriverBoardsIdBidPost(ctx context.Context, p DriverBoardsIdBidPostParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverBoardsIdBidPost"], map[string]any{"id": p.Id}, p.Body, nil)
+func (a *PartnerAPI) DriverBoardsIdBidPost(ctx context.Context, p DriverBoardsIdBidPostParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverBoardsIdBidPost"], map[string]any{"id": p.Id}, p.Body, nil, opts...)
 }
 
 // DriverBoardsIdClaimPostParams are the parameters of PartnerAPI.DriverBoardsIdClaimPost.
@@ -919,8 +899,8 @@ type DriverBoardsIdClaimPostParams struct {
 }
 
 // DriverBoardsIdClaimPost — POST /app/v1/driver/boards/{id}/claim — Claim a seat (route) on a Route Board, or grab a seat on a seat-mode board
-func (a *PartnerAPI) DriverBoardsIdClaimPost(ctx context.Context, p DriverBoardsIdClaimPostParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverBoardsIdClaimPost"], map[string]any{"id": p.Id}, p.Body, nil)
+func (a *PartnerAPI) DriverBoardsIdClaimPost(ctx context.Context, p DriverBoardsIdClaimPostParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverBoardsIdClaimPost"], map[string]any{"id": p.Id}, p.Body, nil, opts...)
 }
 
 // DriverClaimsGetParams are the parameters of PartnerAPI.DriverClaimsGet.
@@ -930,8 +910,8 @@ type DriverClaimsGetParams struct {
 }
 
 // DriverClaimsGet — GET /app/v1/driver/claims — List your Route Board claims
-func (a *PartnerAPI) DriverClaimsGet(ctx context.Context, p DriverClaimsGetParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverClaimsGet"], map[string]any{"history": p.History}, nil, nil)
+func (a *PartnerAPI) DriverClaimsGet(ctx context.Context, p DriverClaimsGetParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverClaimsGet"], map[string]any{"history": p.History}, nil, nil, opts...)
 }
 
 // DriverClaimsIdWithdrawPostParams are the parameters of PartnerAPI.DriverClaimsIdWithdrawPost.
@@ -941,8 +921,8 @@ type DriverClaimsIdWithdrawPostParams struct {
 }
 
 // DriverClaimsIdWithdrawPost — POST /app/v1/driver/claims/{id}/withdraw — Withdraw one of your Route Board claims
-func (a *PartnerAPI) DriverClaimsIdWithdrawPost(ctx context.Context, p DriverClaimsIdWithdrawPostParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverClaimsIdWithdrawPost"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) DriverClaimsIdWithdrawPost(ctx context.Context, p DriverClaimsIdWithdrawPostParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverClaimsIdWithdrawPost"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // DriverCreateRouteParams are the parameters of PartnerAPI.DriverCreateRoute.
@@ -952,8 +932,8 @@ type DriverCreateRouteParams struct {
 }
 
 // DriverCreateRoute — POST /app/v1/driver/create-route — Create a new route by driver
-func (a *PartnerAPI) DriverCreateRoute(ctx context.Context, p DriverCreateRouteParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverCreateRoute"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverCreateRoute(ctx context.Context, p DriverCreateRouteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverCreateRoute"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverDeletePicturesParams are the parameters of PartnerAPI.DriverDeletePictures.
@@ -963,13 +943,13 @@ type DriverDeletePicturesParams struct {
 }
 
 // DriverDeletePictures — POST /app/v1/driver/delete-pictures — Delete order picture by orderfile Id
-func (a *PartnerAPI) DriverDeletePictures(ctx context.Context, p DriverDeletePicturesParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverDeletePictures"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverDeletePictures(ctx context.Context, p DriverDeletePicturesParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverDeletePictures"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverDuty — GET /app/v1/driver/duty — Driver duty status and pending offers
-func (a *PartnerAPI) DriverDuty(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverDuty"], nil, nil, nil)
+func (a *PartnerAPI) DriverDuty(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverDuty"], nil, nil, nil, opts...)
 }
 
 // DriverDutyUpdateParams are the parameters of PartnerAPI.DriverDutyUpdate.
@@ -979,8 +959,8 @@ type DriverDutyUpdateParams struct {
 }
 
 // DriverDutyUpdate — POST /app/v1/driver/duty — Go on / off duty
-func (a *PartnerAPI) DriverDutyUpdate(ctx context.Context, p DriverDutyUpdateParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverDutyUpdate"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverDutyUpdate(ctx context.Context, p DriverDutyUpdateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverDutyUpdate"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverEarningsParams are the parameters of PartnerAPI.DriverEarnings.
@@ -996,8 +976,8 @@ type DriverEarningsParams struct {
 }
 
 // DriverEarnings — GET /app/v1/driver/earnings — Driver earnings summary
-func (a *PartnerAPI) DriverEarnings(ctx context.Context, p DriverEarningsParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverEarnings"], map[string]any{"period": p.Period, "from": p.From, "to": p.To}, nil, nil)
+func (a *PartnerAPI) DriverEarnings(ctx context.Context, p DriverEarningsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverEarnings"], map[string]any{"period": p.Period, "from": p.From, "to": p.To}, nil, nil, opts...)
 }
 
 // DriverEndDeliveryParams are the parameters of PartnerAPI.DriverEndDelivery.
@@ -1007,8 +987,8 @@ type DriverEndDeliveryParams struct {
 }
 
 // DriverEndDelivery — POST /app/v1/driver/endDelivery — end Delivery By route id
-func (a *PartnerAPI) DriverEndDelivery(ctx context.Context, p DriverEndDeliveryParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverEndDelivery"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverEndDelivery(ctx context.Context, p DriverEndDeliveryParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverEndDelivery"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverFirebaseRoutesRouteIdAreaAreaGetParams are the parameters of PartnerAPI.DriverFirebaseRoutesRouteIdAreaAreaGet.
@@ -1021,8 +1001,8 @@ type DriverFirebaseRoutesRouteIdAreaAreaGetParams struct {
 }
 
 // DriverFirebaseRoutesRouteIdAreaAreaGet — GET /app/v1/driver/firebase/routes/{routeId}/area/{area} — GET /app/v1/driver/firebase/routes/{routeId}/area/{area}
-func (a *PartnerAPI) DriverFirebaseRoutesRouteIdAreaAreaGet(ctx context.Context, p DriverFirebaseRoutesRouteIdAreaAreaGetParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverFirebaseRoutesRouteIdAreaAreaGet"], map[string]any{"routeId": p.RouteId, "area": p.Area}, nil, nil)
+func (a *PartnerAPI) DriverFirebaseRoutesRouteIdAreaAreaGet(ctx context.Context, p DriverFirebaseRoutesRouteIdAreaAreaGetParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverFirebaseRoutesRouteIdAreaAreaGet"], map[string]any{"routeId": p.RouteId, "area": p.Area}, nil, nil, opts...)
 }
 
 // DriverKioskReceivePackageParams are the parameters of PartnerAPI.DriverKioskReceivePackage.
@@ -1032,8 +1012,8 @@ type DriverKioskReceivePackageParams struct {
 }
 
 // DriverKioskReceivePackage — POST /app/v1/driver/kiosk-receive-package — Scan and receive an awaiting-processing package from kiosk receiving area
-func (a *PartnerAPI) DriverKioskReceivePackage(ctx context.Context, p DriverKioskReceivePackageParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverKioskReceivePackage"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverKioskReceivePackage(ctx context.Context, p DriverKioskReceivePackageParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverKioskReceivePackage"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverKioskReceivingPackagesParams are the parameters of PartnerAPI.DriverKioskReceivingPackages.
@@ -1046,8 +1026,8 @@ type DriverKioskReceivingPackagesParams struct {
 }
 
 // DriverKioskReceivingPackages — GET /app/v1/driver/kiosk-receiving-packages — Get kiosk receiving area package count
-func (a *PartnerAPI) DriverKioskReceivingPackages(ctx context.Context, p DriverKioskReceivingPackagesParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverKioskReceivingPackages"], map[string]any{"route_id": p.RouteId, "order_id": p.OrderId}, nil, nil)
+func (a *PartnerAPI) DriverKioskReceivingPackages(ctx context.Context, p DriverKioskReceivingPackagesParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverKioskReceivingPackages"], map[string]any{"route_id": p.RouteId, "order_id": p.OrderId}, nil, nil, opts...)
 }
 
 // DriverOptimizeRouteParams are the parameters of PartnerAPI.DriverOptimizeRoute.
@@ -1057,8 +1037,8 @@ type DriverOptimizeRouteParams struct {
 }
 
 // DriverOptimizeRoute — POST /app/v1/driver/optimize-route — optimize route
-func (a *PartnerAPI) DriverOptimizeRoute(ctx context.Context, p DriverOptimizeRouteParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOptimizeRoute"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverOptimizeRoute(ctx context.Context, p DriverOptimizeRouteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOptimizeRoute"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverOrderByRefParams are the parameters of PartnerAPI.DriverOrderByRef.
@@ -1068,8 +1048,8 @@ type DriverOrderByRefParams struct {
 }
 
 // DriverOrderByRef — GET /app/v1/driver/ref/{ref} — Find the driver's order by ref, id or tracking number
-func (a *PartnerAPI) DriverOrderByRef(ctx context.Context, p DriverOrderByRefParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrderByRef"], map[string]any{"ref": p.Ref}, nil, nil)
+func (a *PartnerAPI) DriverOrderByRef(ctx context.Context, p DriverOrderByRefParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrderByRef"], map[string]any{"ref": p.Ref}, nil, nil, opts...)
 }
 
 // DriverOrderCashCollectedParams are the parameters of PartnerAPI.DriverOrderCashCollected.
@@ -1082,8 +1062,8 @@ type DriverOrderCashCollectedParams struct {
 }
 
 // DriverOrderCashCollected — POST /app/v1/driver/orders/{orderId}/cash-collected — Driver records cash collected on an order (payroll v2)
-func (a *PartnerAPI) DriverOrderCashCollected(ctx context.Context, p DriverOrderCashCollectedParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrderCashCollected"], map[string]any{"orderId": p.OrderId}, p.Body, nil)
+func (a *PartnerAPI) DriverOrderCashCollected(ctx context.Context, p DriverOrderCashCollectedParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrderCashCollected"], map[string]any{"orderId": p.OrderId}, p.Body, nil, opts...)
 }
 
 // DriverOrderChatParams are the parameters of PartnerAPI.DriverOrderChat.
@@ -1096,8 +1076,8 @@ type DriverOrderChatParams struct {
 }
 
 // DriverOrderChat — GET /app/v1/driver/orders/{orderId}/chat — Order chat thread (driver view)
-func (a *PartnerAPI) DriverOrderChat(ctx context.Context, p DriverOrderChatParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrderChat"], map[string]any{"orderId": p.OrderId, "since_id": p.SinceId}, nil, nil)
+func (a *PartnerAPI) DriverOrderChat(ctx context.Context, p DriverOrderChatParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrderChat"], map[string]any{"orderId": p.OrderId, "since_id": p.SinceId}, nil, nil, opts...)
 }
 
 // DriverOrderChatSendParams are the parameters of PartnerAPI.DriverOrderChatSend.
@@ -1110,13 +1090,13 @@ type DriverOrderChatSendParams struct {
 }
 
 // DriverOrderChatSend — POST /app/v1/driver/orders/{orderId}/chat — Send a driver message into an order chat
-func (a *PartnerAPI) DriverOrderChatSend(ctx context.Context, p DriverOrderChatSendParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrderChatSend"], map[string]any{"orderId": p.OrderId}, p.Body, nil)
+func (a *PartnerAPI) DriverOrderChatSend(ctx context.Context, p DriverOrderChatSendParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrderChatSend"], map[string]any{"orderId": p.OrderId}, p.Body, nil, opts...)
 }
 
 // DriverOrderChatUnread — GET /app/v1/driver/chat/unread — Driver unread chat counters
-func (a *PartnerAPI) DriverOrderChatUnread(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrderChatUnread"], nil, nil, nil)
+func (a *PartnerAPI) DriverOrderChatUnread(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrderChatUnread"], nil, nil, nil, opts...)
 }
 
 // DriverOrderFilesParams are the parameters of PartnerAPI.DriverOrderFiles.
@@ -1126,8 +1106,8 @@ type DriverOrderFilesParams struct {
 }
 
 // DriverOrderFiles — GET /app/v1/driver/orders-files/{orderId} — GET /app/v1/driver/orders-files/{orderId}
-func (a *PartnerAPI) DriverOrderFiles(ctx context.Context, p DriverOrderFilesParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrderFiles"], map[string]any{"orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) DriverOrderFiles(ctx context.Context, p DriverOrderFilesParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrderFiles"], map[string]any{"orderId": p.OrderId}, nil, nil, opts...)
 }
 
 // DriverOrderPriceDetailParams are the parameters of PartnerAPI.DriverOrderPriceDetail.
@@ -1137,8 +1117,8 @@ type DriverOrderPriceDetailParams struct {
 }
 
 // DriverOrderPriceDetail — GET /app/v1/driver/orders/{orderId}/price-detail — Get unified price detail for an order
-func (a *PartnerAPI) DriverOrderPriceDetail(ctx context.Context, p DriverOrderPriceDetailParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrderPriceDetail"], map[string]any{"orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) DriverOrderPriceDetail(ctx context.Context, p DriverOrderPriceDetailParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrderPriceDetail"], map[string]any{"orderId": p.OrderId}, nil, nil, opts...)
 }
 
 // DriverOrdersParams are the parameters of PartnerAPI.DriverOrders.
@@ -1148,8 +1128,8 @@ type DriverOrdersParams struct {
 }
 
 // DriverOrders — GET /app/v1/driver/orders/{orderId} — Get order by Id
-func (a *PartnerAPI) DriverOrders(ctx context.Context, p DriverOrdersParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrders"], map[string]any{"orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) DriverOrders(ctx context.Context, p DriverOrdersParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrders"], map[string]any{"orderId": p.OrderId}, nil, nil, opts...)
 }
 
 // DriverOrdersGetParams are the parameters of PartnerAPI.DriverOrdersGet.
@@ -1171,8 +1151,8 @@ type DriverOrdersGetParams struct {
 }
 
 // DriverOrdersGet — GET /app/v1/driver/orders — Get Orders
-func (a *PartnerAPI) DriverOrdersGet(ctx context.Context, p DriverOrdersGetParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrdersGet"], map[string]any{"status": p.Status, "id": p.Id, "unassigned": p.Unassigned, "page": p.Page, "pageSize": p.PageSize}, nil, nil)
+func (a *PartnerAPI) DriverOrdersGet(ctx context.Context, p DriverOrdersGetParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrdersGet"], map[string]any{"status": p.Status, "id": p.Id, "unassigned": p.Unassigned, "page": p.Page, "pageSize": p.PageSize}, nil, nil, opts...)
 }
 
 // DriverOrdersNotesParams are the parameters of PartnerAPI.DriverOrdersNotes.
@@ -1182,8 +1162,8 @@ type DriverOrdersNotesParams struct {
 }
 
 // DriverOrdersNotes — GET /app/v1/driver/orders-notes/{orderId} — Get order notes
-func (a *PartnerAPI) DriverOrdersNotes(ctx context.Context, p DriverOrdersNotesParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrdersNotes"], map[string]any{"orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) DriverOrdersNotes(ctx context.Context, p DriverOrdersNotesParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrdersNotes"], map[string]any{"orderId": p.OrderId}, nil, nil, opts...)
 }
 
 // DriverOrdersNotesCreateParams are the parameters of PartnerAPI.DriverOrdersNotesCreate.
@@ -1193,8 +1173,8 @@ type DriverOrdersNotesCreateParams struct {
 }
 
 // DriverOrdersNotesCreate — POST /app/v1/driver/orders-notes/create — Create an order note
-func (a *PartnerAPI) DriverOrdersNotesCreate(ctx context.Context, p DriverOrdersNotesCreateParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrdersNotesCreate"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverOrdersNotesCreate(ctx context.Context, p DriverOrdersNotesCreateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrdersNotesCreate"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverOrdersOrderIdChatReadPostParams are the parameters of PartnerAPI.DriverOrdersOrderIdChatReadPost.
@@ -1204,8 +1184,8 @@ type DriverOrdersOrderIdChatReadPostParams struct {
 }
 
 // DriverOrdersOrderIdChatReadPost — POST /app/v1/driver/orders/{orderId}/chat/read — Mark an order chat as read (driver)
-func (a *PartnerAPI) DriverOrdersOrderIdChatReadPost(ctx context.Context, p DriverOrdersOrderIdChatReadPostParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrdersOrderIdChatReadPost"], map[string]any{"orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) DriverOrdersOrderIdChatReadPost(ctx context.Context, p DriverOrdersOrderIdChatReadPostParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrdersOrderIdChatReadPost"], map[string]any{"orderId": p.OrderId}, nil, nil, opts...)
 }
 
 // DriverOrdersOrderIdRejectPostParams are the parameters of PartnerAPI.DriverOrdersOrderIdRejectPost.
@@ -1218,8 +1198,8 @@ type DriverOrdersOrderIdRejectPostParams struct {
 }
 
 // DriverOrdersOrderIdRejectPost — POST /app/v1/driver/orders/{orderId}/reject — Reject an assigned order
-func (a *PartnerAPI) DriverOrdersOrderIdRejectPost(ctx context.Context, p DriverOrdersOrderIdRejectPostParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrdersOrderIdRejectPost"], map[string]any{"orderId": p.OrderId}, p.Body, nil)
+func (a *PartnerAPI) DriverOrdersOrderIdRejectPost(ctx context.Context, p DriverOrdersOrderIdRejectPostParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrdersOrderIdRejectPost"], map[string]any{"orderId": p.OrderId}, p.Body, nil, opts...)
 }
 
 // DriverOrdersOrderIdRelatedOrderItemsPatchParams are the parameters of PartnerAPI.DriverOrdersOrderIdRelatedOrderItemsPatch.
@@ -1232,13 +1212,13 @@ type DriverOrdersOrderIdRelatedOrderItemsPatchParams struct {
 }
 
 // DriverOrdersOrderIdRelatedOrderItemsPatch — PATCH /app/v1/driver/orders/{orderId}/related-order-items — Update related storage/moving/shipping order items by driver order id
-func (a *PartnerAPI) DriverOrdersOrderIdRelatedOrderItemsPatch(ctx context.Context, p DriverOrdersOrderIdRelatedOrderItemsPatchParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrdersOrderIdRelatedOrderItemsPatch"], map[string]any{"orderId": p.OrderId}, p.Body, nil)
+func (a *PartnerAPI) DriverOrdersOrderIdRelatedOrderItemsPatch(ctx context.Context, p DriverOrdersOrderIdRelatedOrderItemsPatchParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrdersOrderIdRelatedOrderItemsPatch"], map[string]any{"orderId": p.OrderId}, p.Body, nil, opts...)
 }
 
 // DriverOrdersStatus — GET /app/v1/driver/orders-status — Get order status list
-func (a *PartnerAPI) DriverOrdersStatus(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrdersStatus"], nil, nil, nil)
+func (a *PartnerAPI) DriverOrdersStatus(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrdersStatus"], nil, nil, nil, opts...)
 }
 
 // DriverOrdersStatusPostParams are the parameters of PartnerAPI.DriverOrdersStatusPost.
@@ -1248,8 +1228,8 @@ type DriverOrdersStatusPostParams struct {
 }
 
 // DriverOrdersStatusPost — POST /app/v1/driver/orders-status — Update order status
-func (a *PartnerAPI) DriverOrdersStatusPost(ctx context.Context, p DriverOrdersStatusPostParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverOrdersStatusPost"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverOrdersStatusPost(ctx context.Context, p DriverOrdersStatusPostParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverOrdersStatusPost"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverPackagingsGetParams are the parameters of PartnerAPI.DriverPackagingsGet.
@@ -1259,8 +1239,8 @@ type DriverPackagingsGetParams struct {
 }
 
 // DriverPackagingsGet — GET /app/v1/driver/packagings — Get packaging types and packagings for the driver's service provider
-func (a *PartnerAPI) DriverPackagingsGet(ctx context.Context, p DriverPackagingsGetParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverPackagingsGet"], map[string]any{"language": p.Language}, nil, nil)
+func (a *PartnerAPI) DriverPackagingsGet(ctx context.Context, p DriverPackagingsGetParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverPackagingsGet"], map[string]any{"language": p.Language}, nil, nil, opts...)
 }
 
 // DriverPickupOrderParams are the parameters of PartnerAPI.DriverPickupOrder.
@@ -1273,13 +1253,13 @@ type DriverPickupOrderParams struct {
 }
 
 // DriverPickupOrder — POST /app/v1/driver/pickup-order/{ref} — Pickup scan by order or package identifier
-func (a *PartnerAPI) DriverPickupOrder(ctx context.Context, p DriverPickupOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverPickupOrder"], map[string]any{"ref": p.Ref}, p.Body, nil)
+func (a *PartnerAPI) DriverPickupOrder(ctx context.Context, p DriverPickupOrderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverPickupOrder"], map[string]any{"ref": p.Ref}, p.Body, nil, opts...)
 }
 
 // DriverPodRequirements — GET /app/v1/driver/pod-requirements — POD requirements at stop completion (driver app)
-func (a *PartnerAPI) DriverPodRequirements(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverPodRequirements"], nil, nil, nil)
+func (a *PartnerAPI) DriverPodRequirements(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverPodRequirements"], nil, nil, nil, opts...)
 }
 
 // DriverPoolClaimParams are the parameters of PartnerAPI.DriverPoolClaim.
@@ -1292,18 +1272,18 @@ type DriverPoolClaimParams struct {
 }
 
 // DriverPoolClaim — POST /app/v1/driver/pool/orders/{orderId}/claim — Claim a pool order onto today's route
-func (a *PartnerAPI) DriverPoolClaim(ctx context.Context, p DriverPoolClaimParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverPoolClaim"], map[string]any{"orderId": p.OrderId}, p.Body, nil)
+func (a *PartnerAPI) DriverPoolClaim(ctx context.Context, p DriverPoolClaimParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverPoolClaim"], map[string]any{"orderId": p.OrderId}, p.Body, nil, opts...)
 }
 
 // DriverPoolOrders — GET /app/v1/driver/pool/orders — Regular orders in the driver pool
-func (a *PartnerAPI) DriverPoolOrders(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverPoolOrders"], nil, nil, nil)
+func (a *PartnerAPI) DriverPoolOrders(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverPoolOrders"], nil, nil, nil, opts...)
 }
 
 // DriverProfileShow — GET /app/v1/driver/profile — get driver profile
-func (a *PartnerAPI) DriverProfileShow(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverProfileShow"], nil, nil, nil)
+func (a *PartnerAPI) DriverProfileShow(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverProfileShow"], nil, nil, nil, opts...)
 }
 
 // DriverProfileUpdateParams are the parameters of PartnerAPI.DriverProfileUpdate.
@@ -1313,8 +1293,8 @@ type DriverProfileUpdateParams struct {
 }
 
 // DriverProfileUpdate — PUT /app/v1/driver/profile — update driver profile
-func (a *PartnerAPI) DriverProfileUpdate(ctx context.Context, p DriverProfileUpdateParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverProfileUpdate"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverProfileUpdate(ctx context.Context, p DriverProfileUpdateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverProfileUpdate"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverReturnReasonsParams are the parameters of PartnerAPI.DriverReturnReasons.
@@ -1324,8 +1304,8 @@ type DriverReturnReasonsParams struct {
 }
 
 // DriverReturnReasons — GET /app/v1/driver/return-reasons/{order_id} — Reasons for a failed stop
-func (a *PartnerAPI) DriverReturnReasons(ctx context.Context, p DriverReturnReasonsParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverReturnReasons"], map[string]any{"order_id": p.OrderId}, nil, nil)
+func (a *PartnerAPI) DriverReturnReasons(ctx context.Context, p DriverReturnReasonsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverReturnReasons"], map[string]any{"order_id": p.OrderId}, nil, nil, opts...)
 }
 
 // DriverRouteBoardParams are the parameters of PartnerAPI.DriverRouteBoard.
@@ -1335,13 +1315,13 @@ type DriverRouteBoardParams struct {
 }
 
 // DriverRouteBoard — GET /app/v1/driver/boards/{id} — Get one Route Board with its seats
-func (a *PartnerAPI) DriverRouteBoard(ctx context.Context, p DriverRouteBoardParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverRouteBoard"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) DriverRouteBoard(ctx context.Context, p DriverRouteBoardParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverRouteBoard"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // DriverRouteBoards — GET /app/v1/driver/boards — List the Route Boards visible to the driver
-func (a *PartnerAPI) DriverRouteBoards(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverRouteBoards"], nil, nil, nil)
+func (a *PartnerAPI) DriverRouteBoards(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverRouteBoards"], nil, nil, nil, opts...)
 }
 
 // DriverRoutesParams are the parameters of PartnerAPI.DriverRoutes.
@@ -1366,8 +1346,8 @@ type DriverRoutesParams struct {
 }
 
 // DriverRoutes — GET /app/v1/driver/routes — Get routes for one driver
-func (a *PartnerAPI) DriverRoutes(ctx context.Context, p DriverRoutesParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverRoutes"], map[string]any{"isProcessing": p.IsProcessing, "isHistory": p.IsHistory, "page": p.Page, "per_page": p.PerPage, "sort": p.Sort, "id": p.Id}, nil, nil)
+func (a *PartnerAPI) DriverRoutes(ctx context.Context, p DriverRoutesParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverRoutes"], map[string]any{"isProcessing": p.IsProcessing, "isHistory": p.IsHistory, "page": p.Page, "per_page": p.PerPage, "sort": p.Sort, "id": p.Id}, nil, nil, opts...)
 }
 
 // DriverRoutesAddOrderParams are the parameters of PartnerAPI.DriverRoutesAddOrder.
@@ -1383,8 +1363,8 @@ type DriverRoutesAddOrderParams struct {
 }
 
 // DriverRoutesAddOrder — POST /app/v1/driver/routes/{routeId}/add-order/{ref} — Add order to route by ref/orderid/trackingnumber
-func (a *PartnerAPI) DriverRoutesAddOrder(ctx context.Context, p DriverRoutesAddOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverRoutesAddOrder"], map[string]any{"routeId": p.RouteId, "ref": p.Ref, "optimize": p.Optimize}, nil, nil)
+func (a *PartnerAPI) DriverRoutesAddOrder(ctx context.Context, p DriverRoutesAddOrderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverRoutesAddOrder"], map[string]any{"routeId": p.RouteId, "ref": p.Ref, "optimize": p.Optimize}, nil, nil, opts...)
 }
 
 // DriverRoutesGetStopNumberParams are the parameters of PartnerAPI.DriverRoutesGetStopNumber.
@@ -1397,8 +1377,8 @@ type DriverRoutesGetStopNumberParams struct {
 }
 
 // DriverRoutesGetStopNumber — GET /app/v1/driver/routes/{routeId}/get-stop-number/{ref} — Get order stop number by ref/orderid/trackingnumber
-func (a *PartnerAPI) DriverRoutesGetStopNumber(ctx context.Context, p DriverRoutesGetStopNumberParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverRoutesGetStopNumber"], map[string]any{"routeId": p.RouteId, "ref": p.Ref}, nil, nil)
+func (a *PartnerAPI) DriverRoutesGetStopNumber(ctx context.Context, p DriverRoutesGetStopNumberParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverRoutesGetStopNumber"], map[string]any{"routeId": p.RouteId, "ref": p.Ref}, nil, nil, opts...)
 }
 
 // DriverRoutesOrdersParams are the parameters of PartnerAPI.DriverRoutesOrders.
@@ -1417,8 +1397,8 @@ type DriverRoutesOrdersParams struct {
 }
 
 // DriverRoutesOrders — GET /app/v1/driver/routes/{routeId}/orders — Get orders on route for one driver
-func (a *PartnerAPI) DriverRoutesOrders(ctx context.Context, p DriverRoutesOrdersParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverRoutesOrders"], map[string]any{"routeId": p.RouteId, "ids": p.Ids, "isHideSuccess": p.IsHideSuccess, "statusType": p.StatusType}, nil, nil)
+func (a *PartnerAPI) DriverRoutesOrders(ctx context.Context, p DriverRoutesOrdersParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverRoutesOrders"], map[string]any{"routeId": p.RouteId, "ids": p.Ids, "isHideSuccess": p.IsHideSuccess, "statusType": p.StatusType}, nil, nil, opts...)
 }
 
 // DriverRoutesOrdersBatchremoveParams are the parameters of PartnerAPI.DriverRoutesOrdersBatchremove.
@@ -1431,8 +1411,8 @@ type DriverRoutesOrdersBatchremoveParams struct {
 }
 
 // DriverRoutesOrdersBatchremove — POST /app/v1/driver/routes/{routeId}/orders/batchremove — Batch remove orders from a route
-func (a *PartnerAPI) DriverRoutesOrdersBatchremove(ctx context.Context, p DriverRoutesOrdersBatchremoveParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverRoutesOrdersBatchremove"], map[string]any{"routeId": p.RouteId}, p.Body, nil)
+func (a *PartnerAPI) DriverRoutesOrdersBatchremove(ctx context.Context, p DriverRoutesOrdersBatchremoveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverRoutesOrdersBatchremove"], map[string]any{"routeId": p.RouteId}, p.Body, nil, opts...)
 }
 
 // DriverRoutesOrdersRemoveParams are the parameters of PartnerAPI.DriverRoutesOrdersRemove.
@@ -1445,8 +1425,8 @@ type DriverRoutesOrdersRemoveParams struct {
 }
 
 // DriverRoutesOrdersRemove — POST /app/v1/driver/routes/{routeId}/orders/{orderId}/remove — Remove order from route by orderId
-func (a *PartnerAPI) DriverRoutesOrdersRemove(ctx context.Context, p DriverRoutesOrdersRemoveParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverRoutesOrdersRemove"], map[string]any{"routeId": p.RouteId, "orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) DriverRoutesOrdersRemove(ctx context.Context, p DriverRoutesOrdersRemoveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverRoutesOrdersRemove"], map[string]any{"routeId": p.RouteId, "orderId": p.OrderId}, nil, nil, opts...)
 }
 
 // DriverRoutesPointsParams are the parameters of PartnerAPI.DriverRoutesPoints.
@@ -1456,8 +1436,8 @@ type DriverRoutesPointsParams struct {
 }
 
 // DriverRoutesPoints — GET /app/v1/driver/routes/{routeId}/points — Get points on route for one driver
-func (a *PartnerAPI) DriverRoutesPoints(ctx context.Context, p DriverRoutesPointsParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverRoutesPoints"], map[string]any{"routeId": p.RouteId}, nil, nil)
+func (a *PartnerAPI) DriverRoutesPoints(ctx context.Context, p DriverRoutesPointsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverRoutesPoints"], map[string]any{"routeId": p.RouteId}, nil, nil, opts...)
 }
 
 // DriverRoutesValidateOrderParams are the parameters of PartnerAPI.DriverRoutesValidateOrder.
@@ -1467,8 +1447,8 @@ type DriverRoutesValidateOrderParams struct {
 }
 
 // DriverRoutesValidateOrder — POST /app/v1/driver/routes/validate-order — Validate if ref matches order_id
-func (a *PartnerAPI) DriverRoutesValidateOrder(ctx context.Context, p DriverRoutesValidateOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverRoutesValidateOrder"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverRoutesValidateOrder(ctx context.Context, p DriverRoutesValidateOrderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverRoutesValidateOrder"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverSmsFailContentParams are the parameters of PartnerAPI.DriverSmsFailContent.
@@ -1478,8 +1458,8 @@ type DriverSmsFailContentParams struct {
 }
 
 // DriverSmsFailContent — GET /app/v1/driver/sms/fail-content/order/{id} — Delivery failed message text for an order
-func (a *PartnerAPI) DriverSmsFailContent(ctx context.Context, p DriverSmsFailContentParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverSmsFailContent"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) DriverSmsFailContent(ctx context.Context, p DriverSmsFailContentParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverSmsFailContent"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // DriverSmsSuccessContentParams are the parameters of PartnerAPI.DriverSmsSuccessContent.
@@ -1489,8 +1469,8 @@ type DriverSmsSuccessContentParams struct {
 }
 
 // DriverSmsSuccessContent — GET /app/v1/driver/sms/success-content/order/{id} — Delivered message text for an order
-func (a *PartnerAPI) DriverSmsSuccessContent(ctx context.Context, p DriverSmsSuccessContentParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverSmsSuccessContent"], map[string]any{"id": p.Id}, nil, nil)
+func (a *PartnerAPI) DriverSmsSuccessContent(ctx context.Context, p DriverSmsSuccessContentParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverSmsSuccessContent"], map[string]any{"id": p.Id}, nil, nil, opts...)
 }
 
 // DriverSmsTemplateContentParams are the parameters of PartnerAPI.DriverSmsTemplateContent.
@@ -1503,13 +1483,13 @@ type DriverSmsTemplateContentParams struct {
 }
 
 // DriverSmsTemplateContent — GET /app/v1/driver/sms/template/{templateId}/order/{id} — Message text of a template for an order
-func (a *PartnerAPI) DriverSmsTemplateContent(ctx context.Context, p DriverSmsTemplateContentParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverSmsTemplateContent"], map[string]any{"templateId": p.TemplateId, "id": p.Id}, nil, nil)
+func (a *PartnerAPI) DriverSmsTemplateContent(ctx context.Context, p DriverSmsTemplateContentParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverSmsTemplateContent"], map[string]any{"templateId": p.TemplateId, "id": p.Id}, nil, nil, opts...)
 }
 
 // DriverSmsTemplates — GET /app/v1/driver/sms/templates — GET /app/v1/driver/sms/templates
-func (a *PartnerAPI) DriverSmsTemplates(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverSmsTemplates"], nil, nil, nil)
+func (a *PartnerAPI) DriverSmsTemplates(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverSmsTemplates"], nil, nil, nil, opts...)
 }
 
 // DriverStartDeliveryParams are the parameters of PartnerAPI.DriverStartDelivery.
@@ -1519,8 +1499,8 @@ type DriverStartDeliveryParams struct {
 }
 
 // DriverStartDelivery — POST /app/v1/driver/startDelivery — start Delivery By route id
-func (a *PartnerAPI) DriverStartDelivery(ctx context.Context, p DriverStartDeliveryParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverStartDelivery"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverStartDelivery(ctx context.Context, p DriverStartDeliveryParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverStartDelivery"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverUnitMappingsGetParams are the parameters of PartnerAPI.DriverUnitMappingsGet.
@@ -1530,8 +1510,8 @@ type DriverUnitMappingsGetParams struct {
 }
 
 // DriverUnitMappingsGet — GET /app/v1/driver/unit-mappings — Get dimension and weight unit mappings
-func (a *PartnerAPI) DriverUnitMappingsGet(ctx context.Context, p DriverUnitMappingsGetParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverUnitMappingsGet"], map[string]any{"language": p.Language}, nil, nil)
+func (a *PartnerAPI) DriverUnitMappingsGet(ctx context.Context, p DriverUnitMappingsGetParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverUnitMappingsGet"], map[string]any{"language": p.Language}, nil, nil, opts...)
 }
 
 // DriverUpdateDeliverParams are the parameters of PartnerAPI.DriverUpdateDeliver.
@@ -1544,8 +1524,8 @@ type DriverUpdateDeliverParams struct {
 }
 
 // DriverUpdateDeliver — POST /app/v1/driver/update-deliver — POST /app/v1/driver/update-deliver
-func (a *PartnerAPI) DriverUpdateDeliver(ctx context.Context, p DriverUpdateDeliverParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverUpdateDeliver"], map[string]any{}, p.Body, p.Files)
+func (a *PartnerAPI) DriverUpdateDeliver(ctx context.Context, p DriverUpdateDeliverParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverUpdateDeliver"], map[string]any{}, p.Body, p.Files, opts...)
 }
 
 // DriverUploadPicturesParams are the parameters of PartnerAPI.DriverUploadPictures.
@@ -1555,18 +1535,18 @@ type DriverUploadPicturesParams struct {
 }
 
 // DriverUploadPictures — POST /app/v1/driver/upload-pictures — Upload order picture
-func (a *PartnerAPI) DriverUploadPictures(ctx context.Context, p DriverUploadPicturesParams) (any, error) {
-	return a.call(ctx, partnerOperations["driverUploadPictures"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) DriverUploadPictures(ctx context.Context, p DriverUploadPicturesParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverUploadPictures"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // DriverUploadPicturesFromUrlsPost — POST /app/v1/driver/upload-pictures-from-urls — POST /app/v1/driver/upload-pictures-from-urls
-func (a *PartnerAPI) DriverUploadPicturesFromUrlsPost(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["driverUploadPicturesFromUrlsPost"], nil, nil, nil)
+func (a *PartnerAPI) DriverUploadPicturesFromUrlsPost(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["driverUploadPicturesFromUrlsPost"], nil, nil, nil, opts...)
 }
 
 // Health — GET /app/v1/health — Surface status
-func (a *PartnerAPI) Health(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["health"], nil, nil, nil)
+func (a *PartnerAPI) Health(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["health"], nil, nil, nil, opts...)
 }
 
 // PartnerAppDriverRegisterParams are the parameters of PartnerAPI.PartnerAppDriverRegister.
@@ -1579,13 +1559,13 @@ type PartnerAppDriverRegisterParams struct {
 }
 
 // PartnerAppDriverRegister — POST /app/v1/clients/{clientCode}/driver/register — Sign up a driver
-func (a *PartnerAPI) PartnerAppDriverRegister(ctx context.Context, p PartnerAppDriverRegisterParams) (any, error) {
-	return a.call(ctx, partnerOperations["partnerAppDriverRegister"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil)
+func (a *PartnerAPI) PartnerAppDriverRegister(ctx context.Context, p PartnerAppDriverRegisterParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["partnerAppDriverRegister"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil, opts...)
 }
 
 // PartnerAppMe — GET /app/v1/me — Who the token speaks for
-func (a *PartnerAPI) PartnerAppMe(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["partnerAppMe"], nil, nil, nil)
+func (a *PartnerAPI) PartnerAppMe(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["partnerAppMe"], nil, nil, nil, opts...)
 }
 
 // PartnerAppRevokeSessionParams are the parameters of PartnerAPI.PartnerAppRevokeSession.
@@ -1595,13 +1575,13 @@ type PartnerAppRevokeSessionParams struct {
 }
 
 // PartnerAppRevokeSession — DELETE /app/v1/sessions/{sessionId} — End one sign-in
-func (a *PartnerAPI) PartnerAppRevokeSession(ctx context.Context, p PartnerAppRevokeSessionParams) (any, error) {
-	return a.call(ctx, partnerOperations["partnerAppRevokeSession"], map[string]any{"sessionId": p.SessionId}, nil, nil)
+func (a *PartnerAPI) PartnerAppRevokeSession(ctx context.Context, p PartnerAppRevokeSessionParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["partnerAppRevokeSession"], map[string]any{"sessionId": p.SessionId}, nil, nil, opts...)
 }
 
 // PartnerAppSessions — GET /app/v1/sessions — List the person's sign-ins to this app
-func (a *PartnerAPI) PartnerAppSessions(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["partnerAppSessions"], nil, nil, nil)
+func (a *PartnerAPI) PartnerAppSessions(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["partnerAppSessions"], nil, nil, nil, opts...)
 }
 
 // PlatformAppBootstrapParams are the parameters of PartnerAPI.PlatformAppBootstrap.
@@ -1617,13 +1597,13 @@ type PlatformAppBootstrapParams struct {
 }
 
 // PlatformAppBootstrap — GET /app/v1/clients/{clientCode}/bootstrap — Bootstrap a client-assigned app
-func (a *PartnerAPI) PlatformAppBootstrap(ctx context.Context, p PlatformAppBootstrapParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppBootstrap"], map[string]any{"clientCode": p.ClientCode, "platform": p.Platform, "app_version": p.AppVersion}, nil, nil)
+func (a *PartnerAPI) PlatformAppBootstrap(ctx context.Context, p PlatformAppBootstrapParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppBootstrap"], map[string]any{"clientCode": p.ClientCode, "platform": p.Platform, "app_version": p.AppVersion}, nil, nil, opts...)
 }
 
 // PlatformAppCancelAccountDeletion — DELETE /app/v1/privacy/account-deletion — Cancel app account deletion
-func (a *PartnerAPI) PlatformAppCancelAccountDeletion(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppCancelAccountDeletion"], nil, nil, nil)
+func (a *PartnerAPI) PlatformAppCancelAccountDeletion(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppCancelAccountDeletion"], nil, nil, nil, opts...)
 }
 
 // PlatformAppCancelReturnParams are the parameters of PartnerAPI.PlatformAppCancelReturn.
@@ -1633,22 +1613,8 @@ type PlatformAppCancelReturnParams struct {
 }
 
 // PlatformAppCancelReturn — POST /app/v1/returns/{returnId}/cancel — Cancel a customer return request
-func (a *PartnerAPI) PlatformAppCancelReturn(ctx context.Context, p PlatformAppCancelReturnParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppCancelReturn"], map[string]any{"returnId": p.ReturnId}, nil, nil)
-}
-
-// PlatformAppCollectPickupParams are the parameters of PartnerAPI.PlatformAppCollectPickup.
-type PlatformAppCollectPickupParams struct {
-	// DeliveryId is "deliveryId" (path, required)
-	DeliveryId int64
-
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppCollectPickup — POST /app/v1/pickups/{deliveryId}/collect — Collect and remotely open a locker pickup
-func (a *PartnerAPI) PlatformAppCollectPickup(ctx context.Context, p PlatformAppCollectPickupParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppCollectPickup"], map[string]any{"deliveryId": p.DeliveryId}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppCancelReturn(ctx context.Context, p PlatformAppCancelReturnParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppCancelReturn"], map[string]any{"returnId": p.ReturnId}, nil, nil, opts...)
 }
 
 // PlatformAppCompleteRegistrationParams are the parameters of PartnerAPI.PlatformAppCompleteRegistration.
@@ -1658,8 +1624,8 @@ type PlatformAppCompleteRegistrationParams struct {
 }
 
 // PlatformAppCompleteRegistration — POST /app/v1/registration-details — Fill in the registration details
-func (a *PartnerAPI) PlatformAppCompleteRegistration(ctx context.Context, p PlatformAppCompleteRegistrationParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppCompleteRegistration"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppCompleteRegistration(ctx context.Context, p PlatformAppCompleteRegistrationParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppCompleteRegistration"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppCreateReturnParams are the parameters of PartnerAPI.PlatformAppCreateReturn.
@@ -1669,8 +1635,8 @@ type PlatformAppCreateReturnParams struct {
 }
 
 // PlatformAppCreateReturn — POST /app/v1/returns — Create a customer return request
-func (a *PartnerAPI) PlatformAppCreateReturn(ctx context.Context, p PlatformAppCreateReturnParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppCreateReturn"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppCreateReturn(ctx context.Context, p PlatformAppCreateReturnParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppCreateReturn"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppGroupBuyParams are the parameters of PartnerAPI.PlatformAppGroupBuy.
@@ -1686,8 +1652,8 @@ type PlatformAppGroupBuyParams struct {
 }
 
 // PlatformAppGroupBuy — GET /app/v1/group-buys/{code} — Get a group buy campaign
-func (a *PartnerAPI) PlatformAppGroupBuy(ctx context.Context, p PlatformAppGroupBuyParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuy"], map[string]any{"code": p.Code, "leader": p.Leader, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuy(ctx context.Context, p PlatformAppGroupBuyParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuy"], map[string]any{"code": p.Code, "leader": p.Leader, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyAddressDetailsParams are the parameters of PartnerAPI.PlatformAppGroupBuyAddressDetails.
@@ -1703,8 +1669,8 @@ type PlatformAppGroupBuyAddressDetailsParams struct {
 }
 
 // PlatformAppGroupBuyAddressDetails — GET /app/v1/group-buys/{code}/address/details — Get a suggested address
-func (a *PartnerAPI) PlatformAppGroupBuyAddressDetails(ctx context.Context, p PlatformAppGroupBuyAddressDetailsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyAddressDetails"], map[string]any{"code": p.Code, "place_id": p.PlaceId, "session": p.Session}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyAddressDetails(ctx context.Context, p PlatformAppGroupBuyAddressDetailsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyAddressDetails"], map[string]any{"code": p.Code, "place_id": p.PlaceId, "session": p.Session}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyAddressSuggestionsParams are the parameters of PartnerAPI.PlatformAppGroupBuyAddressSuggestions.
@@ -1720,8 +1686,8 @@ type PlatformAppGroupBuyAddressSuggestionsParams struct {
 }
 
 // PlatformAppGroupBuyAddressSuggestions — GET /app/v1/group-buys/{code}/address/suggestions — Suggest home addresses
-func (a *PartnerAPI) PlatformAppGroupBuyAddressSuggestions(ctx context.Context, p PlatformAppGroupBuyAddressSuggestionsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyAddressSuggestions"], map[string]any{"code": p.Code, "q": p.Q, "session": p.Session}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyAddressSuggestions(ctx context.Context, p PlatformAppGroupBuyAddressSuggestionsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyAddressSuggestions"], map[string]any{"code": p.Code, "q": p.Q, "session": p.Session}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyConfirmPaymentParams are the parameters of PartnerAPI.PlatformAppGroupBuyConfirmPayment.
@@ -1734,8 +1700,8 @@ type PlatformAppGroupBuyConfirmPaymentParams struct {
 }
 
 // PlatformAppGroupBuyConfirmPayment — POST /app/v1/group-buy-orders/{token}/confirm-payment — Confirm a group buy card hold
-func (a *PartnerAPI) PlatformAppGroupBuyConfirmPayment(ctx context.Context, p PlatformAppGroupBuyConfirmPaymentParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyConfirmPayment"], map[string]any{"token": p.Token, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyConfirmPayment(ctx context.Context, p PlatformAppGroupBuyConfirmPaymentParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyConfirmPayment"], map[string]any{"token": p.Token, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyLeadParams are the parameters of PartnerAPI.PlatformAppGroupBuyLead.
@@ -1748,8 +1714,8 @@ type PlatformAppGroupBuyLeadParams struct {
 }
 
 // PlatformAppGroupBuyLead — GET /app/v1/group-buys/{code}/lead — Get leading a group buy
-func (a *PartnerAPI) PlatformAppGroupBuyLead(ctx context.Context, p PlatformAppGroupBuyLeadParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyLead"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyLead(ctx context.Context, p PlatformAppGroupBuyLeadParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyLead"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyLeadApplyParams are the parameters of PartnerAPI.PlatformAppGroupBuyLeadApply.
@@ -1765,8 +1731,8 @@ type PlatformAppGroupBuyLeadApplyParams struct {
 }
 
 // PlatformAppGroupBuyLeadApply — POST /app/v1/group-buys/{code}/lead — Apply to lead a group buy
-func (a *PartnerAPI) PlatformAppGroupBuyLeadApply(ctx context.Context, p PlatformAppGroupBuyLeadApplyParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyLeadApply"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyLeadApply(ctx context.Context, p PlatformAppGroupBuyLeadApplyParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyLeadApply"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppGroupBuyLeadOpenParams are the parameters of PartnerAPI.PlatformAppGroupBuyLeadOpen.
@@ -1779,8 +1745,8 @@ type PlatformAppGroupBuyLeadOpenParams struct {
 }
 
 // PlatformAppGroupBuyLeadOpen — POST /app/v1/group-buys/{code}/lead/open — Open a group buy group
-func (a *PartnerAPI) PlatformAppGroupBuyLeadOpen(ctx context.Context, p PlatformAppGroupBuyLeadOpenParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyLeadOpen"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyLeadOpen(ctx context.Context, p PlatformAppGroupBuyLeadOpenParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyLeadOpen"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyLeadStartParams are the parameters of PartnerAPI.PlatformAppGroupBuyLeadStart.
@@ -1796,8 +1762,8 @@ type PlatformAppGroupBuyLeadStartParams struct {
 }
 
 // PlatformAppGroupBuyLeadStart — POST /app/v1/group-buys/{code}/lead/start — Start a campaign from a self-pick plan
-func (a *PartnerAPI) PlatformAppGroupBuyLeadStart(ctx context.Context, p PlatformAppGroupBuyLeadStartParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyLeadStart"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyLeadStart(ctx context.Context, p PlatformAppGroupBuyLeadStartParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyLeadStart"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppGroupBuyLeadingParams are the parameters of PartnerAPI.PlatformAppGroupBuyLeading.
@@ -1807,8 +1773,8 @@ type PlatformAppGroupBuyLeadingParams struct {
 }
 
 // PlatformAppGroupBuyLeading — GET /app/v1/group-buy-leading — List the groups I lead
-func (a *PartnerAPI) PlatformAppGroupBuyLeading(ctx context.Context, p PlatformAppGroupBuyLeadingParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyLeading"], map[string]any{"locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyLeading(ctx context.Context, p PlatformAppGroupBuyLeadingParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyLeading"], map[string]any{"locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyLeadingCollectedParams are the parameters of PartnerAPI.PlatformAppGroupBuyLeadingCollected.
@@ -1824,8 +1790,8 @@ type PlatformAppGroupBuyLeadingCollectedParams struct {
 }
 
 // PlatformAppGroupBuyLeadingCollected — POST /app/v1/group-buy-leading/{groupId}/orders/{orderId}/collected — Mark a household collected
-func (a *PartnerAPI) PlatformAppGroupBuyLeadingCollected(ctx context.Context, p PlatformAppGroupBuyLeadingCollectedParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyLeadingCollected"], map[string]any{"groupId": p.GroupId, "orderId": p.OrderId, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyLeadingCollected(ctx context.Context, p PlatformAppGroupBuyLeadingCollectedParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyLeadingCollected"], map[string]any{"groupId": p.GroupId, "orderId": p.OrderId, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyLeadingGroupParams are the parameters of PartnerAPI.PlatformAppGroupBuyLeadingGroup.
@@ -1838,8 +1804,8 @@ type PlatformAppGroupBuyLeadingGroupParams struct {
 }
 
 // PlatformAppGroupBuyLeadingGroup — GET /app/v1/group-buy-leading/{groupId} — Get a group I lead
-func (a *PartnerAPI) PlatformAppGroupBuyLeadingGroup(ctx context.Context, p PlatformAppGroupBuyLeadingGroupParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyLeadingGroup"], map[string]any{"groupId": p.GroupId, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyLeadingGroup(ctx context.Context, p PlatformAppGroupBuyLeadingGroupParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyLeadingGroup"], map[string]any{"groupId": p.GroupId, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyOrderParams are the parameters of PartnerAPI.PlatformAppGroupBuyOrder.
@@ -1852,8 +1818,8 @@ type PlatformAppGroupBuyOrderParams struct {
 }
 
 // PlatformAppGroupBuyOrder — GET /app/v1/group-buy-orders/{token} — Get a group buy order
-func (a *PartnerAPI) PlatformAppGroupBuyOrder(ctx context.Context, p PlatformAppGroupBuyOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyOrder"], map[string]any{"token": p.Token, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyOrder(ctx context.Context, p PlatformAppGroupBuyOrderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyOrder"], map[string]any{"token": p.Token, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyOrderPayParams are the parameters of PartnerAPI.PlatformAppGroupBuyOrderPay.
@@ -1866,8 +1832,8 @@ type PlatformAppGroupBuyOrderPayParams struct {
 }
 
 // PlatformAppGroupBuyOrderPay — POST /app/v1/group-buy-orders/{token}/pay — Resume a group buy card hold
-func (a *PartnerAPI) PlatformAppGroupBuyOrderPay(ctx context.Context, p PlatformAppGroupBuyOrderPayParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyOrderPay"], map[string]any{"token": p.Token, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyOrderPay(ctx context.Context, p PlatformAppGroupBuyOrderPayParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyOrderPay"], map[string]any{"token": p.Token, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyOrderReceivedParams are the parameters of PartnerAPI.PlatformAppGroupBuyOrderReceived.
@@ -1880,8 +1846,8 @@ type PlatformAppGroupBuyOrderReceivedParams struct {
 }
 
 // PlatformAppGroupBuyOrderReceived — POST /app/v1/group-buy-orders/{token}/received — Mark a group buy order received
-func (a *PartnerAPI) PlatformAppGroupBuyOrderReceived(ctx context.Context, p PlatformAppGroupBuyOrderReceivedParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyOrderReceived"], map[string]any{"token": p.Token, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyOrderReceived(ctx context.Context, p PlatformAppGroupBuyOrderReceivedParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyOrderReceived"], map[string]any{"token": p.Token, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyOrdersParams are the parameters of PartnerAPI.PlatformAppGroupBuyOrders.
@@ -1897,8 +1863,8 @@ type PlatformAppGroupBuyOrdersParams struct {
 }
 
 // PlatformAppGroupBuyOrders — GET /app/v1/group-buy-orders — List my group buy orders
-func (a *PartnerAPI) PlatformAppGroupBuyOrders(ctx context.Context, p PlatformAppGroupBuyOrdersParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyOrders"], map[string]any{"page": p.Page, "per_page": p.PerPage, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyOrders(ctx context.Context, p PlatformAppGroupBuyOrdersParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyOrders"], map[string]any{"page": p.Page, "per_page": p.PerPage, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGroupBuyPlaceOrderParams are the parameters of PartnerAPI.PlatformAppGroupBuyPlaceOrder.
@@ -1914,8 +1880,8 @@ type PlatformAppGroupBuyPlaceOrderParams struct {
 }
 
 // PlatformAppGroupBuyPlaceOrder — POST /app/v1/group-buys/{code}/order — Place a group buy order
-func (a *PartnerAPI) PlatformAppGroupBuyPlaceOrder(ctx context.Context, p PlatformAppGroupBuyPlaceOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyPlaceOrder"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyPlaceOrder(ctx context.Context, p PlatformAppGroupBuyPlaceOrderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyPlaceOrder"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppGroupBuyQuoteParams are the parameters of PartnerAPI.PlatformAppGroupBuyQuote.
@@ -1931,8 +1897,8 @@ type PlatformAppGroupBuyQuoteParams struct {
 }
 
 // PlatformAppGroupBuyQuote — POST /app/v1/group-buys/{code}/quote — Price a group buy order
-func (a *PartnerAPI) PlatformAppGroupBuyQuote(ctx context.Context, p PlatformAppGroupBuyQuoteParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGroupBuyQuote"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGroupBuyQuote(ctx context.Context, p PlatformAppGroupBuyQuoteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGroupBuyQuote"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestClientsParams are the parameters of PartnerAPI.PlatformAppGuestClients.
@@ -1942,8 +1908,8 @@ type PlatformAppGuestClientsParams struct {
 }
 
 // PlatformAppGuestClients — GET /app/v1/guest/clients — List the providers a visitor may use without signing in
-func (a *PartnerAPI) PlatformAppGuestClients(ctx context.Context, p PlatformAppGuestClientsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestClients"], map[string]any{"locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestClients(ctx context.Context, p PlatformAppGuestClientsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestClients"], map[string]any{"locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuy.
@@ -1962,8 +1928,8 @@ type PlatformAppGuestGroupBuyParams struct {
 }
 
 // PlatformAppGuestGroupBuy — GET /app/v1/clients/{clientCode}/guest/group-buys/{code} — Get a group buy campaign as a guest
-func (a *PartnerAPI) PlatformAppGuestGroupBuy(ctx context.Context, p PlatformAppGuestGroupBuyParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuy"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "leader": p.Leader, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuy(ctx context.Context, p PlatformAppGuestGroupBuyParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuy"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "leader": p.Leader, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyAddressDetailsParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyAddressDetails.
@@ -1982,8 +1948,8 @@ type PlatformAppGuestGroupBuyAddressDetailsParams struct {
 }
 
 // PlatformAppGuestGroupBuyAddressDetails — GET /app/v1/clients/{clientCode}/guest/group-buys/{code}/address/details — Get a suggested address for a guest
-func (a *PartnerAPI) PlatformAppGuestGroupBuyAddressDetails(ctx context.Context, p PlatformAppGuestGroupBuyAddressDetailsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyAddressDetails"], map[string]any{"code": p.Code, "place_id": p.PlaceId, "clientCode": p.ClientCode, "session": p.Session}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyAddressDetails(ctx context.Context, p PlatformAppGuestGroupBuyAddressDetailsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyAddressDetails"], map[string]any{"code": p.Code, "place_id": p.PlaceId, "clientCode": p.ClientCode, "session": p.Session}, nil, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyAddressSuggestionsParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyAddressSuggestions.
@@ -2002,8 +1968,8 @@ type PlatformAppGuestGroupBuyAddressSuggestionsParams struct {
 }
 
 // PlatformAppGuestGroupBuyAddressSuggestions — GET /app/v1/clients/{clientCode}/guest/group-buys/{code}/address/suggestions — Suggest home addresses to a guest
-func (a *PartnerAPI) PlatformAppGuestGroupBuyAddressSuggestions(ctx context.Context, p PlatformAppGuestGroupBuyAddressSuggestionsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyAddressSuggestions"], map[string]any{"code": p.Code, "q": p.Q, "clientCode": p.ClientCode, "session": p.Session}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyAddressSuggestions(ctx context.Context, p PlatformAppGuestGroupBuyAddressSuggestionsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyAddressSuggestions"], map[string]any{"code": p.Code, "q": p.Q, "clientCode": p.ClientCode, "session": p.Session}, nil, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyConfirmPaymentParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyConfirmPayment.
@@ -2019,8 +1985,8 @@ type PlatformAppGuestGroupBuyConfirmPaymentParams struct {
 }
 
 // PlatformAppGuestGroupBuyConfirmPayment — POST /app/v1/clients/{clientCode}/guest/group-buy-orders/{token}/confirm-payment — Confirm a guest group buy card hold
-func (a *PartnerAPI) PlatformAppGuestGroupBuyConfirmPayment(ctx context.Context, p PlatformAppGuestGroupBuyConfirmPaymentParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyConfirmPayment"], map[string]any{"token": p.Token, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyConfirmPayment(ctx context.Context, p PlatformAppGuestGroupBuyConfirmPaymentParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyConfirmPayment"], map[string]any{"token": p.Token, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyOrderParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyOrder.
@@ -2036,8 +2002,8 @@ type PlatformAppGuestGroupBuyOrderParams struct {
 }
 
 // PlatformAppGuestGroupBuyOrder — GET /app/v1/clients/{clientCode}/guest/group-buy-orders/{token} — Get a guest group buy order
-func (a *PartnerAPI) PlatformAppGuestGroupBuyOrder(ctx context.Context, p PlatformAppGuestGroupBuyOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyOrder"], map[string]any{"token": p.Token, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyOrder(ctx context.Context, p PlatformAppGuestGroupBuyOrderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyOrder"], map[string]any{"token": p.Token, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyOrderPayParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyOrderPay.
@@ -2053,8 +2019,8 @@ type PlatformAppGuestGroupBuyOrderPayParams struct {
 }
 
 // PlatformAppGuestGroupBuyOrderPay — POST /app/v1/clients/{clientCode}/guest/group-buy-orders/{token}/pay — Resume a guest group buy card hold
-func (a *PartnerAPI) PlatformAppGuestGroupBuyOrderPay(ctx context.Context, p PlatformAppGuestGroupBuyOrderPayParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyOrderPay"], map[string]any{"token": p.Token, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyOrderPay(ctx context.Context, p PlatformAppGuestGroupBuyOrderPayParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyOrderPay"], map[string]any{"token": p.Token, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyOrderReceivedParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyOrderReceived.
@@ -2070,8 +2036,8 @@ type PlatformAppGuestGroupBuyOrderReceivedParams struct {
 }
 
 // PlatformAppGuestGroupBuyOrderReceived — POST /app/v1/clients/{clientCode}/guest/group-buy-orders/{token}/received — Mark a guest group buy order received
-func (a *PartnerAPI) PlatformAppGuestGroupBuyOrderReceived(ctx context.Context, p PlatformAppGuestGroupBuyOrderReceivedParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyOrderReceived"], map[string]any{"token": p.Token, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyOrderReceived(ctx context.Context, p PlatformAppGuestGroupBuyOrderReceivedParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyOrderReceived"], map[string]any{"token": p.Token, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyOrdersParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyOrders.
@@ -2081,11 +2047,14 @@ type PlatformAppGuestGroupBuyOrdersParams struct {
 
 	// Locale is "locale" (query, optional. Answer language, one of the 14 platform languages.)
 	Locale *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
 }
 
 // PlatformAppGuestGroupBuyOrders — GET /app/v1/clients/{clientCode}/guest/group-buy-orders — List a guest's group buy orders
-func (a *PartnerAPI) PlatformAppGuestGroupBuyOrders(ctx context.Context, p PlatformAppGuestGroupBuyOrdersParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyOrders"], map[string]any{"clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyOrders(ctx context.Context, p PlatformAppGuestGroupBuyOrdersParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyOrders"], map[string]any{"clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Order-Token": p.GuestOrderToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyPlaceOrderParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyPlaceOrder.
@@ -2101,11 +2070,14 @@ type PlatformAppGuestGroupBuyPlaceOrderParams struct {
 
 	// Body is the request body (required).
 	Body map[string]any
+
+	// GuestContactToken is sent as the X-Guest-Contact-Token header (optional).
+	GuestContactToken *string
 }
 
 // PlatformAppGuestGroupBuyPlaceOrder — POST /app/v1/clients/{clientCode}/guest/group-buys/{code}/order — Place a guest group buy order
-func (a *PartnerAPI) PlatformAppGuestGroupBuyPlaceOrder(ctx context.Context, p PlatformAppGuestGroupBuyPlaceOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyPlaceOrder"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyPlaceOrder(ctx context.Context, p PlatformAppGuestGroupBuyPlaceOrderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyPlaceOrder"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Contact-Token": p.GuestContactToken}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyQuoteParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyQuote.
@@ -2124,8 +2096,8 @@ type PlatformAppGuestGroupBuyQuoteParams struct {
 }
 
 // PlatformAppGuestGroupBuyQuote — POST /app/v1/clients/{clientCode}/guest/group-buys/{code}/quote — Price a guest group buy order
-func (a *PartnerAPI) PlatformAppGuestGroupBuyQuote(ctx context.Context, p PlatformAppGuestGroupBuyQuoteParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyQuote"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyQuote(ctx context.Context, p PlatformAppGuestGroupBuyQuoteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyQuote"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyVerifyCompleteParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyVerifyComplete.
@@ -2144,8 +2116,8 @@ type PlatformAppGuestGroupBuyVerifyCompleteParams struct {
 }
 
 // PlatformAppGuestGroupBuyVerifyComplete — POST /app/v1/clients/{clientCode}/guest/group-buys/{code}/verify/complete — Verify a group buy guest's code
-func (a *PartnerAPI) PlatformAppGuestGroupBuyVerifyComplete(ctx context.Context, p PlatformAppGuestGroupBuyVerifyCompleteParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyVerifyComplete"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyVerifyComplete(ctx context.Context, p PlatformAppGuestGroupBuyVerifyCompleteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyVerifyComplete"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestGroupBuyVerifyRequestParams are the parameters of PartnerAPI.PlatformAppGuestGroupBuyVerifyRequest.
@@ -2164,8 +2136,8 @@ type PlatformAppGuestGroupBuyVerifyRequestParams struct {
 }
 
 // PlatformAppGuestGroupBuyVerifyRequest — POST /app/v1/clients/{clientCode}/guest/group-buys/{code}/verify/request — Send a group buy guest a code
-func (a *PartnerAPI) PlatformAppGuestGroupBuyVerifyRequest(ctx context.Context, p PlatformAppGuestGroupBuyVerifyRequestParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyVerifyRequest"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestGroupBuyVerifyRequest(ctx context.Context, p PlatformAppGuestGroupBuyVerifyRequestParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestGroupBuyVerifyRequest"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestLinkResolveParams are the parameters of PartnerAPI.PlatformAppGuestLinkResolve.
@@ -2181,8 +2153,8 @@ type PlatformAppGuestLinkResolveParams struct {
 }
 
 // PlatformAppGuestLinkResolve — GET /app/v1/clients/{clientCode}/guest/links/resolve — What a scanned link of the client opens in the app, without signing in
-func (a *PartnerAPI) PlatformAppGuestLinkResolve(ctx context.Context, p PlatformAppGuestLinkResolveParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestLinkResolve"], map[string]any{"url": p.Url, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestLinkResolve(ctx context.Context, p PlatformAppGuestLinkResolveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestLinkResolve"], map[string]any{"url": p.Url, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestMallCategoryParams are the parameters of PartnerAPI.PlatformAppGuestMallCategory.
@@ -2201,8 +2173,8 @@ type PlatformAppGuestMallCategoryParams struct {
 }
 
 // PlatformAppGuestMallCategory — GET /app/v1/clients/{clientCode}/guest/mall/categories/{categoryId} — Mall category products (guest)
-func (a *PartnerAPI) PlatformAppGuestMallCategory(ctx context.Context, p PlatformAppGuestMallCategoryParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestMallCategory"], map[string]any{"categoryId": p.CategoryId, "clientCode": p.ClientCode, "page": p.Page, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestMallCategory(ctx context.Context, p PlatformAppGuestMallCategoryParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestMallCategory"], map[string]any{"categoryId": p.CategoryId, "clientCode": p.ClientCode, "page": p.Page, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestMallGroupBuysParams are the parameters of PartnerAPI.PlatformAppGuestMallGroupBuys.
@@ -2218,8 +2190,8 @@ type PlatformAppGuestMallGroupBuysParams struct {
 }
 
 // PlatformAppGuestMallGroupBuys — GET /app/v1/clients/{clientCode}/guest/mall/group-buys — Group buy channel (guest)
-func (a *PartnerAPI) PlatformAppGuestMallGroupBuys(ctx context.Context, p PlatformAppGuestMallGroupBuysParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestMallGroupBuys"], map[string]any{"clientCode": p.ClientCode, "category": p.Category, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestMallGroupBuys(ctx context.Context, p PlatformAppGuestMallGroupBuysParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestMallGroupBuys"], map[string]any{"clientCode": p.ClientCode, "category": p.Category, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestMallHomeParams are the parameters of PartnerAPI.PlatformAppGuestMallHome.
@@ -2232,8 +2204,8 @@ type PlatformAppGuestMallHomeParams struct {
 }
 
 // PlatformAppGuestMallHome — GET /app/v1/clients/{clientCode}/guest/mall/home — Mall home blocks (guest)
-func (a *PartnerAPI) PlatformAppGuestMallHome(ctx context.Context, p PlatformAppGuestMallHomeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestMallHome"], map[string]any{"clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestMallHome(ctx context.Context, p PlatformAppGuestMallHomeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestMallHome"], map[string]any{"clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestMallSearchParams are the parameters of PartnerAPI.PlatformAppGuestMallSearch.
@@ -2249,8 +2221,8 @@ type PlatformAppGuestMallSearchParams struct {
 }
 
 // PlatformAppGuestMallSearch — GET /app/v1/clients/{clientCode}/guest/mall/search — Mall search (guest)
-func (a *PartnerAPI) PlatformAppGuestMallSearch(ctx context.Context, p PlatformAppGuestMallSearchParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestMallSearch"], map[string]any{"clientCode": p.ClientCode, "q": p.Q, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestMallSearch(ctx context.Context, p PlatformAppGuestMallSearchParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestMallSearch"], map[string]any{"clientCode": p.ClientCode, "q": p.Q, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestMallStoresParams are the parameters of PartnerAPI.PlatformAppGuestMallStores.
@@ -2275,8 +2247,8 @@ type PlatformAppGuestMallStoresParams struct {
 }
 
 // PlatformAppGuestMallStores — GET /app/v1/clients/{clientCode}/guest/mall/stores — Store directory (guest)
-func (a *PartnerAPI) PlatformAppGuestMallStores(ctx context.Context, p PlatformAppGuestMallStoresParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestMallStores"], map[string]any{"clientCode": p.ClientCode, "type": p.Type, "tag": p.Tag, "q": p.Q, "page": p.Page, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestMallStores(ctx context.Context, p PlatformAppGuestMallStoresParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestMallStores"], map[string]any{"clientCode": p.ClientCode, "type": p.Type, "tag": p.Tag, "q": p.Q, "page": p.Page, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestShipmentParams are the parameters of PartnerAPI.PlatformAppGuestShipment.
@@ -2289,11 +2261,17 @@ type PlatformAppGuestShipmentParams struct {
 
 	// Locale is "locale" (query, optional)
 	Locale *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
+
+	// GuestContactToken is sent as the X-Guest-Contact-Token header (optional).
+	GuestContactToken *string
 }
 
 // PlatformAppGuestShipment — GET /app/v1/clients/{clientCode}/guest/shipments/{guestOrderId} — Get a guest shipment
-func (a *PartnerAPI) PlatformAppGuestShipment(ctx context.Context, p PlatformAppGuestShipmentParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestShipment"], map[string]any{"guestOrderId": p.GuestOrderId, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestShipment(ctx context.Context, p PlatformAppGuestShipmentParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestShipment"], map[string]any{"guestOrderId": p.GuestOrderId, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Order-Token": p.GuestOrderToken, "X-Guest-Contact-Token": p.GuestContactToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestShipmentCancelParams are the parameters of PartnerAPI.PlatformAppGuestShipmentCancel.
@@ -2303,11 +2281,17 @@ type PlatformAppGuestShipmentCancelParams struct {
 
 	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
 	ClientCode *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
+
+	// GuestContactToken is sent as the X-Guest-Contact-Token header (optional).
+	GuestContactToken *string
 }
 
 // PlatformAppGuestShipmentCancel — POST /app/v1/clients/{clientCode}/guest/shipments/{guestOrderId}/cancel — Cancel a guest shipment
-func (a *PartnerAPI) PlatformAppGuestShipmentCancel(ctx context.Context, p PlatformAppGuestShipmentCancelParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestShipmentCancel"], map[string]any{"guestOrderId": p.GuestOrderId, "clientCode": p.ClientCode}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestShipmentCancel(ctx context.Context, p PlatformAppGuestShipmentCancelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestShipmentCancel"], map[string]any{"guestOrderId": p.GuestOrderId, "clientCode": p.ClientCode, "X-Guest-Order-Token": p.GuestOrderToken, "X-Guest-Contact-Token": p.GuestContactToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestShipmentLabelParams are the parameters of PartnerAPI.PlatformAppGuestShipmentLabel.
@@ -2317,11 +2301,17 @@ type PlatformAppGuestShipmentLabelParams struct {
 
 	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
 	ClientCode *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
+
+	// GuestContactToken is sent as the X-Guest-Contact-Token header (optional).
+	GuestContactToken *string
 }
 
 // PlatformAppGuestShipmentLabel — GET /app/v1/clients/{clientCode}/guest/shipments/{guestOrderId}/label — Get the label of a guest shipment
-func (a *PartnerAPI) PlatformAppGuestShipmentLabel(ctx context.Context, p PlatformAppGuestShipmentLabelParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestShipmentLabel"], map[string]any{"guestOrderId": p.GuestOrderId, "clientCode": p.ClientCode}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestShipmentLabel(ctx context.Context, p PlatformAppGuestShipmentLabelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestShipmentLabel"], map[string]any{"guestOrderId": p.GuestOrderId, "clientCode": p.ClientCode, "X-Guest-Order-Token": p.GuestOrderToken, "X-Guest-Contact-Token": p.GuestContactToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestShipmentRateParams are the parameters of PartnerAPI.PlatformAppGuestShipmentRate.
@@ -2334,8 +2324,8 @@ type PlatformAppGuestShipmentRateParams struct {
 }
 
 // PlatformAppGuestShipmentRate — POST /app/v1/clients/{clientCode}/guest/shipments/rate — Price a guest shipment
-func (a *PartnerAPI) PlatformAppGuestShipmentRate(ctx context.Context, p PlatformAppGuestShipmentRateParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestShipmentRate"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestShipmentRate(ctx context.Context, p PlatformAppGuestShipmentRateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestShipmentRate"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestShipmentSubmitParams are the parameters of PartnerAPI.PlatformAppGuestShipmentSubmit.
@@ -2345,11 +2335,14 @@ type PlatformAppGuestShipmentSubmitParams struct {
 
 	// Body is the request body (required).
 	Body map[string]any
+
+	// GuestContactToken is sent as the X-Guest-Contact-Token header (optional).
+	GuestContactToken *string
 }
 
 // PlatformAppGuestShipmentSubmit — POST /app/v1/clients/{clientCode}/guest/shipments — Submit a guest shipment for payment
-func (a *PartnerAPI) PlatformAppGuestShipmentSubmit(ctx context.Context, p PlatformAppGuestShipmentSubmitParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestShipmentSubmit"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestShipmentSubmit(ctx context.Context, p PlatformAppGuestShipmentSubmitParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestShipmentSubmit"], map[string]any{"clientCode": p.ClientCode, "X-Guest-Contact-Token": p.GuestContactToken}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestShipmentsParams are the parameters of PartnerAPI.PlatformAppGuestShipments.
@@ -2359,11 +2352,14 @@ type PlatformAppGuestShipmentsParams struct {
 
 	// Locale is "locale" (query, optional)
 	Locale *string
+
+	// GuestContactToken is sent as the X-Guest-Contact-Token header (optional).
+	GuestContactToken *string
 }
 
 // PlatformAppGuestShipments — GET /app/v1/clients/{clientCode}/guest/shipments — List a verified contact's guest shipments
-func (a *PartnerAPI) PlatformAppGuestShipments(ctx context.Context, p PlatformAppGuestShipmentsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestShipments"], map[string]any{"clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestShipments(ctx context.Context, p PlatformAppGuestShipmentsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestShipments"], map[string]any{"clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Contact-Token": p.GuestContactToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreParams are the parameters of PartnerAPI.PlatformAppGuestStore.
@@ -2391,8 +2387,8 @@ type PlatformAppGuestStoreParams struct {
 }
 
 // PlatformAppGuestStore — GET /app/v1/clients/{clientCode}/guest/stores/{slug} — Store page (guest)
-func (a *PartnerAPI) PlatformAppGuestStore(ctx context.Context, p PlatformAppGuestStoreParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStore"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "q": p.Q, "cat": p.Cat, "sort": p.Sort, "table": p.Table, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStore(ctx context.Context, p PlatformAppGuestStoreParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStore"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "q": p.Q, "cat": p.Cat, "sort": p.Sort, "table": p.Table, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreCartParams are the parameters of PartnerAPI.PlatformAppGuestStoreCart.
@@ -2405,11 +2401,14 @@ type PlatformAppGuestStoreCartParams struct {
 
 	// Locale is "locale" (query, optional. Answer language, one of the 14 platform languages; signed in, the account language is the default.)
 	Locale *string
+
+	// GuestCartToken is sent as the X-Guest-Cart-Token header (optional).
+	GuestCartToken *string
 }
 
 // PlatformAppGuestStoreCart — GET /app/v1/clients/{clientCode}/guest/stores/{slug}/cart — Cart of one store (guest)
-func (a *PartnerAPI) PlatformAppGuestStoreCart(ctx context.Context, p PlatformAppGuestStoreCartParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreCart"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreCart(ctx context.Context, p PlatformAppGuestStoreCartParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreCart"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Cart-Token": p.GuestCartToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreCartAddParams are the parameters of PartnerAPI.PlatformAppGuestStoreCartAdd.
@@ -2425,11 +2424,14 @@ type PlatformAppGuestStoreCartAddParams struct {
 
 	// Body is the request body (required).
 	Body map[string]any
+
+	// GuestCartToken is sent as the X-Guest-Cart-Token header (optional).
+	GuestCartToken *string
 }
 
 // PlatformAppGuestStoreCartAdd — POST /app/v1/clients/{clientCode}/guest/stores/{slug}/cart/items — Add to cart (guest)
-func (a *PartnerAPI) PlatformAppGuestStoreCartAdd(ctx context.Context, p PlatformAppGuestStoreCartAddParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreCartAdd"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreCartAdd(ctx context.Context, p PlatformAppGuestStoreCartAddParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreCartAdd"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Cart-Token": p.GuestCartToken}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestStoreCartRemoveParams are the parameters of PartnerAPI.PlatformAppGuestStoreCartRemove.
@@ -2445,11 +2447,14 @@ type PlatformAppGuestStoreCartRemoveParams struct {
 
 	// Locale is "locale" (query, optional. Answer language, one of the 14 platform languages; signed in, the account language is the default.)
 	Locale *string
+
+	// GuestCartToken is sent as the X-Guest-Cart-Token header (optional).
+	GuestCartToken *string
 }
 
 // PlatformAppGuestStoreCartRemove — DELETE /app/v1/clients/{clientCode}/guest/stores/{slug}/cart/items/{itemId} — Remove a cart line (guest)
-func (a *PartnerAPI) PlatformAppGuestStoreCartRemove(ctx context.Context, p PlatformAppGuestStoreCartRemoveParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreCartRemove"], map[string]any{"slug": p.Slug, "itemId": p.ItemId, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreCartRemove(ctx context.Context, p PlatformAppGuestStoreCartRemoveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreCartRemove"], map[string]any{"slug": p.Slug, "itemId": p.ItemId, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Cart-Token": p.GuestCartToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreCartUpdateParams are the parameters of PartnerAPI.PlatformAppGuestStoreCartUpdate.
@@ -2468,11 +2473,14 @@ type PlatformAppGuestStoreCartUpdateParams struct {
 
 	// Body is the request body (required).
 	Body map[string]any
+
+	// GuestCartToken is sent as the X-Guest-Cart-Token header (optional).
+	GuestCartToken *string
 }
 
 // PlatformAppGuestStoreCartUpdate — PATCH /app/v1/clients/{clientCode}/guest/stores/{slug}/cart/items/{itemId} — Change a cart line quantity (guest)
-func (a *PartnerAPI) PlatformAppGuestStoreCartUpdate(ctx context.Context, p PlatformAppGuestStoreCartUpdateParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreCartUpdate"], map[string]any{"slug": p.Slug, "itemId": p.ItemId, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreCartUpdate(ctx context.Context, p PlatformAppGuestStoreCartUpdateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreCartUpdate"], map[string]any{"slug": p.Slug, "itemId": p.ItemId, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Cart-Token": p.GuestCartToken}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestStoreCategoryParams are the parameters of PartnerAPI.PlatformAppGuestStoreCategory.
@@ -2503,8 +2511,8 @@ type PlatformAppGuestStoreCategoryParams struct {
 }
 
 // PlatformAppGuestStoreCategory — GET /app/v1/clients/{clientCode}/guest/stores/{slug}/categories/{categoryId} — Store category page (multi-page style) (guest)
-func (a *PartnerAPI) PlatformAppGuestStoreCategory(ctx context.Context, p PlatformAppGuestStoreCategoryParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreCategory"], map[string]any{"slug": p.Slug, "categoryId": p.CategoryId, "clientCode": p.ClientCode, "sort": p.Sort, "sub": p.Sub, "in_stock": p.InStock, "page": p.Page, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreCategory(ctx context.Context, p PlatformAppGuestStoreCategoryParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreCategory"], map[string]any{"slug": p.Slug, "categoryId": p.CategoryId, "clientCode": p.ClientCode, "sort": p.Sort, "sub": p.Sub, "in_stock": p.InStock, "page": p.Page, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreCheckoutPlaceParams are the parameters of PartnerAPI.PlatformAppGuestStoreCheckoutPlace.
@@ -2520,11 +2528,14 @@ type PlatformAppGuestStoreCheckoutPlaceParams struct {
 
 	// Body is the request body (optional).
 	Body map[string]any
+
+	// GuestCartToken is sent as the X-Guest-Cart-Token header (optional).
+	GuestCartToken *string
 }
 
 // PlatformAppGuestStoreCheckoutPlace — POST /app/v1/clients/{clientCode}/guest/stores/{slug}/checkout/place — Place a guest order where the store takes guest orders (or at a table)
-func (a *PartnerAPI) PlatformAppGuestStoreCheckoutPlace(ctx context.Context, p PlatformAppGuestStoreCheckoutPlaceParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreCheckoutPlace"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreCheckoutPlace(ctx context.Context, p PlatformAppGuestStoreCheckoutPlaceParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreCheckoutPlace"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Cart-Token": p.GuestCartToken}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestStoreCheckoutQuoteParams are the parameters of PartnerAPI.PlatformAppGuestStoreCheckoutQuote.
@@ -2540,11 +2551,14 @@ type PlatformAppGuestStoreCheckoutQuoteParams struct {
 
 	// Body is the request body (optional).
 	Body map[string]any
+
+	// GuestCartToken is sent as the X-Guest-Cart-Token header (optional).
+	GuestCartToken *string
 }
 
 // PlatformAppGuestStoreCheckoutQuote — POST /app/v1/clients/{clientCode}/guest/stores/{slug}/checkout/quote — Price a guest's cart at a store
-func (a *PartnerAPI) PlatformAppGuestStoreCheckoutQuote(ctx context.Context, p PlatformAppGuestStoreCheckoutQuoteParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreCheckoutQuote"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreCheckoutQuote(ctx context.Context, p PlatformAppGuestStoreCheckoutQuoteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreCheckoutQuote"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Cart-Token": p.GuestCartToken}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestStoreHomeParams are the parameters of PartnerAPI.PlatformAppGuestStoreHome.
@@ -2560,8 +2574,8 @@ type PlatformAppGuestStoreHomeParams struct {
 }
 
 // PlatformAppGuestStoreHome — GET /app/v1/clients/{clientCode}/guest/stores/{slug}/home — Store home page (multi-page style) (guest)
-func (a *PartnerAPI) PlatformAppGuestStoreHome(ctx context.Context, p PlatformAppGuestStoreHomeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreHome"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreHome(ctx context.Context, p PlatformAppGuestStoreHomeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreHome"], map[string]any{"slug": p.Slug, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreOrderParams are the parameters of PartnerAPI.PlatformAppGuestStoreOrder.
@@ -2574,11 +2588,14 @@ type PlatformAppGuestStoreOrderParams struct {
 
 	// Locale is "locale" (query, optional. Answer language, one of the 14 platform languages.)
 	Locale *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
 }
 
 // PlatformAppGuestStoreOrder — GET /app/v1/clients/{clientCode}/guest/store-orders/{code} — One guest store order, with its order token
-func (a *PartnerAPI) PlatformAppGuestStoreOrder(ctx context.Context, p PlatformAppGuestStoreOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreOrder"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreOrder(ctx context.Context, p PlatformAppGuestStoreOrderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreOrder"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Order-Token": p.GuestOrderToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreOrderCancelParams are the parameters of PartnerAPI.PlatformAppGuestStoreOrderCancel.
@@ -2591,11 +2608,14 @@ type PlatformAppGuestStoreOrderCancelParams struct {
 
 	// Locale is "locale" (query, optional. Answer language, one of the 14 platform languages.)
 	Locale *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
 }
 
 // PlatformAppGuestStoreOrderCancel — POST /app/v1/clients/{clientCode}/guest/store-orders/{code}/cancel — Cancel a guest order before the store accepts it
-func (a *PartnerAPI) PlatformAppGuestStoreOrderCancel(ctx context.Context, p PlatformAppGuestStoreOrderCancelParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderCancel"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreOrderCancel(ctx context.Context, p PlatformAppGuestStoreOrderCancelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderCancel"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Order-Token": p.GuestOrderToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreOrderConfirmPaymentParams are the parameters of PartnerAPI.PlatformAppGuestStoreOrderConfirmPayment.
@@ -2608,11 +2628,14 @@ type PlatformAppGuestStoreOrderConfirmPaymentParams struct {
 
 	// Locale is "locale" (query, optional. Answer language, one of the 14 platform languages.)
 	Locale *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
 }
 
 // PlatformAppGuestStoreOrderConfirmPayment — POST /app/v1/clients/{clientCode}/guest/store-orders/{code}/confirm-payment — After the PaymentSheet, for a guest order
-func (a *PartnerAPI) PlatformAppGuestStoreOrderConfirmPayment(ctx context.Context, p PlatformAppGuestStoreOrderConfirmPaymentParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderConfirmPayment"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreOrderConfirmPayment(ctx context.Context, p PlatformAppGuestStoreOrderConfirmPaymentParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderConfirmPayment"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Order-Token": p.GuestOrderToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreOrderLockerOpenParams are the parameters of PartnerAPI.PlatformAppGuestStoreOrderLockerOpen.
@@ -2625,11 +2648,14 @@ type PlatformAppGuestStoreOrderLockerOpenParams struct {
 
 	// Locale is "locale" (query, optional. Answer language, one of the 14 platform languages.)
 	Locale *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
 }
 
 // PlatformAppGuestStoreOrderLockerOpen — POST /app/v1/clients/{clientCode}/guest/store-orders/{code}/locker-open — Open the next door of a guest's paid locker pickup
-func (a *PartnerAPI) PlatformAppGuestStoreOrderLockerOpen(ctx context.Context, p PlatformAppGuestStoreOrderLockerOpenParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderLockerOpen"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreOrderLockerOpen(ctx context.Context, p PlatformAppGuestStoreOrderLockerOpenParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderLockerOpen"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Order-Token": p.GuestOrderToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreOrderLockerRefundParams are the parameters of PartnerAPI.PlatformAppGuestStoreOrderLockerRefund.
@@ -2642,11 +2668,14 @@ type PlatformAppGuestStoreOrderLockerRefundParams struct {
 
 	// Locale is "locale" (query, optional. Answer language, one of the 14 platform languages.)
 	Locale *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
 }
 
 // PlatformAppGuestStoreOrderLockerRefund — POST /app/v1/clients/{clientCode}/guest/store-orders/{code}/locker-refund — Refund a guest's locker pickup whose door never opened
-func (a *PartnerAPI) PlatformAppGuestStoreOrderLockerRefund(ctx context.Context, p PlatformAppGuestStoreOrderLockerRefundParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderLockerRefund"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreOrderLockerRefund(ctx context.Context, p PlatformAppGuestStoreOrderLockerRefundParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderLockerRefund"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Order-Token": p.GuestOrderToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreOrderPayParams are the parameters of PartnerAPI.PlatformAppGuestStoreOrderPay.
@@ -2659,11 +2688,14 @@ type PlatformAppGuestStoreOrderPayParams struct {
 
 	// Locale is "locale" (query, optional. Answer language, one of the 14 platform languages.)
 	Locale *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
 }
 
 // PlatformAppGuestStoreOrderPay — POST /app/v1/clients/{clientCode}/guest/store-orders/{code}/pay — Pay a guest order whose payment was left unfinished
-func (a *PartnerAPI) PlatformAppGuestStoreOrderPay(ctx context.Context, p PlatformAppGuestStoreOrderPayParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderPay"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreOrderPay(ctx context.Context, p PlatformAppGuestStoreOrderPayParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderPay"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Order-Token": p.GuestOrderToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreOrderReorderParams are the parameters of PartnerAPI.PlatformAppGuestStoreOrderReorder.
@@ -2676,11 +2708,17 @@ type PlatformAppGuestStoreOrderReorderParams struct {
 
 	// Locale is "locale" (query, optional. Answer language, one of the 14 platform languages.)
 	Locale *string
+
+	// GuestCartToken is sent as the X-Guest-Cart-Token header (optional).
+	GuestCartToken *string
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
 }
 
 // PlatformAppGuestStoreOrderReorder — POST /app/v1/clients/{clientCode}/guest/store-orders/{code}/reorder — Put a guest order's lines back into the guest cart
-func (a *PartnerAPI) PlatformAppGuestStoreOrderReorder(ctx context.Context, p PlatformAppGuestStoreOrderReorderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderReorder"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreOrderReorder(ctx context.Context, p PlatformAppGuestStoreOrderReorderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderReorder"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Cart-Token": p.GuestCartToken, "X-Guest-Order-Token": p.GuestOrderToken}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStoreOrderReturnParams are the parameters of PartnerAPI.PlatformAppGuestStoreOrderReturn.
@@ -2696,11 +2734,14 @@ type PlatformAppGuestStoreOrderReturnParams struct {
 
 	// Body is the request body (optional).
 	Body map[string]any
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
 }
 
 // PlatformAppGuestStoreOrderReturn — POST /app/v1/clients/{clientCode}/guest/store-orders/{code}/return — Ask the store to take a guest's paid or completed order back
-func (a *PartnerAPI) PlatformAppGuestStoreOrderReturn(ctx context.Context, p PlatformAppGuestStoreOrderReturnParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderReturn"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreOrderReturn(ctx context.Context, p PlatformAppGuestStoreOrderReturnParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderReturn"], map[string]any{"code": p.Code, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Order-Token": p.GuestOrderToken}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestStoreOrderReviewParams are the parameters of PartnerAPI.PlatformAppGuestStoreOrderReview.
@@ -2719,11 +2760,14 @@ type PlatformAppGuestStoreOrderReviewParams struct {
 
 	// Body is the request body (optional).
 	Body map[string]any
+
+	// GuestOrderToken is sent as the X-Guest-Order-Token header (optional).
+	GuestOrderToken *string
 }
 
 // PlatformAppGuestStoreOrderReview — POST /app/v1/clients/{clientCode}/guest/store-orders/{code}/review/{productId} — Rate one product of a guest order
-func (a *PartnerAPI) PlatformAppGuestStoreOrderReview(ctx context.Context, p PlatformAppGuestStoreOrderReviewParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderReview"], map[string]any{"code": p.Code, "productId": p.ProductId, "clientCode": p.ClientCode, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreOrderReview(ctx context.Context, p PlatformAppGuestStoreOrderReviewParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreOrderReview"], map[string]any{"code": p.Code, "productId": p.ProductId, "clientCode": p.ClientCode, "locale": p.Locale, "X-Guest-Order-Token": p.GuestOrderToken}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestStoreProductParams are the parameters of PartnerAPI.PlatformAppGuestStoreProduct.
@@ -2742,8 +2786,8 @@ type PlatformAppGuestStoreProductParams struct {
 }
 
 // PlatformAppGuestStoreProduct — GET /app/v1/clients/{clientCode}/guest/stores/{slug}/products/{productId} — Product page (guest)
-func (a *PartnerAPI) PlatformAppGuestStoreProduct(ctx context.Context, p PlatformAppGuestStoreProductParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStoreProduct"], map[string]any{"slug": p.Slug, "productId": p.ProductId, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStoreProduct(ctx context.Context, p PlatformAppGuestStoreProductParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreProduct"], map[string]any{"slug": p.Slug, "productId": p.ProductId, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestStorefrontParams are the parameters of PartnerAPI.PlatformAppGuestStorefront.
@@ -2756,8 +2800,8 @@ type PlatformAppGuestStorefrontParams struct {
 }
 
 // PlatformAppGuestStorefront — GET /app/v1/clients/{clientCode}/guest/storefront — Storefront entry (guest)
-func (a *PartnerAPI) PlatformAppGuestStorefront(ctx context.Context, p PlatformAppGuestStorefrontParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestStorefront"], map[string]any{"clientCode": p.ClientCode, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppGuestStorefront(ctx context.Context, p PlatformAppGuestStorefrontParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStorefront"], map[string]any{"clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppGuestTrackParams are the parameters of PartnerAPI.PlatformAppGuestTrack.
@@ -2770,8 +2814,8 @@ type PlatformAppGuestTrackParams struct {
 }
 
 // PlatformAppGuestTrack — POST /app/v1/clients/{clientCode}/guest/track — Track any code (guest)
-func (a *PartnerAPI) PlatformAppGuestTrack(ctx context.Context, p PlatformAppGuestTrackParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestTrack"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestTrack(ctx context.Context, p PlatformAppGuestTrackParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestTrack"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestVerifyCompleteParams are the parameters of PartnerAPI.PlatformAppGuestVerifyComplete.
@@ -2784,8 +2828,8 @@ type PlatformAppGuestVerifyCompleteParams struct {
 }
 
 // PlatformAppGuestVerifyComplete — POST /app/v1/clients/{clientCode}/guest/verify/complete — Check a guest verification code
-func (a *PartnerAPI) PlatformAppGuestVerifyComplete(ctx context.Context, p PlatformAppGuestVerifyCompleteParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestVerifyComplete"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestVerifyComplete(ctx context.Context, p PlatformAppGuestVerifyCompleteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestVerifyComplete"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil, opts...)
 }
 
 // PlatformAppGuestVerifyRequestParams are the parameters of PartnerAPI.PlatformAppGuestVerifyRequest.
@@ -2798,22 +2842,8 @@ type PlatformAppGuestVerifyRequestParams struct {
 }
 
 // PlatformAppGuestVerifyRequest — POST /app/v1/clients/{clientCode}/guest/verify/request — Send a guest a verification code
-func (a *PartnerAPI) PlatformAppGuestVerifyRequest(ctx context.Context, p PlatformAppGuestVerifyRequestParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppGuestVerifyRequest"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil)
-}
-
-// PlatformAppHandOverPickupParams are the parameters of PartnerAPI.PlatformAppHandOverPickup.
-type PlatformAppHandOverPickupParams struct {
-	// DeliveryId is "deliveryId" (path, required)
-	DeliveryId int64
-
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppHandOverPickup — POST /app/v1/pickups/{deliveryId}/handoff — Hand a locker pickup to somebody else
-func (a *PartnerAPI) PlatformAppHandOverPickup(ctx context.Context, p PlatformAppHandOverPickupParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppHandOverPickup"], map[string]any{"deliveryId": p.DeliveryId}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppGuestVerifyRequest(ctx context.Context, p PlatformAppGuestVerifyRequestParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestVerifyRequest"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil, opts...)
 }
 
 // PlatformAppHomeParams are the parameters of PartnerAPI.PlatformAppHome.
@@ -2826,8 +2856,8 @@ type PlatformAppHomeParams struct {
 }
 
 // PlatformAppHome — GET /app/v1/home — App home screen summary
-func (a *PartnerAPI) PlatformAppHome(ctx context.Context, p PlatformAppHomeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppHome"], map[string]any{"latitude": p.Latitude, "longitude": p.Longitude}, nil, nil)
+func (a *PartnerAPI) PlatformAppHome(ctx context.Context, p PlatformAppHomeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppHome"], map[string]any{"latitude": p.Latitude, "longitude": p.Longitude}, nil, nil, opts...)
 }
 
 // PlatformAppLinkResolveParams are the parameters of PartnerAPI.PlatformAppLinkResolve.
@@ -2840,396 +2870,8 @@ type PlatformAppLinkResolveParams struct {
 }
 
 // PlatformAppLinkResolve — GET /app/v1/links/resolve — What a scanned link of the client opens in the app
-func (a *PartnerAPI) PlatformAppLinkResolve(ctx context.Context, p PlatformAppLinkResolveParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLinkResolve"], map[string]any{"url": p.Url, "locale": p.Locale}, nil, nil)
-}
-
-// PlatformAppLockerLocationParams are the parameters of PartnerAPI.PlatformAppLockerLocation.
-type PlatformAppLockerLocationParams struct {
-	// LocationId is "locationId" (path, required)
-	LocationId int64
-
-	// Latitude is "latitude" (query, optional. Origin latitude)
-	Latitude *float64
-
-	// Longitude is "longitude" (query, optional. Origin longitude)
-	Longitude *float64
-
-	// OriginAddress1 is "origin_address_1" (query, optional. Selected customer address line 1 used when coordinates are not supplied)
-	OriginAddress1 *string
-
-	// OriginAddress2 is "origin_address_2" (query, optional. Selected customer address line 2)
-	OriginAddress2 *string
-
-	// OriginCity is "origin_city" (query, optional. Selected customer address city)
-	OriginCity *string
-
-	// OriginProvince is "origin_province" (query, optional. Selected customer address province or region)
-	OriginProvince *string
-
-	// OriginCountry is "origin_country" (query, optional. Selected customer address country name or ISO-2 code)
-	OriginCountry *string
-
-	// OriginPostcode is "origin_postcode" (query, optional. Selected customer address postcode)
-	OriginPostcode *string
-}
-
-// PlatformAppLockerLocation — GET /app/v1/locker-locations/{locationId} — Show a SmartLocker location
-func (a *PartnerAPI) PlatformAppLockerLocation(ctx context.Context, p PlatformAppLockerLocationParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerLocation"], map[string]any{"locationId": p.LocationId, "latitude": p.Latitude, "longitude": p.Longitude, "origin_address_1": p.OriginAddress1, "origin_address_2": p.OriginAddress2, "origin_city": p.OriginCity, "origin_province": p.OriginProvince, "origin_country": p.OriginCountry, "origin_postcode": p.OriginPostcode}, nil, nil)
-}
-
-// PlatformAppLockerLocationGuideParams are the parameters of PartnerAPI.PlatformAppLockerLocationGuide.
-type PlatformAppLockerLocationGuideParams struct {
-	// LocationId is "locationId" (path, required)
-	LocationId int64
-}
-
-// PlatformAppLockerLocationGuide — GET /app/v1/locker-locations/{locationId}/guide — Indoor directions to the lockers of a location
-func (a *PartnerAPI) PlatformAppLockerLocationGuide(ctx context.Context, p PlatformAppLockerLocationGuideParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerLocationGuide"], map[string]any{"locationId": p.LocationId}, nil, nil)
-}
-
-// PlatformAppLockerLocationGuideFeedbackParams are the parameters of PartnerAPI.PlatformAppLockerLocationGuideFeedback.
-type PlatformAppLockerLocationGuideFeedbackParams struct {
-	// LocationId is "locationId" (path, required)
-	LocationId int64
-
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppLockerLocationGuideFeedback — POST /app/v1/locker-locations/{locationId}/guide/feedback — Answer whether the lockers were found
-func (a *PartnerAPI) PlatformAppLockerLocationGuideFeedback(ctx context.Context, p PlatformAppLockerLocationGuideFeedbackParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerLocationGuideFeedback"], map[string]any{"locationId": p.LocationId}, p.Body, nil)
-}
-
-// PlatformAppLockerLocationsParams are the parameters of PartnerAPI.PlatformAppLockerLocations.
-type PlatformAppLockerLocationsParams struct {
-	// Latitude is "latitude" (query, optional. Origin latitude)
-	Latitude *float64
-
-	// Longitude is "longitude" (query, optional. Origin longitude)
-	Longitude *float64
-
-	// OriginAddress1 is "origin_address_1" (query, optional. Selected customer address line 1 used when coordinates are not supplied)
-	OriginAddress1 *string
-
-	// OriginAddress2 is "origin_address_2" (query, optional. Selected customer address line 2)
-	OriginAddress2 *string
-
-	// OriginCity is "origin_city" (query, optional. Selected customer address city)
-	OriginCity *string
-
-	// OriginProvince is "origin_province" (query, optional. Selected customer address province or region)
-	OriginProvince *string
-
-	// OriginCountry is "origin_country" (query, optional. Selected customer address country name or ISO-2 code)
-	OriginCountry *string
-
-	// OriginPostcode is "origin_postcode" (query, optional. Selected customer address postcode)
-	OriginPostcode *string
-
-	// Search is "search" (query, optional. Location name, city or postcode)
-	Search *string
-
-	// Limit is "limit" (query, optional. Maximum locations)
-	Limit *int64
-
-	// PerPage is "per_page" (query, optional. Page size, up to 100)
-	PerPage *int64
-
-	// Page is "page" (query, optional. One-based result page)
-	Page *int64
-
-	// North is "north" (query, optional. Viewport north latitude)
-	North *float64
-
-	// South is "south" (query, optional. Viewport south latitude)
-	South *float64
-
-	// East is "east" (query, optional. Viewport east longitude)
-	East *float64
-
-	// West is "west" (query, optional. Viewport west longitude)
-	West *float64
-
-	// Pickup is "pickup" (query, optional. Narrows the list to locations that support pickup. Only applied when true; false, empty or omitted returns the unfiltered catalog.)
-	Pickup *bool
-
-	// Return is "return" (query, optional. Narrows the list to locations that accept returns. Only applied when true; false, empty or omitted returns the unfiltered catalog.)
-	Return *bool
-
-	// Online is "online" (query, optional. Narrows the list to locations whose aggregated status is online. Only applied when true; false, empty or omitted returns the unfiltered catalog.)
-	Online *bool
-
-	// Available is "available" (query, optional. Narrows the list to locations with at least one available compartment. Only applied when true; false, empty or omitted returns the unfiltered catalog.)
-	Available *bool
-
-	// Favorite is "favorite" (query, optional. Narrows the list to the signed-in customer’s favorites. Only applied when true; false, empty or omitted returns the unfiltered catalog.)
-	Favorite *bool
-
-	// IncludeStatus is "include_status" (query, optional. Include batched runtime status and capacity summaries)
-	IncludeStatus *bool
-
-	// Sort is "sort" (query, optional. Sort by distance, name, favorite, recent or popular)
-	Sort *string
-}
-
-// PlatformAppLockerLocations — GET /app/v1/locker-locations — List app-enabled SmartLocker locations
-func (a *PartnerAPI) PlatformAppLockerLocations(ctx context.Context, p PlatformAppLockerLocationsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerLocations"], map[string]any{"latitude": p.Latitude, "longitude": p.Longitude, "origin_address_1": p.OriginAddress1, "origin_address_2": p.OriginAddress2, "origin_city": p.OriginCity, "origin_province": p.OriginProvince, "origin_country": p.OriginCountry, "origin_postcode": p.OriginPostcode, "search": p.Search, "limit": p.Limit, "per_page": p.PerPage, "page": p.Page, "north": p.North, "south": p.South, "east": p.East, "west": p.West, "pickup": p.Pickup, "return": p.Return, "online": p.Online, "available": p.Available, "favorite": p.Favorite, "include_status": p.IncludeStatus, "sort": p.Sort}, nil, nil)
-}
-
-// PlatformAppLockerShopCatalogParams are the parameters of PartnerAPI.PlatformAppLockerShopCatalog.
-type PlatformAppLockerShopCatalogParams struct {
-	// LocationId is "locationId" (path, required)
-	LocationId int64
-
-	// Locale is "locale" (query, optional)
-	Locale *string
-}
-
-// PlatformAppLockerShopCatalog — GET /app/v1/locker-locations/{locationId}/shop — What a location's cabinets have for sale
-func (a *PartnerAPI) PlatformAppLockerShopCatalog(ctx context.Context, p PlatformAppLockerShopCatalogParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerShopCatalog"], map[string]any{"locationId": p.LocationId, "locale": p.Locale}, nil, nil)
-}
-
-// PlatformAppLockerShopCreateOrderParams are the parameters of PartnerAPI.PlatformAppLockerShopCreateOrder.
-type PlatformAppLockerShopCreateOrderParams struct {
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppLockerShopCreateOrder — POST /app/v1/locker-shop/orders — Buy from a cabinet
-func (a *PartnerAPI) PlatformAppLockerShopCreateOrder(ctx context.Context, p PlatformAppLockerShopCreateOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerShopCreateOrder"], map[string]any{}, p.Body, nil)
-}
-
-// PlatformAppLockerShopIssueAccessCodeParams are the parameters of PartnerAPI.PlatformAppLockerShopIssueAccessCode.
-type PlatformAppLockerShopIssueAccessCodeParams struct {
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppLockerShopIssueAccessCode — POST /app/v1/locker-shop/access-codes — Issue a staff code (merchant staff)
-func (a *PartnerAPI) PlatformAppLockerShopIssueAccessCode(ctx context.Context, p PlatformAppLockerShopIssueAccessCodeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerShopIssueAccessCode"], map[string]any{}, p.Body, nil)
-}
-
-// PlatformAppLockerShopItemsParams are the parameters of PartnerAPI.PlatformAppLockerShopItems.
-type PlatformAppLockerShopItemsParams struct {
-	// ShelfId is "shelf_id" (query, optional)
-	ShelfId *int64
-
-	// StoreId is "store_id" (query, optional)
-	StoreId *int64
-
-	// Status is "status" (query, optional)
-	Status *string
-
-	// Page is "page" (query, optional)
-	Page *int64
-
-	// PerPage is "per_page" (query, optional)
-	PerPage *int64
-}
-
-// PlatformAppLockerShopItems — GET /app/v1/locker-shop/items — Items in cells (merchant staff)
-func (a *PartnerAPI) PlatformAppLockerShopItems(ctx context.Context, p PlatformAppLockerShopItemsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerShopItems"], map[string]any{"shelf_id": p.ShelfId, "store_id": p.StoreId, "status": p.Status, "page": p.Page, "per_page": p.PerPage}, nil, nil)
-}
-
-// PlatformAppLockerShopOpenParams are the parameters of PartnerAPI.PlatformAppLockerShopOpen.
-type PlatformAppLockerShopOpenParams struct {
-	// Id is "id" (path, required)
-	Id int64
-}
-
-// PlatformAppLockerShopOpen — POST /app/v1/locker-shop/orders/{id}/open — Open the next door
-func (a *PartnerAPI) PlatformAppLockerShopOpen(ctx context.Context, p PlatformAppLockerShopOpenParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerShopOpen"], map[string]any{"id": p.Id}, nil, nil)
-}
-
-// PlatformAppLockerShopOrderParams are the parameters of PartnerAPI.PlatformAppLockerShopOrder.
-type PlatformAppLockerShopOrderParams struct {
-	// Id is "id" (path, required)
-	Id int64
-}
-
-// PlatformAppLockerShopOrder — GET /app/v1/locker-shop/orders/{id} — One shop purchase
-func (a *PartnerAPI) PlatformAppLockerShopOrder(ctx context.Context, p PlatformAppLockerShopOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerShopOrder"], map[string]any{"id": p.Id}, nil, nil)
-}
-
-// PlatformAppLockerShopOrdersParams are the parameters of PartnerAPI.PlatformAppLockerShopOrders.
-type PlatformAppLockerShopOrdersParams struct {
-	// Scope is "scope" (query, optional)
-	Scope *string
-
-	// Page is "page" (query, optional)
-	Page *int64
-
-	// PerPage is "per_page" (query, optional)
-	PerPage *int64
-}
-
-// PlatformAppLockerShopOrders — GET /app/v1/locker-shop/orders — The caller's shop purchases
-func (a *PartnerAPI) PlatformAppLockerShopOrders(ctx context.Context, p PlatformAppLockerShopOrdersParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerShopOrders"], map[string]any{"scope": p.Scope, "page": p.Page, "per_page": p.PerPage}, nil, nil)
-}
-
-// PlatformAppLockerShopRefundRequestParams are the parameters of PartnerAPI.PlatformAppLockerShopRefundRequest.
-type PlatformAppLockerShopRefundRequestParams struct {
-	// Id is "id" (path, required)
-	Id int64
-}
-
-// PlatformAppLockerShopRefundRequest — POST /app/v1/locker-shop/orders/{id}/refund-request — Ask for a refund after a door would not open
-func (a *PartnerAPI) PlatformAppLockerShopRefundRequest(ctx context.Context, p PlatformAppLockerShopRefundRequestParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerShopRefundRequest"], map[string]any{"id": p.Id}, nil, nil)
-}
-
-// PlatformAppLockerStorageClaimParams are the parameters of PartnerAPI.PlatformAppLockerStorageClaim.
-type PlatformAppLockerStorageClaimParams struct {
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppLockerStorageClaim — POST /app/v1/locker-storage/rentals/claim — Add a stored bag by its code
-func (a *PartnerAPI) PlatformAppLockerStorageClaim(ctx context.Context, p PlatformAppLockerStorageClaimParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStorageClaim"], map[string]any{}, p.Body, nil)
-}
-
-// PlatformAppLockerStorageDeliveryParams are the parameters of PartnerAPI.PlatformAppLockerStorageDelivery.
-type PlatformAppLockerStorageDeliveryParams struct {
-	// Id is "id" (path, required. Rental id)
-	Id int64
-
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppLockerStorageDelivery — POST /app/v1/locker-storage/rentals/{id}/delivery — Have the bag delivered to an address
-func (a *PartnerAPI) PlatformAppLockerStorageDelivery(ctx context.Context, p PlatformAppLockerStorageDeliveryParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStorageDelivery"], map[string]any{"id": p.Id}, p.Body, nil)
-}
-
-// PlatformAppLockerStorageKeepParams are the parameters of PartnerAPI.PlatformAppLockerStorageKeep.
-type PlatformAppLockerStorageKeepParams struct {
-	// Id is "id" (path, required. Rental id)
-	Id int64
-}
-
-// PlatformAppLockerStorageKeep — POST /app/v1/locker-storage/rentals/{id}/keep — Keep the bag in its compartment
-func (a *PartnerAPI) PlatformAppLockerStorageKeep(ctx context.Context, p PlatformAppLockerStorageKeepParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStorageKeep"], map[string]any{"id": p.Id}, nil, nil)
-}
-
-// PlatformAppLockerStorageOnwardQuoteParams are the parameters of PartnerAPI.PlatformAppLockerStorageOnwardQuote.
-type PlatformAppLockerStorageOnwardQuoteParams struct {
-	// Id is "id" (path, required. Rental id)
-	Id int64
-
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppLockerStorageOnwardQuote — POST /app/v1/locker-storage/rentals/{id}/onward-quote — Price delivery and shipment to an address
-func (a *PartnerAPI) PlatformAppLockerStorageOnwardQuote(ctx context.Context, p PlatformAppLockerStorageOnwardQuoteParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStorageOnwardQuote"], map[string]any{"id": p.Id}, p.Body, nil)
-}
-
-// PlatformAppLockerStoragePickupSiteParams are the parameters of PartnerAPI.PlatformAppLockerStoragePickupSite.
-type PlatformAppLockerStoragePickupSiteParams struct {
-	// Id is "id" (path, required. Rental id)
-	Id int64
-
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppLockerStoragePickupSite — POST /app/v1/locker-storage/rentals/{id}/pickup-site — Collect at another cabinet
-func (a *PartnerAPI) PlatformAppLockerStoragePickupSite(ctx context.Context, p PlatformAppLockerStoragePickupSiteParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStoragePickupSite"], map[string]any{"id": p.Id}, p.Body, nil)
-}
-
-// PlatformAppLockerStoragePickupSiteCancelParams are the parameters of PartnerAPI.PlatformAppLockerStoragePickupSiteCancel.
-type PlatformAppLockerStoragePickupSiteCancelParams struct {
-	// Id is "id" (path, required. Rental id)
-	Id int64
-}
-
-// PlatformAppLockerStoragePickupSiteCancel — POST /app/v1/locker-storage/rentals/{id}/pickup-site/cancel — Collect where the bag is after all
-func (a *PartnerAPI) PlatformAppLockerStoragePickupSiteCancel(ctx context.Context, p PlatformAppLockerStoragePickupSiteCancelParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStoragePickupSiteCancel"], map[string]any{"id": p.Id}, nil, nil)
-}
-
-// PlatformAppLockerStorageRentalParams are the parameters of PartnerAPI.PlatformAppLockerStorageRental.
-type PlatformAppLockerStorageRentalParams struct {
-	// Id is "id" (path, required. Rental id)
-	Id int64
-}
-
-// PlatformAppLockerStorageRental — GET /app/v1/locker-storage/rentals/{id} — Show one stored bag
-func (a *PartnerAPI) PlatformAppLockerStorageRental(ctx context.Context, p PlatformAppLockerStorageRentalParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStorageRental"], map[string]any{"id": p.Id}, nil, nil)
-}
-
-// PlatformAppLockerStorageRentalsParams are the parameters of PartnerAPI.PlatformAppLockerStorageRentals.
-type PlatformAppLockerStorageRentalsParams struct {
-	// Scope is "scope" (query, optional. current | past)
-	Scope *string
-
-	// Page is "page" (query, optional)
-	Page *int64
-
-	// PerPage is "per_page" (query, optional. 1–50, default 20)
-	PerPage *int64
-}
-
-// PlatformAppLockerStorageRentals — GET /app/v1/locker-storage/rentals — List the renter's stored luggage
-func (a *PartnerAPI) PlatformAppLockerStorageRentals(ctx context.Context, p PlatformAppLockerStorageRentalsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStorageRentals"], map[string]any{"scope": p.Scope, "page": p.Page, "per_page": p.PerPage}, nil, nil)
-}
-
-// PlatformAppLockerStorageResendCodeParams are the parameters of PartnerAPI.PlatformAppLockerStorageResendCode.
-type PlatformAppLockerStorageResendCodeParams struct {
-	// Id is "id" (path, required. Rental id)
-	Id int64
-}
-
-// PlatformAppLockerStorageResendCode — POST /app/v1/locker-storage/rentals/{id}/resend-code — Send the pickup code again
-func (a *PartnerAPI) PlatformAppLockerStorageResendCode(ctx context.Context, p PlatformAppLockerStorageResendCodeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStorageResendCode"], map[string]any{"id": p.Id}, nil, nil)
-}
-
-// PlatformAppLockerStorageReturnTimeParams are the parameters of PartnerAPI.PlatformAppLockerStorageReturnTime.
-type PlatformAppLockerStorageReturnTimeParams struct {
-	// Id is "id" (path, required. Rental id)
-	Id int64
-
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppLockerStorageReturnTime — POST /app/v1/locker-storage/rentals/{id}/return-time — Change when you come back
-func (a *PartnerAPI) PlatformAppLockerStorageReturnTime(ctx context.Context, p PlatformAppLockerStorageReturnTimeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStorageReturnTime"], map[string]any{"id": p.Id}, p.Body, nil)
-}
-
-// PlatformAppLockerStorageShipmentParams are the parameters of PartnerAPI.PlatformAppLockerStorageShipment.
-type PlatformAppLockerStorageShipmentParams struct {
-	// Id is "id" (path, required. Rental id)
-	Id int64
-
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppLockerStorageShipment — POST /app/v1/locker-storage/rentals/{id}/shipment — Ship the bag with a carrier or courier
-func (a *PartnerAPI) PlatformAppLockerStorageShipment(ctx context.Context, p PlatformAppLockerStorageShipmentParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppLockerStorageShipment"], map[string]any{"id": p.Id}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppLinkResolve(ctx context.Context, p PlatformAppLinkResolveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppLinkResolve"], map[string]any{"url": p.Url, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppMallCategoryParams are the parameters of PartnerAPI.PlatformAppMallCategory.
@@ -3245,8 +2887,8 @@ type PlatformAppMallCategoryParams struct {
 }
 
 // PlatformAppMallCategory — GET /app/v1/mall/categories/{categoryId} — Mall category products
-func (a *PartnerAPI) PlatformAppMallCategory(ctx context.Context, p PlatformAppMallCategoryParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppMallCategory"], map[string]any{"categoryId": p.CategoryId, "page": p.Page, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppMallCategory(ctx context.Context, p PlatformAppMallCategoryParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppMallCategory"], map[string]any{"categoryId": p.CategoryId, "page": p.Page, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppMallGroupBuysParams are the parameters of PartnerAPI.PlatformAppMallGroupBuys.
@@ -3259,8 +2901,8 @@ type PlatformAppMallGroupBuysParams struct {
 }
 
 // PlatformAppMallGroupBuys — GET /app/v1/mall/group-buys — Group buy channel
-func (a *PartnerAPI) PlatformAppMallGroupBuys(ctx context.Context, p PlatformAppMallGroupBuysParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppMallGroupBuys"], map[string]any{"category": p.Category, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppMallGroupBuys(ctx context.Context, p PlatformAppMallGroupBuysParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppMallGroupBuys"], map[string]any{"category": p.Category, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppMallHomeParams are the parameters of PartnerAPI.PlatformAppMallHome.
@@ -3270,8 +2912,8 @@ type PlatformAppMallHomeParams struct {
 }
 
 // PlatformAppMallHome — GET /app/v1/mall/home — Mall home blocks
-func (a *PartnerAPI) PlatformAppMallHome(ctx context.Context, p PlatformAppMallHomeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppMallHome"], map[string]any{"locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppMallHome(ctx context.Context, p PlatformAppMallHomeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppMallHome"], map[string]any{"locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppMallSearchParams are the parameters of PartnerAPI.PlatformAppMallSearch.
@@ -3284,8 +2926,8 @@ type PlatformAppMallSearchParams struct {
 }
 
 // PlatformAppMallSearch — GET /app/v1/mall/search — Mall search
-func (a *PartnerAPI) PlatformAppMallSearch(ctx context.Context, p PlatformAppMallSearchParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppMallSearch"], map[string]any{"q": p.Q, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppMallSearch(ctx context.Context, p PlatformAppMallSearchParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppMallSearch"], map[string]any{"q": p.Q, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppMallStoresParams are the parameters of PartnerAPI.PlatformAppMallStores.
@@ -3307,13 +2949,13 @@ type PlatformAppMallStoresParams struct {
 }
 
 // PlatformAppMallStores — GET /app/v1/mall/stores — Store directory
-func (a *PartnerAPI) PlatformAppMallStores(ctx context.Context, p PlatformAppMallStoresParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppMallStores"], map[string]any{"type": p.Type, "tag": p.Tag, "q": p.Q, "page": p.Page, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppMallStores(ctx context.Context, p PlatformAppMallStoresParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppMallStores"], map[string]any{"type": p.Type, "tag": p.Tag, "q": p.Q, "page": p.Page, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppMarkAllNotificationsRead — POST /app/v1/notifications/read-all — Mark all app notifications as read
-func (a *PartnerAPI) PlatformAppMarkAllNotificationsRead(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppMarkAllNotificationsRead"], nil, nil, nil)
+func (a *PartnerAPI) PlatformAppMarkAllNotificationsRead(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppMarkAllNotificationsRead"], nil, nil, nil, opts...)
 }
 
 // PlatformAppMarkNotificationReadParams are the parameters of PartnerAPI.PlatformAppMarkNotificationRead.
@@ -3323,13 +2965,13 @@ type PlatformAppMarkNotificationReadParams struct {
 }
 
 // PlatformAppMarkNotificationRead — POST /app/v1/notifications/{notificationId}/read — Mark one app notification as read
-func (a *PartnerAPI) PlatformAppMarkNotificationRead(ctx context.Context, p PlatformAppMarkNotificationReadParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppMarkNotificationRead"], map[string]any{"notificationId": p.NotificationId}, nil, nil)
+func (a *PartnerAPI) PlatformAppMarkNotificationRead(ctx context.Context, p PlatformAppMarkNotificationReadParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppMarkNotificationRead"], map[string]any{"notificationId": p.NotificationId}, nil, nil, opts...)
 }
 
 // PlatformAppNotificationPreferences — GET /app/v1/notifications/preferences — Get notification preferences
-func (a *PartnerAPI) PlatformAppNotificationPreferences(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppNotificationPreferences"], nil, nil, nil)
+func (a *PartnerAPI) PlatformAppNotificationPreferences(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppNotificationPreferences"], nil, nil, nil, opts...)
 }
 
 // PlatformAppNotificationRealtimeParams are the parameters of PartnerAPI.PlatformAppNotificationRealtime.
@@ -3339,8 +2981,8 @@ type PlatformAppNotificationRealtimeParams struct {
 }
 
 // PlatformAppNotificationRealtime — GET /app/v1/notifications/realtime — Get foreground notification MQTT credentials
-func (a *PartnerAPI) PlatformAppNotificationRealtime(ctx context.Context, p PlatformAppNotificationRealtimeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppNotificationRealtime"], map[string]any{"device_id": p.DeviceId}, nil, nil)
+func (a *PartnerAPI) PlatformAppNotificationRealtime(ctx context.Context, p PlatformAppNotificationRealtimeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppNotificationRealtime"], map[string]any{"device_id": p.DeviceId}, nil, nil, opts...)
 }
 
 // PlatformAppNotificationsParams are the parameters of PartnerAPI.PlatformAppNotifications.
@@ -3359,8 +3001,8 @@ type PlatformAppNotificationsParams struct {
 }
 
 // PlatformAppNotifications — GET /app/v1/notifications — List app notifications
-func (a *PartnerAPI) PlatformAppNotifications(ctx context.Context, p PlatformAppNotificationsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppNotifications"], map[string]any{"filter": p.Filter, "category": p.Category, "page": p.Page, "per_page": p.PerPage}, nil, nil)
+func (a *PartnerAPI) PlatformAppNotifications(ctx context.Context, p PlatformAppNotificationsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppNotifications"], map[string]any{"filter": p.Filter, "category": p.Category, "page": p.Page, "per_page": p.PerPage}, nil, nil, opts...)
 }
 
 // PlatformAppOrderParams are the parameters of PartnerAPI.PlatformAppOrder.
@@ -3373,8 +3015,8 @@ type PlatformAppOrderParams struct {
 }
 
 // PlatformAppOrder — GET /app/v1/orders/{orderType}/{orderId} — Show an app-enabled customer order
-func (a *PartnerAPI) PlatformAppOrder(ctx context.Context, p PlatformAppOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppOrder"], map[string]any{"orderType": p.OrderType, "orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) PlatformAppOrder(ctx context.Context, p PlatformAppOrderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppOrder"], map[string]any{"orderType": p.OrderType, "orderId": p.OrderId}, nil, nil, opts...)
 }
 
 // PlatformAppOrdersParams are the parameters of PartnerAPI.PlatformAppOrders.
@@ -3396,8 +3038,8 @@ type PlatformAppOrdersParams struct {
 }
 
 // PlatformAppOrders — GET /app/v1/orders — List app-enabled customer orders
-func (a *PartnerAPI) PlatformAppOrders(ctx context.Context, p PlatformAppOrdersParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppOrders"], map[string]any{"type": p.Type, "status": p.Status, "search": p.Search, "per_page": p.PerPage, "page": p.Page}, nil, nil)
+func (a *PartnerAPI) PlatformAppOrders(ctx context.Context, p PlatformAppOrdersParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppOrders"], map[string]any{"type": p.Type, "status": p.Status, "search": p.Search, "per_page": p.PerPage, "page": p.Page}, nil, nil, opts...)
 }
 
 // PlatformAppPayParams are the parameters of PartnerAPI.PlatformAppPay.
@@ -3410,8 +3052,8 @@ type PlatformAppPayParams struct {
 }
 
 // PlatformAppPay — POST /app/v1/pay/requests/{publicToken}/pay — Pay a payment request
-func (a *PartnerAPI) PlatformAppPay(ctx context.Context, p PlatformAppPayParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPay"], map[string]any{"publicToken": p.PublicToken}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppPay(ctx context.Context, p PlatformAppPayParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppPay"], map[string]any{"publicToken": p.PublicToken}, p.Body, nil, opts...)
 }
 
 // PlatformAppPayCreateRequestParams are the parameters of PartnerAPI.PlatformAppPayCreateRequest.
@@ -3421,13 +3063,13 @@ type PlatformAppPayCreateRequestParams struct {
 }
 
 // PlatformAppPayCreateRequest — POST /app/v1/pay/requests — Raise a payment request for one payable
-func (a *PartnerAPI) PlatformAppPayCreateRequest(ctx context.Context, p PlatformAppPayCreateRequestParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPayCreateRequest"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppPayCreateRequest(ctx context.Context, p PlatformAppPayCreateRequestParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppPayCreateRequest"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppPayOutstanding — GET /app/v1/pay/outstanding — Everything this payer owes
-func (a *PartnerAPI) PlatformAppPayOutstanding(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPayOutstanding"], nil, nil, nil)
+func (a *PartnerAPI) PlatformAppPayOutstanding(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppPayOutstanding"], nil, nil, nil, opts...)
 }
 
 // PlatformAppPayRequestParams are the parameters of PartnerAPI.PlatformAppPayRequest.
@@ -3437,8 +3079,8 @@ type PlatformAppPayRequestParams struct {
 }
 
 // PlatformAppPayRequest — GET /app/v1/pay/requests/{publicToken} — One payment request and its methods
-func (a *PartnerAPI) PlatformAppPayRequest(ctx context.Context, p PlatformAppPayRequestParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPayRequest"], map[string]any{"publicToken": p.PublicToken}, nil, nil)
+func (a *PartnerAPI) PlatformAppPayRequest(ctx context.Context, p PlatformAppPayRequestParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppPayRequest"], map[string]any{"publicToken": p.PublicToken}, nil, nil, opts...)
 }
 
 // PlatformAppPayResolveLinkParams are the parameters of PartnerAPI.PlatformAppPayResolveLink.
@@ -3448,8 +3090,8 @@ type PlatformAppPayResolveLinkParams struct {
 }
 
 // PlatformAppPayResolveLink — POST /app/v1/pay/links — Pay the code shown on a cabinet screen
-func (a *PartnerAPI) PlatformAppPayResolveLink(ctx context.Context, p PlatformAppPayResolveLinkParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPayResolveLink"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppPayResolveLink(ctx context.Context, p PlatformAppPayResolveLinkParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppPayResolveLink"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppPayResolveTagParams are the parameters of PartnerAPI.PlatformAppPayResolveTag.
@@ -3459,41 +3101,13 @@ type PlatformAppPayResolveTagParams struct {
 }
 
 // PlatformAppPayResolveTag — POST /app/v1/pay/resolve — Resolve a scanned pay tag
-func (a *PartnerAPI) PlatformAppPayResolveTag(ctx context.Context, p PlatformAppPayResolveTagParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPayResolveTag"], map[string]any{}, p.Body, nil)
-}
-
-// PlatformAppPickupParams are the parameters of PartnerAPI.PlatformAppPickup.
-type PlatformAppPickupParams struct {
-	// DeliveryId is "deliveryId" (path, required)
-	DeliveryId int64
-}
-
-// PlatformAppPickup — GET /app/v1/pickups/{deliveryId} — Show a customer locker pickup
-func (a *PartnerAPI) PlatformAppPickup(ctx context.Context, p PlatformAppPickupParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPickup"], map[string]any{"deliveryId": p.DeliveryId}, nil, nil)
-}
-
-// PlatformAppPickupsParams are the parameters of PartnerAPI.PlatformAppPickups.
-type PlatformAppPickupsParams struct {
-	// Status is "status" (query, optional. Pickup status)
-	Status *string
-
-	// PerPage is "per_page" (query, optional. Items per page)
-	PerPage *int64
-
-	// Page is "page" (query, optional. Page number)
-	Page *int64
-}
-
-// PlatformAppPickups — GET /app/v1/pickups — List customer locker pickups
-func (a *PartnerAPI) PlatformAppPickups(ctx context.Context, p PlatformAppPickupsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPickups"], map[string]any{"status": p.Status, "per_page": p.PerPage, "page": p.Page}, nil, nil)
+func (a *PartnerAPI) PlatformAppPayResolveTag(ctx context.Context, p PlatformAppPayResolveTagParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppPayResolveTag"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppPrivacy — GET /app/v1/privacy — Get app privacy overview
-func (a *PartnerAPI) PlatformAppPrivacy(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPrivacy"], nil, nil, nil)
+func (a *PartnerAPI) PlatformAppPrivacy(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppPrivacy"], nil, nil, nil, opts...)
 }
 
 // PlatformAppPublicQuoteParams are the parameters of PartnerAPI.PlatformAppPublicQuote.
@@ -3506,8 +3120,8 @@ type PlatformAppPublicQuoteParams struct {
 }
 
 // PlatformAppPublicQuote — POST /app/v1/quotes/{line} — Quote a line without signing in
-func (a *PartnerAPI) PlatformAppPublicQuote(ctx context.Context, p PlatformAppPublicQuoteParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPublicQuote"], map[string]any{"line": p.Line}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppPublicQuote(ctx context.Context, p PlatformAppPublicQuoteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppPublicQuote"], map[string]any{"line": p.Line}, p.Body, nil, opts...)
 }
 
 // PlatformAppPublicQuoteSchemaParams are the parameters of PartnerAPI.PlatformAppPublicQuoteSchema.
@@ -3517,8 +3131,8 @@ type PlatformAppPublicQuoteSchemaParams struct {
 }
 
 // PlatformAppPublicQuoteSchema — GET /app/v1/quotes/schema — The quote form a client offers without signing in
-func (a *PartnerAPI) PlatformAppPublicQuoteSchema(ctx context.Context, p PlatformAppPublicQuoteSchemaParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppPublicQuoteSchema"], map[string]any{"locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppPublicQuoteSchema(ctx context.Context, p PlatformAppPublicQuoteSchemaParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppPublicQuoteSchema"], map[string]any{"locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppRegisterCustomerParams are the parameters of PartnerAPI.PlatformAppRegisterCustomer.
@@ -3531,8 +3145,8 @@ type PlatformAppRegisterCustomerParams struct {
 }
 
 // PlatformAppRegisterCustomer — POST /app/v1/clients/{clientCode}/registration/complete — Register a Client customer
-func (a *PartnerAPI) PlatformAppRegisterCustomer(ctx context.Context, p PlatformAppRegisterCustomerParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppRegisterCustomer"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppRegisterCustomer(ctx context.Context, p PlatformAppRegisterCustomerParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppRegisterCustomer"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil, opts...)
 }
 
 // PlatformAppRegisterDeviceParams are the parameters of PartnerAPI.PlatformAppRegisterDevice.
@@ -3542,18 +3156,18 @@ type PlatformAppRegisterDeviceParams struct {
 }
 
 // PlatformAppRegisterDevice — POST /app/v1/devices — Register an app push device
-func (a *PartnerAPI) PlatformAppRegisterDevice(ctx context.Context, p PlatformAppRegisterDeviceParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppRegisterDevice"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppRegisterDevice(ctx context.Context, p PlatformAppRegisterDeviceParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppRegisterDevice"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppRegistrationClients — GET /app/v1/registration/clients — List the Clients that accept new customer registrations
-func (a *PartnerAPI) PlatformAppRegistrationClients(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppRegistrationClients"], nil, nil, nil)
+func (a *PartnerAPI) PlatformAppRegistrationClients(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppRegistrationClients"], nil, nil, nil, opts...)
 }
 
 // PlatformAppRegistrationDetails — GET /app/v1/registration-details — Registration details still to fill in
-func (a *PartnerAPI) PlatformAppRegistrationDetails(ctx context.Context) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppRegistrationDetails"], nil, nil, nil)
+func (a *PartnerAPI) PlatformAppRegistrationDetails(ctx context.Context, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppRegistrationDetails"], nil, nil, nil, opts...)
 }
 
 // PlatformAppRequestAccountDeletionParams are the parameters of PartnerAPI.PlatformAppRequestAccountDeletion.
@@ -3563,8 +3177,8 @@ type PlatformAppRequestAccountDeletionParams struct {
 }
 
 // PlatformAppRequestAccountDeletion — POST /app/v1/privacy/account-deletion — Request account closure
-func (a *PartnerAPI) PlatformAppRequestAccountDeletion(ctx context.Context, p PlatformAppRequestAccountDeletionParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppRequestAccountDeletion"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppRequestAccountDeletion(ctx context.Context, p PlatformAppRequestAccountDeletionParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppRequestAccountDeletion"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppRequestPhoneVerificationParams are the parameters of PartnerAPI.PlatformAppRequestPhoneVerification.
@@ -3574,8 +3188,8 @@ type PlatformAppRequestPhoneVerificationParams struct {
 }
 
 // PlatformAppRequestPhoneVerification — POST /app/v1/privacy/phone/request — Request phone verification for the signed-in customer
-func (a *PartnerAPI) PlatformAppRequestPhoneVerification(ctx context.Context, p PlatformAppRequestPhoneVerificationParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppRequestPhoneVerification"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppRequestPhoneVerification(ctx context.Context, p PlatformAppRequestPhoneVerificationParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppRequestPhoneVerification"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppRequestRegistrationCodeParams are the parameters of PartnerAPI.PlatformAppRequestRegistrationCode.
@@ -3588,8 +3202,8 @@ type PlatformAppRequestRegistrationCodeParams struct {
 }
 
 // PlatformAppRequestRegistrationCode — POST /app/v1/clients/{clientCode}/registration/phone/request — Request a registration phone verification code
-func (a *PartnerAPI) PlatformAppRequestRegistrationCode(ctx context.Context, p PlatformAppRequestRegistrationCodeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppRequestRegistrationCode"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppRequestRegistrationCode(ctx context.Context, p PlatformAppRequestRegistrationCodeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppRequestRegistrationCode"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil, opts...)
 }
 
 // PlatformAppRequestRegistrationEmailCodeParams are the parameters of PartnerAPI.PlatformAppRequestRegistrationEmailCode.
@@ -3602,8 +3216,8 @@ type PlatformAppRequestRegistrationEmailCodeParams struct {
 }
 
 // PlatformAppRequestRegistrationEmailCode — POST /app/v1/clients/{clientCode}/registration/email/request — Request a registration email verification code
-func (a *PartnerAPI) PlatformAppRequestRegistrationEmailCode(ctx context.Context, p PlatformAppRequestRegistrationEmailCodeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppRequestRegistrationEmailCode"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppRequestRegistrationEmailCode(ctx context.Context, p PlatformAppRequestRegistrationEmailCodeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppRequestRegistrationEmailCode"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil, opts...)
 }
 
 // PlatformAppResendReturnConfirmationParams are the parameters of PartnerAPI.PlatformAppResendReturnConfirmation.
@@ -3613,8 +3227,8 @@ type PlatformAppResendReturnConfirmationParams struct {
 }
 
 // PlatformAppResendReturnConfirmation — POST /app/v1/returns/{returnId}/confirmation-email — Resend a return confirmation email
-func (a *PartnerAPI) PlatformAppResendReturnConfirmation(ctx context.Context, p PlatformAppResendReturnConfirmationParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppResendReturnConfirmation"], map[string]any{"returnId": p.ReturnId}, nil, nil)
+func (a *PartnerAPI) PlatformAppResendReturnConfirmation(ctx context.Context, p PlatformAppResendReturnConfirmationParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppResendReturnConfirmation"], map[string]any{"returnId": p.ReturnId}, nil, nil, opts...)
 }
 
 // PlatformAppReturnParams are the parameters of PartnerAPI.PlatformAppReturn.
@@ -3624,8 +3238,8 @@ type PlatformAppReturnParams struct {
 }
 
 // PlatformAppReturn — GET /app/v1/returns/{returnId} — Show a customer return request
-func (a *PartnerAPI) PlatformAppReturn(ctx context.Context, p PlatformAppReturnParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppReturn"], map[string]any{"returnId": p.ReturnId}, nil, nil)
+func (a *PartnerAPI) PlatformAppReturn(ctx context.Context, p PlatformAppReturnParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppReturn"], map[string]any{"returnId": p.ReturnId}, nil, nil, opts...)
 }
 
 // PlatformAppReturnConfigurationParams are the parameters of PartnerAPI.PlatformAppReturnConfiguration.
@@ -3635,8 +3249,8 @@ type PlatformAppReturnConfigurationParams struct {
 }
 
 // PlatformAppReturnConfiguration — GET /app/v1/returns/config — Get App return configuration
-func (a *PartnerAPI) PlatformAppReturnConfiguration(ctx context.Context, p PlatformAppReturnConfigurationParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppReturnConfiguration"], map[string]any{"locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppReturnConfiguration(ctx context.Context, p PlatformAppReturnConfigurationParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppReturnConfiguration"], map[string]any{"locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppReturnFeeQuoteParams are the parameters of PartnerAPI.PlatformAppReturnFeeQuote.
@@ -3646,8 +3260,8 @@ type PlatformAppReturnFeeQuoteParams struct {
 }
 
 // PlatformAppReturnFeeQuote — POST /app/v1/returns/fee-quote — Quote a return channel's fee
-func (a *PartnerAPI) PlatformAppReturnFeeQuote(ctx context.Context, p PlatformAppReturnFeeQuoteParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppReturnFeeQuote"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppReturnFeeQuote(ctx context.Context, p PlatformAppReturnFeeQuoteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppReturnFeeQuote"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppReturnsParams are the parameters of PartnerAPI.PlatformAppReturns.
@@ -3663,8 +3277,8 @@ type PlatformAppReturnsParams struct {
 }
 
 // PlatformAppReturns — GET /app/v1/returns — List customer return requests
-func (a *PartnerAPI) PlatformAppReturns(ctx context.Context, p PlatformAppReturnsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppReturns"], map[string]any{"status": p.Status, "per_page": p.PerPage, "page": p.Page}, nil, nil)
+func (a *PartnerAPI) PlatformAppReturns(ctx context.Context, p PlatformAppReturnsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppReturns"], map[string]any{"status": p.Status, "per_page": p.PerPage, "page": p.Page}, nil, nil, opts...)
 }
 
 // PlatformAppRevokeDeviceParams are the parameters of PartnerAPI.PlatformAppRevokeDevice.
@@ -3674,8 +3288,8 @@ type PlatformAppRevokeDeviceParams struct {
 }
 
 // PlatformAppRevokeDevice — DELETE /app/v1/devices/{deviceId} — Revoke an app push device
-func (a *PartnerAPI) PlatformAppRevokeDevice(ctx context.Context, p PlatformAppRevokeDeviceParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppRevokeDevice"], map[string]any{"deviceId": p.DeviceId}, nil, nil)
+func (a *PartnerAPI) PlatformAppRevokeDevice(ctx context.Context, p PlatformAppRevokeDeviceParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppRevokeDevice"], map[string]any{"deviceId": p.DeviceId}, nil, nil, opts...)
 }
 
 // PlatformAppStoreParams are the parameters of PartnerAPI.PlatformAppStore.
@@ -3700,8 +3314,8 @@ type PlatformAppStoreParams struct {
 }
 
 // PlatformAppStore — GET /app/v1/stores/{slug} — Store page
-func (a *PartnerAPI) PlatformAppStore(ctx context.Context, p PlatformAppStoreParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStore"], map[string]any{"slug": p.Slug, "q": p.Q, "cat": p.Cat, "sort": p.Sort, "table": p.Table, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStore(ctx context.Context, p PlatformAppStoreParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStore"], map[string]any{"slug": p.Slug, "q": p.Q, "cat": p.Cat, "sort": p.Sort, "table": p.Table, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreCartParams are the parameters of PartnerAPI.PlatformAppStoreCart.
@@ -3714,8 +3328,8 @@ type PlatformAppStoreCartParams struct {
 }
 
 // PlatformAppStoreCart — GET /app/v1/stores/{slug}/cart — Cart of one store
-func (a *PartnerAPI) PlatformAppStoreCart(ctx context.Context, p PlatformAppStoreCartParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreCart"], map[string]any{"slug": p.Slug, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreCart(ctx context.Context, p PlatformAppStoreCartParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreCart"], map[string]any{"slug": p.Slug, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreCartAddParams are the parameters of PartnerAPI.PlatformAppStoreCartAdd.
@@ -3731,8 +3345,8 @@ type PlatformAppStoreCartAddParams struct {
 }
 
 // PlatformAppStoreCartAdd — POST /app/v1/stores/{slug}/cart/items — Add to cart
-func (a *PartnerAPI) PlatformAppStoreCartAdd(ctx context.Context, p PlatformAppStoreCartAddParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreCartAdd"], map[string]any{"slug": p.Slug, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppStoreCartAdd(ctx context.Context, p PlatformAppStoreCartAddParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreCartAdd"], map[string]any{"slug": p.Slug, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppStoreCartRemoveParams are the parameters of PartnerAPI.PlatformAppStoreCartRemove.
@@ -3748,8 +3362,8 @@ type PlatformAppStoreCartRemoveParams struct {
 }
 
 // PlatformAppStoreCartRemove — DELETE /app/v1/stores/{slug}/cart/items/{itemId} — Remove a cart line
-func (a *PartnerAPI) PlatformAppStoreCartRemove(ctx context.Context, p PlatformAppStoreCartRemoveParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreCartRemove"], map[string]any{"slug": p.Slug, "itemId": p.ItemId, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreCartRemove(ctx context.Context, p PlatformAppStoreCartRemoveParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreCartRemove"], map[string]any{"slug": p.Slug, "itemId": p.ItemId, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreCartUpdateParams are the parameters of PartnerAPI.PlatformAppStoreCartUpdate.
@@ -3768,8 +3382,8 @@ type PlatformAppStoreCartUpdateParams struct {
 }
 
 // PlatformAppStoreCartUpdate — PATCH /app/v1/stores/{slug}/cart/items/{itemId} — Change a cart line quantity
-func (a *PartnerAPI) PlatformAppStoreCartUpdate(ctx context.Context, p PlatformAppStoreCartUpdateParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreCartUpdate"], map[string]any{"slug": p.Slug, "itemId": p.ItemId, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppStoreCartUpdate(ctx context.Context, p PlatformAppStoreCartUpdateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreCartUpdate"], map[string]any{"slug": p.Slug, "itemId": p.ItemId, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppStoreCategoryParams are the parameters of PartnerAPI.PlatformAppStoreCategory.
@@ -3797,8 +3411,8 @@ type PlatformAppStoreCategoryParams struct {
 }
 
 // PlatformAppStoreCategory — GET /app/v1/stores/{slug}/categories/{categoryId} — Store category page (multi-page style)
-func (a *PartnerAPI) PlatformAppStoreCategory(ctx context.Context, p PlatformAppStoreCategoryParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreCategory"], map[string]any{"slug": p.Slug, "categoryId": p.CategoryId, "sort": p.Sort, "sub": p.Sub, "in_stock": p.InStock, "page": p.Page, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreCategory(ctx context.Context, p PlatformAppStoreCategoryParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreCategory"], map[string]any{"slug": p.Slug, "categoryId": p.CategoryId, "sort": p.Sort, "sub": p.Sub, "in_stock": p.InStock, "page": p.Page, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreCheckoutPlaceParams are the parameters of PartnerAPI.PlatformAppStoreCheckoutPlace.
@@ -3814,8 +3428,8 @@ type PlatformAppStoreCheckoutPlaceParams struct {
 }
 
 // PlatformAppStoreCheckoutPlace — POST /app/v1/stores/{slug}/checkout/place — Place the order from the cart
-func (a *PartnerAPI) PlatformAppStoreCheckoutPlace(ctx context.Context, p PlatformAppStoreCheckoutPlaceParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreCheckoutPlace"], map[string]any{"slug": p.Slug, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppStoreCheckoutPlace(ctx context.Context, p PlatformAppStoreCheckoutPlaceParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreCheckoutPlace"], map[string]any{"slug": p.Slug, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppStoreCheckoutQuoteParams are the parameters of PartnerAPI.PlatformAppStoreCheckoutQuote.
@@ -3831,8 +3445,8 @@ type PlatformAppStoreCheckoutQuoteParams struct {
 }
 
 // PlatformAppStoreCheckoutQuote — POST /app/v1/stores/{slug}/checkout/quote — Price the cart of a store for the order the buyer is about to place
-func (a *PartnerAPI) PlatformAppStoreCheckoutQuote(ctx context.Context, p PlatformAppStoreCheckoutQuoteParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreCheckoutQuote"], map[string]any{"slug": p.Slug, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppStoreCheckoutQuote(ctx context.Context, p PlatformAppStoreCheckoutQuoteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreCheckoutQuote"], map[string]any{"slug": p.Slug, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppStoreHomeParams are the parameters of PartnerAPI.PlatformAppStoreHome.
@@ -3845,8 +3459,8 @@ type PlatformAppStoreHomeParams struct {
 }
 
 // PlatformAppStoreHome — GET /app/v1/stores/{slug}/home — Store home page (multi-page style)
-func (a *PartnerAPI) PlatformAppStoreHome(ctx context.Context, p PlatformAppStoreHomeParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreHome"], map[string]any{"slug": p.Slug, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreHome(ctx context.Context, p PlatformAppStoreHomeParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreHome"], map[string]any{"slug": p.Slug, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreOrderParams are the parameters of PartnerAPI.PlatformAppStoreOrder.
@@ -3859,8 +3473,8 @@ type PlatformAppStoreOrderParams struct {
 }
 
 // PlatformAppStoreOrder — GET /app/v1/store-orders/{code} — One store order of the account
-func (a *PartnerAPI) PlatformAppStoreOrder(ctx context.Context, p PlatformAppStoreOrderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreOrder"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreOrder(ctx context.Context, p PlatformAppStoreOrderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreOrder"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreOrderCancelParams are the parameters of PartnerAPI.PlatformAppStoreOrderCancel.
@@ -3873,8 +3487,8 @@ type PlatformAppStoreOrderCancelParams struct {
 }
 
 // PlatformAppStoreOrderCancel — POST /app/v1/store-orders/{code}/cancel — Cancel the order before the store accepts it
-func (a *PartnerAPI) PlatformAppStoreOrderCancel(ctx context.Context, p PlatformAppStoreOrderCancelParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreOrderCancel"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreOrderCancel(ctx context.Context, p PlatformAppStoreOrderCancelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreOrderCancel"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreOrderConfirmPaymentParams are the parameters of PartnerAPI.PlatformAppStoreOrderConfirmPayment.
@@ -3887,8 +3501,8 @@ type PlatformAppStoreOrderConfirmPaymentParams struct {
 }
 
 // PlatformAppStoreOrderConfirmPayment — POST /app/v1/store-orders/{code}/confirm-payment — After the PaymentSheet
-func (a *PartnerAPI) PlatformAppStoreOrderConfirmPayment(ctx context.Context, p PlatformAppStoreOrderConfirmPaymentParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreOrderConfirmPayment"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreOrderConfirmPayment(ctx context.Context, p PlatformAppStoreOrderConfirmPaymentParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreOrderConfirmPayment"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreOrderLockerOpenParams are the parameters of PartnerAPI.PlatformAppStoreOrderLockerOpen.
@@ -3901,8 +3515,8 @@ type PlatformAppStoreOrderLockerOpenParams struct {
 }
 
 // PlatformAppStoreOrderLockerOpen — POST /app/v1/store-orders/{code}/locker-open — Open the next door of a paid locker pickup, on the buyer's own press at the cabi
-func (a *PartnerAPI) PlatformAppStoreOrderLockerOpen(ctx context.Context, p PlatformAppStoreOrderLockerOpenParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreOrderLockerOpen"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreOrderLockerOpen(ctx context.Context, p PlatformAppStoreOrderLockerOpenParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreOrderLockerOpen"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreOrderLockerRefundParams are the parameters of PartnerAPI.PlatformAppStoreOrderLockerRefund.
@@ -3915,8 +3529,8 @@ type PlatformAppStoreOrderLockerRefundParams struct {
 }
 
 // PlatformAppStoreOrderLockerRefund — POST /app/v1/store-orders/{code}/locker-refund — Refund a locker pickup whose door never opened
-func (a *PartnerAPI) PlatformAppStoreOrderLockerRefund(ctx context.Context, p PlatformAppStoreOrderLockerRefundParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreOrderLockerRefund"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreOrderLockerRefund(ctx context.Context, p PlatformAppStoreOrderLockerRefundParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreOrderLockerRefund"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreOrderPayParams are the parameters of PartnerAPI.PlatformAppStoreOrderPay.
@@ -3932,8 +3546,8 @@ type PlatformAppStoreOrderPayParams struct {
 }
 
 // PlatformAppStoreOrderPay — POST /app/v1/store-orders/{code}/pay — Pay an unpaid order whose payment was left unfinished
-func (a *PartnerAPI) PlatformAppStoreOrderPay(ctx context.Context, p PlatformAppStoreOrderPayParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreOrderPay"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppStoreOrderPay(ctx context.Context, p PlatformAppStoreOrderPayParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreOrderPay"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppStoreOrderReorderParams are the parameters of PartnerAPI.PlatformAppStoreOrderReorder.
@@ -3946,8 +3560,8 @@ type PlatformAppStoreOrderReorderParams struct {
 }
 
 // PlatformAppStoreOrderReorder — POST /app/v1/store-orders/{code}/reorder — Put the order's lines back into the buyer's cart at the store
-func (a *PartnerAPI) PlatformAppStoreOrderReorder(ctx context.Context, p PlatformAppStoreOrderReorderParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreOrderReorder"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreOrderReorder(ctx context.Context, p PlatformAppStoreOrderReorderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreOrderReorder"], map[string]any{"code": p.Code, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreOrderReturnParams are the parameters of PartnerAPI.PlatformAppStoreOrderReturn.
@@ -3963,8 +3577,8 @@ type PlatformAppStoreOrderReturnParams struct {
 }
 
 // PlatformAppStoreOrderReturn — POST /app/v1/store-orders/{code}/return — Ask the store to take a paid or completed order back
-func (a *PartnerAPI) PlatformAppStoreOrderReturn(ctx context.Context, p PlatformAppStoreOrderReturnParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreOrderReturn"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppStoreOrderReturn(ctx context.Context, p PlatformAppStoreOrderReturnParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreOrderReturn"], map[string]any{"code": p.Code, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppStoreOrderReviewParams are the parameters of PartnerAPI.PlatformAppStoreOrderReview.
@@ -3983,8 +3597,8 @@ type PlatformAppStoreOrderReviewParams struct {
 }
 
 // PlatformAppStoreOrderReview — POST /app/v1/store-orders/{code}/review/{productId} — Rate one product of the order (1 to 5, optional comment)
-func (a *PartnerAPI) PlatformAppStoreOrderReview(ctx context.Context, p PlatformAppStoreOrderReviewParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreOrderReview"], map[string]any{"code": p.Code, "productId": p.ProductId, "locale": p.Locale}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppStoreOrderReview(ctx context.Context, p PlatformAppStoreOrderReviewParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreOrderReview"], map[string]any{"code": p.Code, "productId": p.ProductId, "locale": p.Locale}, p.Body, nil, opts...)
 }
 
 // PlatformAppStoreOrdersParams are the parameters of PartnerAPI.PlatformAppStoreOrders.
@@ -4006,8 +3620,8 @@ type PlatformAppStoreOrdersParams struct {
 }
 
 // PlatformAppStoreOrders — GET /app/v1/store-orders — The account's store orders at this client, newest first
-func (a *PartnerAPI) PlatformAppStoreOrders(ctx context.Context, p PlatformAppStoreOrdersParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreOrders"], map[string]any{"scope": p.Scope, "page": p.Page, "per_page": p.PerPage, "include": p.Include, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreOrders(ctx context.Context, p PlatformAppStoreOrdersParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreOrders"], map[string]any{"scope": p.Scope, "page": p.Page, "per_page": p.PerPage, "include": p.Include, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStoreProductParams are the parameters of PartnerAPI.PlatformAppStoreProduct.
@@ -4023,8 +3637,8 @@ type PlatformAppStoreProductParams struct {
 }
 
 // PlatformAppStoreProduct — GET /app/v1/stores/{slug}/products/{productId} — Product page
-func (a *PartnerAPI) PlatformAppStoreProduct(ctx context.Context, p PlatformAppStoreProductParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStoreProduct"], map[string]any{"slug": p.Slug, "productId": p.ProductId, "locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppStoreProduct(ctx context.Context, p PlatformAppStoreProductParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreProduct"], map[string]any{"slug": p.Slug, "productId": p.ProductId, "locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppStorefrontParams are the parameters of PartnerAPI.PlatformAppStorefront.
@@ -4034,19 +3648,8 @@ type PlatformAppStorefrontParams struct {
 }
 
 // PlatformAppStorefront — GET /app/v1/storefront — Storefront entry
-func (a *PartnerAPI) PlatformAppStorefront(ctx context.Context, p PlatformAppStorefrontParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppStorefront"], map[string]any{"locale": p.Locale}, nil, nil)
-}
-
-// PlatformAppTakeBackPickupParams are the parameters of PartnerAPI.PlatformAppTakeBackPickup.
-type PlatformAppTakeBackPickupParams struct {
-	// DeliveryId is "deliveryId" (path, required)
-	DeliveryId int64
-}
-
-// PlatformAppTakeBackPickup — POST /app/v1/pickups/{deliveryId}/handoff/revoke — Take back a handed-over locker pickup
-func (a *PartnerAPI) PlatformAppTakeBackPickup(ctx context.Context, p PlatformAppTakeBackPickupParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppTakeBackPickup"], map[string]any{"deliveryId": p.DeliveryId}, nil, nil)
+func (a *PartnerAPI) PlatformAppStorefront(ctx context.Context, p PlatformAppStorefrontParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStorefront"], map[string]any{"locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppTrackParams are the parameters of PartnerAPI.PlatformAppTrack.
@@ -4056,22 +3659,8 @@ type PlatformAppTrackParams struct {
 }
 
 // PlatformAppTrack — POST /app/v1/track — Track any code (signed in)
-func (a *PartnerAPI) PlatformAppTrack(ctx context.Context, p PlatformAppTrackParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppTrack"], map[string]any{}, p.Body, nil)
-}
-
-// PlatformAppUpdateLockerPreferenceParams are the parameters of PartnerAPI.PlatformAppUpdateLockerPreference.
-type PlatformAppUpdateLockerPreferenceParams struct {
-	// LocationId is "locationId" (path, required)
-	LocationId int64
-
-	// Body is the request body (required).
-	Body map[string]any
-}
-
-// PlatformAppUpdateLockerPreference — PUT /app/v1/locker-locations/{locationId}/preference — Update a customer SmartLocker preference
-func (a *PartnerAPI) PlatformAppUpdateLockerPreference(ctx context.Context, p PlatformAppUpdateLockerPreferenceParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppUpdateLockerPreference"], map[string]any{"locationId": p.LocationId}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppTrack(ctx context.Context, p PlatformAppTrackParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppTrack"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppUpdateNotificationPreferencesParams are the parameters of PartnerAPI.PlatformAppUpdateNotificationPreferences.
@@ -4081,8 +3670,8 @@ type PlatformAppUpdateNotificationPreferencesParams struct {
 }
 
 // PlatformAppUpdateNotificationPreferences — PUT /app/v1/notifications/preferences — Update notification preferences
-func (a *PartnerAPI) PlatformAppUpdateNotificationPreferences(ctx context.Context, p PlatformAppUpdateNotificationPreferencesParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppUpdateNotificationPreferences"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppUpdateNotificationPreferences(ctx context.Context, p PlatformAppUpdateNotificationPreferencesParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppUpdateNotificationPreferences"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppVerifyPhoneParams are the parameters of PartnerAPI.PlatformAppVerifyPhone.
@@ -4092,8 +3681,8 @@ type PlatformAppVerifyPhoneParams struct {
 }
 
 // PlatformAppVerifyPhone — POST /app/v1/privacy/phone/verify — Verify and link the signed-in customer's phone
-func (a *PartnerAPI) PlatformAppVerifyPhone(ctx context.Context, p PlatformAppVerifyPhoneParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppVerifyPhone"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppVerifyPhone(ctx context.Context, p PlatformAppVerifyPhoneParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppVerifyPhone"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppWalletParams are the parameters of PartnerAPI.PlatformAppWallet.
@@ -4103,19 +3692,22 @@ type PlatformAppWalletParams struct {
 }
 
 // PlatformAppWallet — GET /app/v1/wallet — Get the app-scoped customer wallet
-func (a *PartnerAPI) PlatformAppWallet(ctx context.Context, p PlatformAppWalletParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppWallet"], map[string]any{"locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppWallet(ctx context.Context, p PlatformAppWalletParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppWallet"], map[string]any{"locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppWalletCreateTopUpParams are the parameters of PartnerAPI.PlatformAppWalletCreateTopUp.
 type PlatformAppWalletCreateTopUpParams struct {
 	// Body is the request body (required).
 	Body map[string]any
+
+	// IdempotencyKey is sent as the Idempotency-Key header (optional). When nil, the client makes one per call.
+	IdempotencyKey *string
 }
 
 // PlatformAppWalletCreateTopUp — POST /app/v1/wallet/top-ups — Create an idempotent customer wallet top-up
-func (a *PartnerAPI) PlatformAppWalletCreateTopUp(ctx context.Context, p PlatformAppWalletCreateTopUpParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppWalletCreateTopUp"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppWalletCreateTopUp(ctx context.Context, p PlatformAppWalletCreateTopUpParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppWalletCreateTopUp"], map[string]any{"Idempotency-Key": p.IdempotencyKey}, p.Body, nil, opts...)
 }
 
 // PlatformAppWalletPaymentMethodsParams are the parameters of PartnerAPI.PlatformAppWalletPaymentMethods.
@@ -4125,8 +3717,8 @@ type PlatformAppWalletPaymentMethodsParams struct {
 }
 
 // PlatformAppWalletPaymentMethods — GET /app/v1/wallet/payment-methods — List Client-approved wallet payment methods
-func (a *PartnerAPI) PlatformAppWalletPaymentMethods(ctx context.Context, p PlatformAppWalletPaymentMethodsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppWalletPaymentMethods"], map[string]any{"locale": p.Locale}, nil, nil)
+func (a *PartnerAPI) PlatformAppWalletPaymentMethods(ctx context.Context, p PlatformAppWalletPaymentMethodsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppWalletPaymentMethods"], map[string]any{"locale": p.Locale}, nil, nil, opts...)
 }
 
 // PlatformAppWalletTaxPreviewParams are the parameters of PartnerAPI.PlatformAppWalletTaxPreview.
@@ -4136,8 +3728,8 @@ type PlatformAppWalletTaxPreviewParams struct {
 }
 
 // PlatformAppWalletTaxPreview — POST /app/v1/wallet/tax-preview — Preview configured customer tax
-func (a *PartnerAPI) PlatformAppWalletTaxPreview(ctx context.Context, p PlatformAppWalletTaxPreviewParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppWalletTaxPreview"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppWalletTaxPreview(ctx context.Context, p PlatformAppWalletTaxPreviewParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppWalletTaxPreview"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // PlatformAppWalletTopUpStatusParams are the parameters of PartnerAPI.PlatformAppWalletTopUpStatus.
@@ -4147,8 +3739,8 @@ type PlatformAppWalletTopUpStatusParams struct {
 }
 
 // PlatformAppWalletTopUpStatus — GET /app/v1/wallet/top-ups/{operationId} — Get a wallet top-up status
-func (a *PartnerAPI) PlatformAppWalletTopUpStatus(ctx context.Context, p PlatformAppWalletTopUpStatusParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppWalletTopUpStatus"], map[string]any{"operationId": p.OperationId}, nil, nil)
+func (a *PartnerAPI) PlatformAppWalletTopUpStatus(ctx context.Context, p PlatformAppWalletTopUpStatusParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppWalletTopUpStatus"], map[string]any{"operationId": p.OperationId}, nil, nil, opts...)
 }
 
 // PlatformAppWalletTransactionsParams are the parameters of PartnerAPI.PlatformAppWalletTransactions.
@@ -4170,8 +3762,8 @@ type PlatformAppWalletTransactionsParams struct {
 }
 
 // PlatformAppWalletTransactions — GET /app/v1/wallet/transactions — List the customer wallet ledger
-func (a *PartnerAPI) PlatformAppWalletTransactions(ctx context.Context, p PlatformAppWalletTransactionsParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppWalletTransactions"], map[string]any{"category": p.Category, "status": p.Status, "type": p.Type, "per_page": p.PerPage, "page": p.Page}, nil, nil)
+func (a *PartnerAPI) PlatformAppWalletTransactions(ctx context.Context, p PlatformAppWalletTransactionsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppWalletTransactions"], map[string]any{"category": p.Category, "status": p.Status, "type": p.Type, "per_page": p.PerPage, "page": p.Page}, nil, nil, opts...)
 }
 
 // PlatformAppWithdrawAccountClosureParams are the parameters of PartnerAPI.PlatformAppWithdrawAccountClosure.
@@ -4181,8 +3773,8 @@ type PlatformAppWithdrawAccountClosureParams struct {
 }
 
 // PlatformAppWithdrawAccountClosure — POST /app/v1/account-closure/withdraw — Withdraw a pending account closure request
-func (a *PartnerAPI) PlatformAppWithdrawAccountClosure(ctx context.Context, p PlatformAppWithdrawAccountClosureParams) (any, error) {
-	return a.call(ctx, partnerOperations["platformAppWithdrawAccountClosure"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) PlatformAppWithdrawAccountClosure(ctx context.Context, p PlatformAppWithdrawAccountClosureParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppWithdrawAccountClosure"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // UniorderParams are the parameters of PartnerAPI.Uniorder.
@@ -4192,30 +3784,36 @@ type UniorderParams struct {
 }
 
 // Uniorder — GET /app/v1/uniorder/{orderId} — Uniorder: read an order
-func (a *PartnerAPI) Uniorder(ctx context.Context, p UniorderParams) (any, error) {
-	return a.call(ctx, partnerOperations["uniorder"], map[string]any{"orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) Uniorder(ctx context.Context, p UniorderParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["uniorder"], map[string]any{"orderId": p.OrderId}, nil, nil, opts...)
 }
 
 // UniorderCancelParams are the parameters of PartnerAPI.UniorderCancel.
 type UniorderCancelParams struct {
 	// OrderId is "orderId" (path, required. The order id POST /v1/uniorder returned.)
 	OrderId int64
+
+	// IdempotencyKey is sent as the Idempotency-Key header (optional). When nil, the client makes one per call.
+	IdempotencyKey *string
 }
 
 // UniorderCancel — POST /app/v1/uniorder/{orderId}/cancel — Uniorder: cancel an order
-func (a *PartnerAPI) UniorderCancel(ctx context.Context, p UniorderCancelParams) (any, error) {
-	return a.call(ctx, partnerOperations["uniorderCancel"], map[string]any{"orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) UniorderCancel(ctx context.Context, p UniorderCancelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["uniorderCancel"], map[string]any{"orderId": p.OrderId, "Idempotency-Key": p.IdempotencyKey}, nil, nil, opts...)
 }
 
 // UniorderCreateParams are the parameters of PartnerAPI.UniorderCreate.
 type UniorderCreateParams struct {
 	// Body is the request body (required).
 	Body map[string]any
+
+	// IdempotencyKey is sent as the Idempotency-Key header (optional). When nil, the client makes one per call.
+	IdempotencyKey *string
 }
 
 // UniorderCreate — POST /app/v1/uniorder — Uniorder: create an order at a rate
-func (a *PartnerAPI) UniorderCreate(ctx context.Context, p UniorderCreateParams) (any, error) {
-	return a.call(ctx, partnerOperations["uniorderCreate"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) UniorderCreate(ctx context.Context, p UniorderCreateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["uniorderCreate"], map[string]any{"Idempotency-Key": p.IdempotencyKey}, p.Body, nil, opts...)
 }
 
 // UniorderLabelParams are the parameters of PartnerAPI.UniorderLabel.
@@ -4231,8 +3829,8 @@ type UniorderLabelParams struct {
 }
 
 // UniorderLabel — GET /app/v1/uniorder/{orderId}/label — Uniorder: download the label
-func (a *PartnerAPI) UniorderLabel(ctx context.Context, p UniorderLabelParams) (any, error) {
-	return a.call(ctx, partnerOperations["uniorderLabel"], map[string]any{"orderId": p.OrderId, "hide_sender_address": p.HideSenderAddress, "hide_receiver_address": p.HideReceiverAddress}, nil, nil)
+func (a *PartnerAPI) UniorderLabel(ctx context.Context, p UniorderLabelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["uniorderLabel"], map[string]any{"orderId": p.OrderId, "hide_sender_address": p.HideSenderAddress, "hide_receiver_address": p.HideReceiverAddress}, nil, nil, opts...)
 }
 
 // UniorderPurchaseLabelParams are the parameters of PartnerAPI.UniorderPurchaseLabel.
@@ -4242,11 +3840,14 @@ type UniorderPurchaseLabelParams struct {
 
 	// Body is the request body (optional).
 	Body map[string]any
+
+	// IdempotencyKey is sent as the Idempotency-Key header (optional). When nil, the client makes one per call.
+	IdempotencyKey *string
 }
 
 // UniorderPurchaseLabel — POST /app/v1/uniorder/{orderId}/label — Uniorder: buy the label of a label order kept without one
-func (a *PartnerAPI) UniorderPurchaseLabel(ctx context.Context, p UniorderPurchaseLabelParams) (any, error) {
-	return a.call(ctx, partnerOperations["uniorderPurchaseLabel"], map[string]any{"orderId": p.OrderId}, p.Body, nil)
+func (a *PartnerAPI) UniorderPurchaseLabel(ctx context.Context, p UniorderPurchaseLabelParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["uniorderPurchaseLabel"], map[string]any{"orderId": p.OrderId, "Idempotency-Key": p.IdempotencyKey}, p.Body, nil, opts...)
 }
 
 // UniorderRateParams are the parameters of PartnerAPI.UniorderRate.
@@ -4256,8 +3857,8 @@ type UniorderRateParams struct {
 }
 
 // UniorderRate — POST /app/v1/uniorder/rate — Uniorder: rate a shipment (self delivery and label carrier services)
-func (a *PartnerAPI) UniorderRate(ctx context.Context, p UniorderRateParams) (any, error) {
-	return a.call(ctx, partnerOperations["uniorderRate"], map[string]any{}, p.Body, nil)
+func (a *PartnerAPI) UniorderRate(ctx context.Context, p UniorderRateParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["uniorderRate"], map[string]any{}, p.Body, nil, opts...)
 }
 
 // UniorderTrackingParams are the parameters of PartnerAPI.UniorderTracking.
@@ -4267,6 +3868,6 @@ type UniorderTrackingParams struct {
 }
 
 // UniorderTracking — GET /app/v1/uniorder/{orderId}/tracking — Uniorder: track an order
-func (a *PartnerAPI) UniorderTracking(ctx context.Context, p UniorderTrackingParams) (any, error) {
-	return a.call(ctx, partnerOperations["uniorderTracking"], map[string]any{"orderId": p.OrderId}, nil, nil)
+func (a *PartnerAPI) UniorderTracking(ctx context.Context, p UniorderTrackingParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["uniorderTracking"], map[string]any{"orderId": p.OrderId}, nil, nil, opts...)
 }
