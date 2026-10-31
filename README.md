@@ -23,24 +23,24 @@ PHP: [Goodneo-Solutions/sapp-php](https://github.com/Goodneo-Solutions/sapp-php)
 
 | Package | Platform | Status |
 |---|---|---|
-| [`@superrouteca/sapp`](https://www.npmjs.com/package/@superrouteca/sapp) | JavaScript and TypeScript: web, Node 20+, React Native | 0.2.2 |
-| [`@superrouteca/sapp-react`](https://www.npmjs.com/package/@superrouteca/sapp-react) | React: provider and hooks | 0.2.2 |
-| [`@superrouteca/sapp-react-native`](https://www.npmjs.com/package/@superrouteca/sapp-react-native) | React Native: hooks, secure token store | 0.2.2 |
-| [`sapp`](https://pub.dev/packages/sapp) | Dart and Flutter | 0.2.2 |
-| [`SApp`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | iOS 15+, macOS 12+ | 0.2.2 |
-| [`ca.superroute:sapp` / `sapp-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Kotlin on the JVM and Android 7+ | 0.2.2 |
-| [`Superroute.SApp`](https://www.nuget.org/packages/Superroute.SApp) (NuGet) | .NET 8: Windows apps and servers | 0.2.2 |
-| [`superroute-sapp`](https://pypi.org/project/superroute-sapp/) (PyPI, `import sapp`) | Python 3.9+: servers and scripts | 0.2.2 |
-| [`superroute/sapp`](https://packagist.org/packages/superroute/sapp) (Packagist) | PHP 8.1+: servers | 0.2.2 |
-| [`github.com/Goodneo-Solutions/sapp-releases/go`](https://github.com/Goodneo-Solutions/sapp-releases/tree/main/go) | Go 1.21+: servers | 0.2.2 |
-| [`ca.superroute:sapp-java`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Java 17+: servers, no dependencies | 0.2.2 |
-| [`sapp_ui`](https://pub.dev/packages/sapp_ui) | Flutter UI kit: sign-in, notifications, wallet, orders, returns, store, group buy, driver | 0.2.2 |
-| [`@superrouteca/sapp-ui`](https://www.npmjs.com/package/@superrouteca/sapp-ui) | Web UI kit: the same components as custom elements | 0.2.2 |
-| `@superrouteca/sapp-react/ui` | React components over the web UI kit | 0.2.2 |
-| [`SAppUI`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | SwiftUI UI kit: iOS 15+, macOS 12+ | 0.2.2 |
-| [`ca.superroute:sapp-ui-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Jetpack Compose UI kit: Android 7+ | 0.2.2 |
-| `@superrouteca/sapp-react-native/ui` | React Native UI kit | 0.2.2 |
-| [`Superroute.SApp.Wpf`](https://www.nuget.org/packages/Superroute.SApp.Wpf) / [`Superroute.SApp.WinForms`](https://www.nuget.org/packages/Superroute.SApp.WinForms) (NuGet) | WPF and WinForms UI kits over `Superroute.SApp.UI` | 0.2.2 |
+| [`@superrouteca/sapp`](https://www.npmjs.com/package/@superrouteca/sapp) | JavaScript and TypeScript: web, Node 20+, React Native | 0.2.5 |
+| [`@superrouteca/sapp-react`](https://www.npmjs.com/package/@superrouteca/sapp-react) | React: provider and hooks | 0.2.5 |
+| [`@superrouteca/sapp-react-native`](https://www.npmjs.com/package/@superrouteca/sapp-react-native) | React Native: hooks, secure token store | 0.2.5 |
+| [`sapp`](https://pub.dev/packages/sapp) | Dart and Flutter | 0.2.5 |
+| [`SApp`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | iOS 15+, macOS 12+ | 0.2.5 |
+| [`ca.superroute:sapp` / `sapp-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Kotlin on the JVM and Android 7+ | 0.2.5 |
+| [`Superroute.SApp`](https://www.nuget.org/packages/Superroute.SApp) (NuGet) | .NET 8: Windows apps and servers | 0.2.5 |
+| [`superroute-sapp`](https://pypi.org/project/superroute-sapp/) (PyPI, `import sapp`) | Python 3.9+: servers and scripts | 0.2.5 |
+| [`superroute/sapp`](https://packagist.org/packages/superroute/sapp) (Packagist) | PHP 8.1+: servers | 0.2.5 |
+| [`github.com/Goodneo-Solutions/sapp-releases/go`](https://github.com/Goodneo-Solutions/sapp-releases/tree/main/go) | Go 1.21+: servers | 0.2.5 |
+| [`ca.superroute:sapp-java`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Java 17+: servers, no dependencies | 0.2.5 |
+| [`sapp_ui`](https://pub.dev/packages/sapp_ui) | Flutter UI kit: sign-in, notifications, wallet, orders, returns, store, group buy, driver | 0.2.5 |
+| [`@superrouteca/sapp-ui`](https://www.npmjs.com/package/@superrouteca/sapp-ui) | Web UI kit: the same components as custom elements | 0.2.5 |
+| `@superrouteca/sapp-react/ui` | React components over the web UI kit | 0.2.5 |
+| [`SAppUI`](https://github.com/Goodneo-Solutions/sapp-releases) (Swift Package Manager) | SwiftUI UI kit: iOS 15+, macOS 12+ | 0.2.5 |
+| [`ca.superroute:sapp-ui-android`](https://github.com/Goodneo-Solutions/sapp-releases) (Maven) | Jetpack Compose UI kit: Android 7+ | 0.2.5 |
+| `@superrouteca/sapp-react-native/ui` | React Native UI kit | 0.2.5 |
+| [`Superroute.SApp.Wpf`](https://www.nuget.org/packages/Superroute.SApp.Wpf) / [`Superroute.SApp.WinForms`](https://www.nuget.org/packages/Superroute.SApp.WinForms) (NuGet) | WPF and WinForms UI kits over `Superroute.SApp.UI` | 0.2.5 |
 
 Every package of a release carries the same version. Version numbers never contain the digits 3 or 4.
 
@@ -164,7 +164,7 @@ extra query, retries, `SuperrouteException`) for a package that adds a connectio
 
 ```swift
 // Package.swift
-.package(url: "https://github.com/Goodneo-Solutions/sapp-releases", from: "0.2.2")
+.package(url: "https://github.com/Goodneo-Solutions/sapp-releases", from: "0.2.5")
 // in the target: .product(name: "SApp", package: "sapp-releases"), and .product(name: "SAppUI", package: "sapp-releases") for the UI kit
 ```
 
@@ -198,8 +198,8 @@ dependencyResolutionManagement {
 }
 
 // build.gradle.kts: ca.superroute:sapp on the JVM, sapp-android on Android, sapp-ui-android for the Compose kit
-implementation("ca.superroute:sapp-android:0.2.2")
-implementation("ca.superroute:sapp-ui-android:0.2.2")
+implementation("ca.superroute:sapp-android:0.2.5")
+implementation("ca.superroute:sapp-ui-android:0.2.5")
 ```
 
 ```kotlin
@@ -278,7 +278,7 @@ Answers decode into `any` (numbers as `float64`). Failures are `*sapp.Error`.
 
 ```java
 // build.gradle.kts: repositories { maven("https://goodneo-solutions.github.io/sapp-releases/maven") }
-implementation("ca.superroute:sapp-java:0.2.2")
+implementation("ca.superroute:sapp-java:0.2.5")
 
 PartnerClient sr = PartnerClient.builder("p_acme_parcels").clientCode("k3m9q2").appKey("sp_appkey_…").build();
 sr.signInWithIdToken(googleIdToken);
@@ -347,7 +347,9 @@ SuperrouteScope(
 ```
 
 Components, for customer apps: `SrSignIn`, `SrNotificationInbox`, `SrWalletSummary`, `SrOrderList`,
-`SrOrderDetail`, `SrTracking`, `SrNotificationPreferences`, `SrAccountPrivacy`, `SrReturnList`, `SrReturnForm`, `SrShippingOrderForm`, the store
+`SrOrderDetail`, `SrTracking`, `SrNotificationPreferences`, `SrAccountPrivacy`, `SrReturnList`, `SrReturnForm`, `SrShippingOrderForm`, for people who are not signed in `SrGuestQuote` (a price from
+the service provider's quote lines) and `SrGuestShippingOrder` (a shipment confirmed by a code sent to an email or phone,
+paid on the provider's payment page, with the person's shipments, cancelling and the label), the store
 and mall (`SrStoreDirectory`, `SrStorePage`, `SrProductDetail`, `SrCart`, `SrCheckout`) and group buy
 (`SrGroupBuyList`, `SrGroupBuy`, `SrGroupBuyOrders`, `SrGroupBuyOrder`, and for group leaders `SrGroupBuyLead`,
 `SrGroupBuyLeading`, `SrGroupBuyLeadingGroup`); for driver apps: `SrDriverRoutes`,
@@ -369,7 +371,7 @@ platform. Strings in 14 languages live in `ui/strings/` (`tools/ui_strings.py`).
 ```
 
 Elements: `sr-sign-in`, `sr-notification-inbox`, `sr-wallet-summary`, `sr-order-list`,
-`sr-order-detail`, `sr-tracking`, `sr-notification-preferences`, `sr-account-privacy`, `sr-return-list`, `sr-return-form`, `sr-shipping-order-form`, `sr-store-directory`,
+`sr-order-detail`, `sr-tracking`, `sr-notification-preferences`, `sr-account-privacy`, `sr-return-list`, `sr-return-form`, `sr-shipping-order-form`, `sr-guest-quote`, `sr-guest-shipping-order`, `sr-store-directory`,
 `sr-store-page`, `sr-product-detail`, `sr-cart`, `sr-checkout`, `sr-group-buy-list`, `sr-group-buy`,
 `sr-group-buy-orders`, `sr-group-buy-order`, for group leaders `sr-group-buy-lead`, `sr-group-buy-leading`,
 `sr-group-buy-leading-group`, and for driver apps `sr-driver-routes`, `sr-route-stops`, `sr-stop`,
@@ -417,8 +419,13 @@ Every failed call throws one error type (`SuperrouteError` / `SuperrouteExceptio
 `status`, the server's `code` (`invalid_token`, `insufficient_scope`, `access_denied`, `APP_ACCESS_DENIED`, …), its
 `message`, the field messages `errors` (field → list of messages), the answer's `reasons` and `data` as sent, the
 request id and the parsed body (in C# the answer's `data` is `ResponseData`, since `Exception.Data` is taken).
+It also carries the refused answer's response headers (`headers`, names in lower case; empty when no answer came) and
+`retryAfter` (`retry_after` in Python, `RetryAfter` in C# and Go): the `Retry-After` header in whole seconds — a number
+as sent, an HTTP date as the seconds until then — or null when there is none or it cannot be read. The request id is the
+answer's `request_id`, else its `X-Request-Id` header.
 `signInRequired` is true when the person must sign in again. Repeatable calls are
-retried on a lost connection and on temporary server errors; writes are never retried.
+retried on a lost connection, on temporary server errors and on a 429 with a `Retry-After` header (waiting its
+seconds, at most 30, or 1 second when the header is not a number); writes are never retried.
 
 **Behaviour change (next version):** Superroute sometimes refuses with status 200 and the answer
 `{"result": false, "code", "message", "errors", "reasons", "data"}` (for example an order cancel whose label cancel

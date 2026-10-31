@@ -124,9 +124,13 @@ var partnerOperations = func() map[string]Operation {
 	m["driverUploadPicturesFromUrlsPost"] = Operation{Method: "POST", Path: "/app/v1/driver/upload-pictures-from-urls", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["health"] = Operation{Method: "GET", Path: "/app/v1/health", Auth: AuthNone, Query: []string{}, Body: BodyNone}
 	m["partnerAppDriverRegister"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/driver/register", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
+	m["partnerAppGuestPickupPoints"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/pickup-points", Auth: AuthKey, Query: []string{"latitude", "longitude", "search", "pickup", "return", "available", "page", "per_page"}, Body: BodyNone}
+	m["partnerAppGuestQuote"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/quotes/{line}", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
+	m["partnerAppGuestQuoteSchema"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/quotes/schema", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
 	m["partnerAppMe"] = Operation{Method: "GET", Path: "/app/v1/me", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["partnerAppRevokeSession"] = Operation{Method: "DELETE", Path: "/app/v1/sessions/{sessionId}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["partnerAppSessions"] = Operation{Method: "GET", Path: "/app/v1/sessions", Auth: AuthToken, Query: []string{}, Body: BodyNone}
+	m["partnerAppSwidget"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/swidget", Auth: AuthKey, Query: []string{}, Body: BodyNone}
 	m["platformAppBootstrap"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/bootstrap", Auth: AuthKey, Query: []string{"platform", "app_version"}, Body: BodyNone}
 	m["platformAppCancelAccountDeletion"] = Operation{Method: "DELETE", Path: "/app/v1/privacy/account-deletion", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["platformAppCancelReturn"] = Operation{Method: "POST", Path: "/app/v1/returns/{returnId}/cancel", Auth: AuthToken, Query: []string{}, Body: BodyNone}
@@ -255,6 +259,7 @@ var partnerOperations = func() map[string]Operation {
 	m["platformAppStoreOrders"] = Operation{Method: "GET", Path: "/app/v1/store-orders", Auth: AuthToken, Query: []string{"scope", "page", "per_page", "include", "locale"}, Body: BodyNone}
 	m["platformAppStoreProduct"] = Operation{Method: "GET", Path: "/app/v1/stores/{slug}/products/{productId}", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
 	m["platformAppStorefront"] = Operation{Method: "GET", Path: "/app/v1/storefront", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
+	m["platformAppSwidgetShow"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/swidgets/{widgetId}", Auth: AuthKey, Query: []string{}, Body: BodyNone}
 	m["platformAppTrack"] = Operation{Method: "POST", Path: "/app/v1/track", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppUpdateNotificationPreferences"] = Operation{Method: "PUT", Path: "/app/v1/notifications/preferences", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppVerifyPhone"] = Operation{Method: "POST", Path: "/app/v1/privacy/phone/verify", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
@@ -1563,6 +1568,72 @@ func (a *PartnerAPI) PartnerAppDriverRegister(ctx context.Context, p PartnerAppD
 	return a.call(ctx, partnerOperations["partnerAppDriverRegister"], map[string]any{"clientCode": p.ClientCode}, p.Body, nil, opts...)
 }
 
+// PartnerAppGuestPickupPointsParams are the parameters of PartnerAPI.PartnerAppGuestPickupPoints.
+type PartnerAppGuestPickupPointsParams struct {
+	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
+	ClientCode *string
+
+	// Latitude is "latitude" (query, optional)
+	Latitude *float64
+
+	// Longitude is "longitude" (query, optional)
+	Longitude *float64
+
+	// Search is "search" (query, optional)
+	Search *string
+
+	// Pickup is "pickup" (query, optional)
+	Pickup *bool
+
+	// Return is "return" (query, optional)
+	Return *bool
+
+	// Available is "available" (query, optional)
+	Available *bool
+
+	// Page is "page" (query, optional)
+	Page *int64
+
+	// PerPage is "per_page" (query, optional)
+	PerPage *int64
+}
+
+// PartnerAppGuestPickupPoints — GET /app/v1/clients/{clientCode}/guest/pickup-points — Pickup points (guest)
+func (a *PartnerAPI) PartnerAppGuestPickupPoints(ctx context.Context, p PartnerAppGuestPickupPointsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["partnerAppGuestPickupPoints"], map[string]any{"clientCode": p.ClientCode, "latitude": p.Latitude, "longitude": p.Longitude, "search": p.Search, "pickup": p.Pickup, "return": p.Return, "available": p.Available, "page": p.Page, "per_page": p.PerPage}, nil, nil, opts...)
+}
+
+// PartnerAppGuestQuoteParams are the parameters of PartnerAPI.PartnerAppGuestQuote.
+type PartnerAppGuestQuoteParams struct {
+	// Line is "line" (path, required)
+	Line string
+
+	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
+	ClientCode *string
+
+	// Body is the request body (required).
+	Body map[string]any
+}
+
+// PartnerAppGuestQuote — POST /app/v1/clients/{clientCode}/guest/quotes/{line} — Quote one line (guest)
+func (a *PartnerAPI) PartnerAppGuestQuote(ctx context.Context, p PartnerAppGuestQuoteParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["partnerAppGuestQuote"], map[string]any{"line": p.Line, "clientCode": p.ClientCode}, p.Body, nil, opts...)
+}
+
+// PartnerAppGuestQuoteSchemaParams are the parameters of PartnerAPI.PartnerAppGuestQuoteSchema.
+type PartnerAppGuestQuoteSchemaParams struct {
+	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
+	ClientCode *string
+
+	// Locale is "locale" (query, optional)
+	Locale *string
+}
+
+// PartnerAppGuestQuoteSchema — GET /app/v1/clients/{clientCode}/guest/quotes/schema — Quote form (guest)
+func (a *PartnerAPI) PartnerAppGuestQuoteSchema(ctx context.Context, p PartnerAppGuestQuoteSchemaParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["partnerAppGuestQuoteSchema"], map[string]any{"clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
+}
+
 // PartnerAppMe — GET /app/v1/me — Who the token speaks for
 func (a *PartnerAPI) PartnerAppMe(ctx context.Context, opts ...CallOption) (any, error) {
 	return a.call(ctx, partnerOperations["partnerAppMe"], nil, nil, nil, opts...)
@@ -1582,6 +1653,17 @@ func (a *PartnerAPI) PartnerAppRevokeSession(ctx context.Context, p PartnerAppRe
 // PartnerAppSessions — GET /app/v1/sessions — List the person's sign-ins to this app
 func (a *PartnerAPI) PartnerAppSessions(ctx context.Context, opts ...CallOption) (any, error) {
 	return a.call(ctx, partnerOperations["partnerAppSessions"], nil, nil, nil, opts...)
+}
+
+// PartnerAppSwidgetParams are the parameters of PartnerAPI.PartnerAppSwidget.
+type PartnerAppSwidgetParams struct {
+	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
+	ClientCode *string
+}
+
+// PartnerAppSwidget — GET /app/v1/clients/{clientCode}/swidget — sWidget configuration
+func (a *PartnerAPI) PartnerAppSwidget(ctx context.Context, p PartnerAppSwidgetParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["partnerAppSwidget"], map[string]any{"clientCode": p.ClientCode}, nil, nil, opts...)
 }
 
 // PlatformAppBootstrapParams are the parameters of PartnerAPI.PlatformAppBootstrap.
@@ -3650,6 +3732,20 @@ type PlatformAppStorefrontParams struct {
 // PlatformAppStorefront — GET /app/v1/storefront — Storefront entry
 func (a *PartnerAPI) PlatformAppStorefront(ctx context.Context, p PlatformAppStorefrontParams, opts ...CallOption) (any, error) {
 	return a.call(ctx, partnerOperations["platformAppStorefront"], map[string]any{"locale": p.Locale}, nil, nil, opts...)
+}
+
+// PlatformAppSwidgetShowParams are the parameters of PartnerAPI.PlatformAppSwidgetShow.
+type PlatformAppSwidgetShowParams struct {
+	// WidgetId is "widgetId" (path, required. The widget's public id.)
+	WidgetId string
+
+	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
+	ClientCode *string
+}
+
+// PlatformAppSwidgetShow — GET /app/v1/clients/{clientCode}/swidgets/{widgetId} — Load a widget by its id
+func (a *PartnerAPI) PlatformAppSwidgetShow(ctx context.Context, p PlatformAppSwidgetShowParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppSwidgetShow"], map[string]any{"widgetId": p.WidgetId, "clientCode": p.ClientCode}, nil, nil, opts...)
 }
 
 // PlatformAppTrackParams are the parameters of PartnerAPI.PlatformAppTrack.

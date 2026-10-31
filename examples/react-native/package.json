@@ -1,6 +1,6 @@
 {
   "name": "sapp-react-native-example",
-  "version": "0.2.2",
+  "version": "0.2.5",
   "private": true,
   "description": "The sApp UI kit for React Native in an Expo app: sign-in, inbox, wallet, orders, store, group buy and driver screens.",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "ios": "expo run:ios"
   },
   "dependencies": {
-    "@superrouteca/sapp-react-native": "0.2.2",
+    "@superrouteca/sapp-react-native": "0.2.5",
     "expo": "~52.0.46",
     "expo-document-picker": "~13.0.3",
     "expo-file-system": "~18.0.12",

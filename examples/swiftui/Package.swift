@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "SAppUIExample",
     platforms: [.iOS(.v15), .macOS(.v12)],
-    dependencies: [.package(url: "https://github.com/Goodneo-Solutions/sapp-releases", exact: "0.2.2")],
+    dependencies: [.package(url: "https://github.com/Goodneo-Solutions/sapp-releases", exact: "0.2.5")],
     targets: [
         .executableTarget(name: "SAppUIExample", dependencies: [
             .product(name: "SApp", package: "sapp-releases"),

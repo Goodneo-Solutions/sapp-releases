@@ -668,3 +668,80 @@ func TestTheOpenClientCallOperationGoesThroughTheSameCall(t *testing.T) {
 		t.Fatal(f.calls[0])
 	}
 }
+
+func TestARefusedAnswerCarriesItsHeadersRetryAfterAndRequestID(t *testing.T) {
+	f := fixed(reply{status: 429, body: map[string]any{"error": "too_many_requests"}, headers: map[string]string{"Retry-After": "7", "X-Request-Id": "req-1", "X-Extra": "a"}})
+	sr := partner(t, f, PartnerOptions{TokenStore: signedIn(time.Hour)})
+	_, err := sr.API.PlatformAppWalletCreateTopUp(ctx, PlatformAppWalletCreateTopUpParams{Body: map[string]any{"amount": 1}})
+	e := asError(t, err)
+	want := map[string]string{"retry-after": "7", "x-request-id": "req-1", "x-extra": "a"}
+	if e.Status != 429 || e.RequestID != "req-1" || e.RetryAfter == nil || *e.RetryAfter != 7 || !reflect.DeepEqual(e.Headers, want) {
+		t.Fatal(e, e.Headers, e.RetryAfter)
+	}
+}
+
+func TestRetryAfterAsADateOrUnreadable(t *testing.T) {
+	later := time.Now().Add(30 * time.Second).UTC().Format(http.TimeFormat)
+	past := time.Now().Add(-30 * time.Second).UTC().Format(http.TimeFormat)
+	f := fixed(reply{status: 503, headers: map[string]string{"Retry-After": later}}, reply{status: 503, headers: map[string]string{"Retry-After": past}},
+		reply{status: 503, headers: map[string]string{"Retry-After": "soon"}})
+	sr := partner(t, f, PartnerOptions{TokenStore: signedIn(time.Hour)})
+	call := func() *Error {
+		_, err := sr.API.PlatformAppWalletCreateTopUp(ctx, PlatformAppWalletCreateTopUpParams{Body: map[string]any{"amount": 1}})
+		return asError(t, err)
+	}
+	if r := call().RetryAfter; r == nil || *r < 28 || *r > 31 {
+		t.Fatal(r)
+	}
+	if r := call().RetryAfter; r == nil || *r != 0 {
+		t.Fatal(r)
+	}
+	if r := call().RetryAfter; r != nil {
+		t.Fatal(*r)
+	}
+}
+
+func TestANetworkErrorHasNoHeadersAndNoRetryAfter(t *testing.T) {
+	f := fixed(reply{network: true})
+	sr := partner(t, f, PartnerOptions{TokenStore: signedIn(time.Hour)})
+	_, err := sr.API.PlatformAppWalletCreateTopUp(ctx, PlatformAppWalletCreateTopUpParams{Body: map[string]any{"amount": 1}})
+	e := asError(t, err)
+	if e.Status != 0 || e.Code != "network_error" || e.Headers == nil || len(e.Headers) != 0 || e.RetryAfter != nil {
+		t.Fatal(e)
+	}
+}
+
+func TestTheTokenEndpointCallOperationAndGraphQLRefusalsCarryTheMetadata(t *testing.T) {
+	f := fixed(
+		reply{status: 400, body: map[string]any{"error": "invalid_grant"}, headers: map[string]string{"X-Request-Id": "req-t", "Retry-After": "3"}},
+		reply{status: 200, body: map[string]any{"result": false, "code": "NOPE"}, headers: map[string]string{"X-Request-Id": "req-o"}},
+		reply{status: 200, body: map[string]any{"errors": []any{map[string]any{"message": "Unauthorized"}}}, headers: map[string]string{"X-Request-Id": "req-g"}},
+	)
+	sr := partner(t, f, PartnerOptions{AppKey: "sp_appkey_1"})
+	_, err := sr.SignInWithPassword(ctx, "a", "b", nil)
+	e := asError(t, err)
+	if e.Status != 400 || e.RequestID != "req-t" || e.RetryAfter == nil || *e.RetryAfter != 3 || e.Headers["x-request-id"] != "req-t" {
+		t.Fatal(e, e.Headers)
+	}
+	_, err = sr.CallOperation(ctx, Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/things", Auth: AuthKey}, nil, nil, nil)
+	e = asError(t, err)
+	if e.Code != "NOPE" || e.RequestID != "req-o" || e.Headers["x-request-id"] != "req-o" {
+		t.Fatal(e, e.Headers)
+	}
+	_, err = sr.GraphQL(ctx, "{ x }", nil)
+	e = asError(t, err)
+	if e.Code != "graphql_error" || e.RequestID != "req-g" || e.Headers["x-request-id"] != "req-g" {
+		t.Fatal(e, e.Headers)
+	}
+}
+
+func TestOldErrorLiteralsKeepWorking(t *testing.T) {
+	e := &Error{Status: 403, Code: "x", Message: "Refused.", RequestID: "req-2"}
+	if e.Error() != "Refused." || e.Headers != nil || e.RetryAfter != nil {
+		t.Fatal(e)
+	}
+	joined := lowerHeaders(http.Header{"Set-Cookie": {"a", "b"}, "Retry-After": {"5"}})
+	if !reflect.DeepEqual(joined, map[string]string{"set-cookie": "a, b", "retry-after": "5"}) {
+		t.Fatal(joined)
+	}
+}

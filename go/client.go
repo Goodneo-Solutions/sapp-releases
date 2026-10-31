@@ -28,7 +28,7 @@ import (
 )
 
 // Version is the sApp version.
-const Version = "0.2.2"
+const Version = "0.2.5"
 
 // DefaultBaseURL is where the partner app API and the Open Platform answer.
 const DefaultBaseURL = "https://open.superroute.ca"
@@ -48,6 +48,10 @@ const (
 //
 // An answer {"result": false, …} is a failed call too, whatever its status (Superroute sometimes answers a refusal
 // with 200): Errors holds its field messages, Reasons and Data what it sent beside them.
+//
+// Headers are the refused answer's headers (names in lower case, several values of one name joined with ", "; empty
+// when there was no answer), RetryAfter its Retry-After in whole seconds (nil when absent or not understood) and
+// RequestID the answer's request_id, else its X-Request-Id header.
 type Error struct {
 	Status    int
 	Code      string
@@ -59,8 +63,13 @@ type Error struct {
 	// Reasons is the answer's "reasons", as sent (a list or a map), or nil.
 	Reasons any
 	// Data is the answer's "data", as sent, or nil.
-	Data  any
-	cause error
+	Data any
+	// Headers are the refused answer's headers: names in lower case, several values of one name joined with ", ".
+	// Empty when the request never got an answer.
+	Headers map[string]string
+	// RetryAfter is the answer's Retry-After in whole seconds (an HTTP-date as the seconds until it, at least 0), or nil.
+	RetryAfter *int
+	cause      error
 }
 
 func (e *Error) Error() string {
@@ -80,6 +89,58 @@ func (e *Error) Unwrap() error { return e.cause }
 func (e *Error) SignInRequired() bool { return e.Status == 401 || e.Code == "invalid_grant" }
 
 var upperCode = regexp.MustCompile(`^[A-Z_]+$`)
+
+// lowerHeaders answers the headers with names in lower case and several values of one name joined with ", ".
+func lowerHeaders(h http.Header) map[string]string {
+	out := make(map[string]string, len(h))
+	for name, values := range h {
+		key := strings.ToLower(name)
+		joined := strings.Join(values, ", ")
+		if prev, ok := out[key]; ok {
+			joined = prev + ", " + joined
+		}
+		out[key] = joined
+	}
+	return out
+}
+
+// retryAfterSeconds reads Retry-After in whole seconds: a non-negative integer as is, an HTTP-date as the seconds
+// until it (rounded up, at least 0), anything else nil.
+func retryAfterSeconds(value string, now time.Time) *int {
+	value = strings.TrimSpace(value)
+	if value == "" {
+		return nil
+	}
+	if strings.Trim(value, "0123456789") == "" {
+		n, err := strconv.Atoi(value)
+		if err != nil {
+			return nil
+		}
+		return &n
+	}
+	when, err := http.ParseTime(value)
+	if err != nil {
+		return nil
+	}
+	secs := int(math.Ceil(when.Sub(now).Seconds()))
+	if secs < 0 {
+		secs = 0
+	}
+	return &secs
+}
+
+// withAnswer fills the answer's headers, Retry-After and (when the error has none) X-Request-Id into e.
+func (e *Error) withAnswer(headers map[string]string) *Error {
+	if headers == nil {
+		headers = map[string]string{}
+	}
+	e.Headers = headers
+	e.RetryAfter = retryAfterSeconds(headers["retry-after"], time.Now())
+	if e.RequestID == "" {
+		e.RequestID = headers["x-request-id"]
+	}
+	return e
+}
 
 func errorFrom(status int, body any, requestID string) *Error {
 	b, _ := body.(map[string]any)
@@ -257,11 +318,18 @@ func (s *MemoryTokenStore) Clear(context.Context) error {
 	return nil
 }
 
-func tokensFrom(body any, now time.Time) (*Tokens, error) {
+func tokensFrom(body any, now time.Time, headers ...map[string]string) (*Tokens, error) {
 	b, _ := body.(map[string]any)
 	access, _ := b["access_token"].(string)
 	if access == "" {
-		return nil, &Error{Status: 200, Code: "invalid_response", Message: "The token answer had no access token.", Body: body}
+		e := &Error{Status: 200, Code: "invalid_response", Message: "The token answer had no access token.", Body: body}
+		if id, _ := b["request_id"].(string); id != "" {
+			e.RequestID = id
+		}
+		if len(headers) > 0 {
+			e.withAnswer(headers[0])
+		}
+		return nil, e
 	}
 	refresh, _ := b["refresh_token"].(string)
 	expires := 3600.0
@@ -511,6 +579,7 @@ type answer struct {
 	body      any
 	requestID string
 	retry     string
+	headers   map[string]string
 }
 
 type transport struct {
@@ -561,7 +630,8 @@ func (t *transport) send(ctx context.Context, r request, retryable bool) (*answe
 				}
 				continue
 			}
-			return nil, &Error{Status: 0, Code: "network_error", Message: "The request could not reach Superroute.", cause: err}
+			return nil, &Error{Status: 0, Code: "network_error", Message: "The request could not reach Superroute.",
+				Headers: map[string]string{}, cause: err}
 		}
 		raw, err := io.ReadAll(res.Body)
 		res.Body.Close()
@@ -594,13 +664,14 @@ func (t *transport) send(ctx context.Context, r request, retryable bool) (*answe
 				parsed = string(raw)
 			}
 		}
-		return &answer{status: res.StatusCode, body: parsed, requestID: res.Header.Get("X-Request-Id")}, nil
+		return &answer{status: res.StatusCode, body: parsed, requestID: res.Header.Get("X-Request-Id"),
+			headers: lowerHeaders(res.Header)}, nil
 	}
 }
 
 func (a *answer) orError() (any, error) {
 	if refused(a.status, a.body) {
-		return nil, errorFrom(a.status, a.body, a.requestID)
+		return nil, errorFrom(a.status, a.body, a.requestID).withAnswer(a.headers)
 	}
 	return a.body, nil
 }
@@ -791,7 +862,7 @@ func (c *PartnerClient) tokenRequest(ctx context.Context, fields ...[2]string) (
 	if err != nil {
 		return nil, err
 	}
-	tokens, err := tokensFrom(body, c.now())
+	tokens, err := tokensFrom(body, c.now(), a.headers)
 	if err != nil {
 		return nil, err
 	}
@@ -992,6 +1063,14 @@ func (c *PartnerClient) authorise(ctx context.Context, op Operation, headers map
 }
 
 func (c *PartnerClient) call(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File, opts ...CallOption) (any, error) {
+	a, err := c.exchange(ctx, op, params, body, files, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return a.orError()
+}
+
+func (c *PartnerClient) exchange(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File, opts ...CallOption) (*answer, error) {
 	u, err := buildURL(c.baseURL, op, params, optionsOf(opts).extraQuery)
 	if err != nil {
 		return nil, err
@@ -1026,7 +1105,7 @@ func (c *PartnerClient) call(ctx context.Context, op Operation, params map[strin
 			return nil, err
 		}
 	}
-	return a.orError()
+	return a, nil
 }
 
 func (c *PartnerClient) apiCall(ctx context.Context, op Operation, params map[string]any, body map[string]any, files []File, opts ...CallOption) (any, error) {
@@ -1061,8 +1140,12 @@ func (c *PartnerClient) GraphQL(ctx context.Context, query string, variables map
 	if variables == nil {
 		variables = map[string]any{}
 	}
-	answer, err := c.call(ctx, Operation{Method: "POST", Path: "/app/graphql", Auth: AuthTokenOrKey, Body: BodyJSON}, nil,
+	a, err := c.exchange(ctx, Operation{Method: "POST", Path: "/app/graphql", Auth: AuthTokenOrKey, Body: BodyJSON}, nil,
 		map[string]any{"query": query, "variables": variables}, nil)
+	if err != nil {
+		return nil, err
+	}
+	answer, err := a.orError()
 	if err != nil {
 		return nil, err
 	}
@@ -1075,7 +1158,11 @@ func (c *PartnerClient) GraphQL(ctx context.Context, query string, variables map
 				parts = append(parts, s)
 			}
 		}
-		return nil, &Error{Status: 200, Code: "graphql_error", Message: strings.Join(parts, " "), Body: answer}
+		e := &Error{Status: 200, Code: "graphql_error", Message: strings.Join(parts, " "), Body: answer}
+		if id, _ := b["request_id"].(string); id != "" {
+			e.RequestID = id
+		}
+		return nil, e.withAnswer(a.headers)
 	}
 	if b == nil {
 		return nil, nil

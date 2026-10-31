@@ -47,6 +47,7 @@ var openOperations = func() map[string]Operation {
 	m["planInsert"] = Operation{Method: "POST", Path: "/v1/plan/insert", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["planMatrixCloseDelete"] = Operation{Method: "DELETE", Path: "/v1/plan/matrix/{matrixId}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["planMatrixOpen"] = Operation{Method: "POST", Path: "/v1/plan/matrix", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
+	m["planMatrixPoints"] = Operation{Method: "POST", Path: "/v1/plan/matrix/{matrixId}/points", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["planMove"] = Operation{Method: "POST", Path: "/v1/plan/move", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["planRecost"] = Operation{Method: "POST", Path: "/v1/plan/recost", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["planRefine"] = Operation{Method: "POST", Path: "/v1/plan/refine", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
@@ -408,6 +409,20 @@ type PlanMatrixOpenParams struct {
 // PlanMatrixOpen — POST /v1/plan/matrix — Open a distance snapshot
 func (a *OpenAPI) PlanMatrixOpen(ctx context.Context, p PlanMatrixOpenParams, opts ...CallOption) (any, error) {
 	return a.call(ctx, openOperations["planMatrixOpen"], map[string]any{}, p.Body, nil, opts...)
+}
+
+// PlanMatrixPointsParams are the parameters of OpenAPI.PlanMatrixPoints.
+type PlanMatrixPointsParams struct {
+	// MatrixId is "matrixId" (path, required)
+	MatrixId string
+
+	// Body is the request body (required).
+	Body map[string]any
+}
+
+// PlanMatrixPoints — POST /v1/plan/matrix/{matrixId}/points — Measure new points of a distance snapshot
+func (a *OpenAPI) PlanMatrixPoints(ctx context.Context, p PlanMatrixPointsParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, openOperations["planMatrixPoints"], map[string]any{"matrixId": p.MatrixId}, p.Body, nil, opts...)
 }
 
 // PlanMoveParams are the parameters of OpenAPI.PlanMove.
