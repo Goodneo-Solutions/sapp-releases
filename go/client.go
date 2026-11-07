@@ -28,7 +28,7 @@ import (
 )
 
 // Version is the sApp version.
-const Version = "0.2.5"
+const Version = "0.2.6"
 
 // DefaultBaseURL is where the partner app API and the Open Platform answer.
 const DefaultBaseURL = "https://open.superroute.ca"

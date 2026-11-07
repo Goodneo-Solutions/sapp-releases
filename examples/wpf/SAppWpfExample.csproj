@@ -9,6 +9,6 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Superroute.SApp.Wpf" Version="0.2.5" />
+    <PackageReference Include="Superroute.SApp.Wpf" Version="0.2.6" />
   </ItemGroup>
 </Project>

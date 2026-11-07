@@ -14,13 +14,13 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "SApp",
-            url: "https://github.com/Goodneo-Solutions/sapp-releases/releases/download/0.2.5/SApp.xcframework.zip",
-            checksum: "ec017643b7fe91aaeb25ac8e3a3136563a1c0df016f2692b54b81e0acc2374f4"
+            url: "https://github.com/Goodneo-Solutions/sapp-releases/releases/download/0.2.6/SApp.xcframework.zip",
+            checksum: "a85efeb84d76d9e4adfa049b12dd320da9afde61cc2482677813bf97923417cd"
         ),
         .binaryTarget(
             name: "SAppUI",
-            url: "https://github.com/Goodneo-Solutions/sapp-releases/releases/download/0.2.5/SAppUI.xcframework.zip",
-            checksum: "641ac29a7feed01771d92c15d86a4e56a1a6801f4d2ae9e5d423a95891754c8e"
+            url: "https://github.com/Goodneo-Solutions/sapp-releases/releases/download/0.2.6/SAppUI.xcframework.zip",
+            checksum: "cefaa14c452c7e0b65fcf4ae0f810b523aa7ed998fec4967068164ef8f04b199"
         ),
     ]
 )

@@ -123,6 +123,7 @@ var partnerOperations = func() map[string]Operation {
 	m["driverUploadPictures"] = Operation{Method: "POST", Path: "/app/v1/driver/upload-pictures", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["driverUploadPicturesFromUrlsPost"] = Operation{Method: "POST", Path: "/app/v1/driver/upload-pictures-from-urls", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["health"] = Operation{Method: "GET", Path: "/app/v1/health", Auth: AuthNone, Query: []string{}, Body: BodyNone}
+	m["openappSwidgetConfig"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/swidget", Auth: AuthKey, Query: []string{}, Body: BodyNone}
 	m["partnerAppDriverRegister"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/driver/register", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
 	m["partnerAppGuestPickupPoints"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/pickup-points", Auth: AuthKey, Query: []string{"latitude", "longitude", "search", "pickup", "return", "available", "page", "per_page"}, Body: BodyNone}
 	m["partnerAppGuestQuote"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/quotes/{line}", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
@@ -130,7 +131,6 @@ var partnerOperations = func() map[string]Operation {
 	m["partnerAppMe"] = Operation{Method: "GET", Path: "/app/v1/me", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["partnerAppRevokeSession"] = Operation{Method: "DELETE", Path: "/app/v1/sessions/{sessionId}", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["partnerAppSessions"] = Operation{Method: "GET", Path: "/app/v1/sessions", Auth: AuthToken, Query: []string{}, Body: BodyNone}
-	m["partnerAppSwidget"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/swidget", Auth: AuthKey, Query: []string{}, Body: BodyNone}
 	m["platformAppBootstrap"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/bootstrap", Auth: AuthKey, Query: []string{"platform", "app_version"}, Body: BodyNone}
 	m["platformAppCancelAccountDeletion"] = Operation{Method: "DELETE", Path: "/app/v1/privacy/account-deletion", Auth: AuthToken, Query: []string{}, Body: BodyNone}
 	m["platformAppCancelReturn"] = Operation{Method: "POST", Path: "/app/v1/returns/{returnId}/cancel", Auth: AuthToken, Query: []string{}, Body: BodyNone}
@@ -197,6 +197,7 @@ var partnerOperations = func() map[string]Operation {
 	m["platformAppGuestStoreOrderReturn"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/return", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON, Headers: []string{"X-Guest-Order-Token"}}
 	m["platformAppGuestStoreOrderReview"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/store-orders/{code}/review/{productId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyJSON, Headers: []string{"X-Guest-Order-Token"}}
 	m["platformAppGuestStoreProduct"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/products/{productId}", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
+	m["platformAppGuestStoreProductConfigure"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/stores/{slug}/products/{productId}/configure", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
 	m["platformAppGuestStorefront"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/guest/storefront", Auth: AuthKey, Query: []string{"locale"}, Body: BodyNone}
 	m["platformAppGuestTrack"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/track", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
 	m["platformAppGuestVerifyComplete"] = Operation{Method: "POST", Path: "/app/v1/clients/{clientCode}/guest/verify/complete", Auth: AuthKey, Query: []string{}, Body: BodyJSON}
@@ -258,6 +259,7 @@ var partnerOperations = func() map[string]Operation {
 	m["platformAppStoreOrderReview"] = Operation{Method: "POST", Path: "/app/v1/store-orders/{code}/review/{productId}", Auth: AuthToken, Query: []string{"locale"}, Body: BodyJSON}
 	m["platformAppStoreOrders"] = Operation{Method: "GET", Path: "/app/v1/store-orders", Auth: AuthToken, Query: []string{"scope", "page", "per_page", "include", "locale"}, Body: BodyNone}
 	m["platformAppStoreProduct"] = Operation{Method: "GET", Path: "/app/v1/stores/{slug}/products/{productId}", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
+	m["platformAppStoreProductConfigure"] = Operation{Method: "POST", Path: "/app/v1/stores/{slug}/products/{productId}/configure", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
 	m["platformAppStorefront"] = Operation{Method: "GET", Path: "/app/v1/storefront", Auth: AuthToken, Query: []string{"locale"}, Body: BodyNone}
 	m["platformAppSwidgetShow"] = Operation{Method: "GET", Path: "/app/v1/clients/{clientCode}/swidgets/{widgetId}", Auth: AuthKey, Query: []string{}, Body: BodyNone}
 	m["platformAppTrack"] = Operation{Method: "POST", Path: "/app/v1/track", Auth: AuthToken, Query: []string{}, Body: BodyJSON}
@@ -1554,6 +1556,17 @@ func (a *PartnerAPI) Health(ctx context.Context, opts ...CallOption) (any, error
 	return a.call(ctx, partnerOperations["health"], nil, nil, nil, opts...)
 }
 
+// OpenappSwidgetConfigParams are the parameters of PartnerAPI.OpenappSwidgetConfig.
+type OpenappSwidgetConfigParams struct {
+	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
+	ClientCode *string
+}
+
+// OpenappSwidgetConfig — GET /app/v1/clients/{clientCode}/swidget — sWidget configuration
+func (a *PartnerAPI) OpenappSwidgetConfig(ctx context.Context, p OpenappSwidgetConfigParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["openappSwidgetConfig"], map[string]any{"clientCode": p.ClientCode}, nil, nil, opts...)
+}
+
 // PartnerAppDriverRegisterParams are the parameters of PartnerAPI.PartnerAppDriverRegister.
 type PartnerAppDriverRegisterParams struct {
 	// ClientCode is "clientCode" (path, optional. The client's public code)
@@ -1653,17 +1666,6 @@ func (a *PartnerAPI) PartnerAppRevokeSession(ctx context.Context, p PartnerAppRe
 // PartnerAppSessions — GET /app/v1/sessions — List the person's sign-ins to this app
 func (a *PartnerAPI) PartnerAppSessions(ctx context.Context, opts ...CallOption) (any, error) {
 	return a.call(ctx, partnerOperations["partnerAppSessions"], nil, nil, nil, opts...)
-}
-
-// PartnerAppSwidgetParams are the parameters of PartnerAPI.PartnerAppSwidget.
-type PartnerAppSwidgetParams struct {
-	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
-	ClientCode *string
-}
-
-// PartnerAppSwidget — GET /app/v1/clients/{clientCode}/swidget — sWidget configuration
-func (a *PartnerAPI) PartnerAppSwidget(ctx context.Context, p PartnerAppSwidgetParams, opts ...CallOption) (any, error) {
-	return a.call(ctx, partnerOperations["partnerAppSwidget"], map[string]any{"clientCode": p.ClientCode}, nil, nil, opts...)
 }
 
 // PlatformAppBootstrapParams are the parameters of PartnerAPI.PlatformAppBootstrap.
@@ -2872,6 +2874,26 @@ func (a *PartnerAPI) PlatformAppGuestStoreProduct(ctx context.Context, p Platfor
 	return a.call(ctx, partnerOperations["platformAppGuestStoreProduct"], map[string]any{"slug": p.Slug, "productId": p.ProductId, "clientCode": p.ClientCode, "locale": p.Locale}, nil, nil, opts...)
 }
 
+// PlatformAppGuestStoreProductConfigureParams are the parameters of PartnerAPI.PlatformAppGuestStoreProductConfigure.
+type PlatformAppGuestStoreProductConfigureParams struct {
+	// Slug is "slug" (path, required)
+	Slug string
+
+	// ProductId is "productId" (path, required)
+	ProductId int64
+
+	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
+	ClientCode *string
+
+	// Body is the request body (optional).
+	Body map[string]any
+}
+
+// PlatformAppGuestStoreProductConfigure — POST /app/v1/clients/{clientCode}/guest/stores/{slug}/products/{productId}/configure — Configure a product (guest)
+func (a *PartnerAPI) PlatformAppGuestStoreProductConfigure(ctx context.Context, p PlatformAppGuestStoreProductConfigureParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppGuestStoreProductConfigure"], map[string]any{"slug": p.Slug, "productId": p.ProductId, "clientCode": p.ClientCode}, p.Body, nil, opts...)
+}
+
 // PlatformAppGuestStorefrontParams are the parameters of PartnerAPI.PlatformAppGuestStorefront.
 type PlatformAppGuestStorefrontParams struct {
 	// ClientCode is "clientCode" (path, optional. The service provider's public client code for this app.)
@@ -3721,6 +3743,23 @@ type PlatformAppStoreProductParams struct {
 // PlatformAppStoreProduct — GET /app/v1/stores/{slug}/products/{productId} — Product page
 func (a *PartnerAPI) PlatformAppStoreProduct(ctx context.Context, p PlatformAppStoreProductParams, opts ...CallOption) (any, error) {
 	return a.call(ctx, partnerOperations["platformAppStoreProduct"], map[string]any{"slug": p.Slug, "productId": p.ProductId, "locale": p.Locale}, nil, nil, opts...)
+}
+
+// PlatformAppStoreProductConfigureParams are the parameters of PartnerAPI.PlatformAppStoreProductConfigure.
+type PlatformAppStoreProductConfigureParams struct {
+	// Slug is "slug" (path, required)
+	Slug string
+
+	// ProductId is "productId" (path, required)
+	ProductId int64
+
+	// Body is the request body (optional).
+	Body map[string]any
+}
+
+// PlatformAppStoreProductConfigure — POST /app/v1/stores/{slug}/products/{productId}/configure — Configure a product
+func (a *PartnerAPI) PlatformAppStoreProductConfigure(ctx context.Context, p PlatformAppStoreProductConfigureParams, opts ...CallOption) (any, error) {
+	return a.call(ctx, partnerOperations["platformAppStoreProductConfigure"], map[string]any{"slug": p.Slug, "productId": p.ProductId}, p.Body, nil, opts...)
 }
 
 // PlatformAppStorefrontParams are the parameters of PartnerAPI.PlatformAppStorefront.
